@@ -30,7 +30,7 @@ class Role extends SpatieRole
      * @param $query
      * @return mixed
      */
-    public function scopeExceptSuperAdmin($query)
+    public function scopeExceptAdmin($query)
     {
         return $query->whereNotIn('roles.name', [
             self::ADMIN,
