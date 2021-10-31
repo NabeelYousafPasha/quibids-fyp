@@ -14,7 +14,11 @@ class PackageController extends Controller
      */
     public function index()
     {
-        //
+        $packages = Package::all();
+
+        return view('frontend.pages.package.index')->with([
+            'packages' => $packages,
+        ]);
     }
 
     /**

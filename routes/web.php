@@ -1,6 +1,9 @@
 <?php
 
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\{
+    HomeController,
+    PackageController
+};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +23,8 @@ Route::group([
     'middleware' => ['auth'],
 ], function () {
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
+
+    Route::resource('/packages', PackageController::class);
 });
 
 require __DIR__.'/auth.php';
