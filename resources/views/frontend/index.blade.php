@@ -7,8 +7,11 @@
             <div class="row">
                 <div class="col-xl-7 col-lg-9">
                     <div class="banner-classic">
-                        <h1>The best place <span class="d-block font-weight-bold">to buy and sell!</span><img class="banner-classic-figure" src="images/banner-arrow-184x147.png" alt="" width="184" height="73"/>
-                        </h1><a class="button button-icon button-icon-right button-black button-lg" href="#"><span class="icon novi-icon fa fa-chevron-right"></span>Register</a>
+                        <h1>
+                            The best place <span class="d-block font-weight-bold">to buy and sell!</span>
+                            <img class="banner-classic-figure" src="{{ asset('frontend-assets/images/banner-arrow-184x147.png') }}" alt="" width="184" height="73"/>
+                        </h1>
+                        <a class="button button-icon button-icon-right button-black button-lg" href="#"><span class="icon novi-icon fa fa-chevron-right"></span>Register</a>
                     </div>
                 </div>
             </div>
@@ -27,7 +30,7 @@
                             <div class="post-classic-price-value">876</div>
                         </div>
                         <div class="post-classic-thumbnail">
-                            <figure class="post-classic-figure"><img src="images/page1_pic1-270x271.jpeg" alt="" width="270" height="135"/>
+                            <figure class="post-classic-figure"><img src="{{ asset('frontend-assets/images/page1_pic1-270x271.jpeg') }}" alt="" width="270" height="135"/>
                             </figure>
                             <div class="post-classic-caption"><a class="heading-5" href="#">Apple MacBook Pro 13'' 2.3GHz 128GB Space Gray</a></div>
                         </div>
@@ -40,7 +43,7 @@
                             <div class="post-classic-price-value">176</div>
                         </div>
                         <div class="post-classic-thumbnail">
-                            <figure class="post-classic-figure"><img src="images/page1_pic2-270x271.jpeg" alt="" width="270" height="135"/>
+                            <figure class="post-classic-figure"><img src="{{ asset('frontend-assets/images/page1_pic2-270x271.jpeg') }}" alt="" width="270" height="135"/>
                             </figure>
                             <div class="post-classic-caption"><a class="heading-5" href="#">Apple iPad Pro 11” Wi-Fi 64GB Silver</a></div>
                         </div>
@@ -53,7 +56,7 @@
                             <div class="post-classic-price-value">16</div>
                         </div>
                         <div class="post-classic-thumbnail">
-                            <figure class="post-classic-figure"><img src="images/page1_pic3-270x271.jpeg" alt="" width="270" height="135"/>
+                            <figure class="post-classic-figure"><img src="{{ asset('frontend-assets/images/page1_pic3-270x271.jpeg') }}" alt="" width="270" height="135"/>
                             </figure>
                             <div class="post-classic-caption"><a class="heading-5" href="#">Ray-Ban High Street 54mm Sunglasses</a></div>
                         </div>
@@ -66,7 +69,7 @@
                             <div class="post-classic-price-value">86</div>
                         </div>
                         <div class="post-classic-thumbnail">
-                            <figure class="post-classic-figure"><img src="images/page1_pic4-270x271.jpeg" alt="" width="270" height="135"/>
+                            <figure class="post-classic-figure"><img src="{{ asset('frontend-assets/images/page1_pic4-270x271.jpeg') }}" alt="" width="270" height="135"/>
                             </figure>
                             <div class="post-classic-caption"><a class="heading-5" href="#">Pier One Classic Dark Blue Ankle Boots</a></div>
                         </div>
@@ -85,7 +88,7 @@
                     <!-- Post Modern-->
                     <div class="post-modern">
                         <div class="post-modern-countdown countdown" data-format="HMS" data-until="+75500"></div>
-                        <figure class="post-modern-figure"><img src="images/page1_pic5-270x217.jpeg" alt="" width="270" height="108"/>
+                        <figure class="post-modern-figure"><img src="{{ asset('frontend-assets/images/page1_pic5-270x217.jpeg') }}" alt="" width="270" height="108"/>
                         </figure>
                         <div class="post-modern-caption">
                             <div class="post-modern-price">Price: $258</div>
@@ -102,7 +105,7 @@
                     <!-- Post Modern-->
                     <div class="post-modern">
                         <div class="post-modern-countdown countdown" data-format="HMS" data-until="+25000"></div>
-                        <figure class="post-modern-figure"><img src="images/page1_pic6-270x217.jpeg" alt="" width="270" height="108"/>
+                        <figure class="post-modern-figure"><img src="{{ asset('frontend-assets/images/page1_pic6-270x217.jpeg') }}" alt="" width="270" height="108"/>
                         </figure>
                         <div class="post-modern-caption">
                             <div class="post-modern-price">Price: $258</div>
@@ -119,7 +122,7 @@
                     <!-- Post Modern-->
                     <div class="post-modern">
                         <div class="post-modern-countdown countdown" data-format="HMS" data-until="+2500"></div>
-                        <figure class="post-modern-figure"><img src="images/page1_pic7-270x217.jpeg" alt="" width="270" height="108"/>
+                        <figure class="post-modern-figure"><img src="{{ asset('frontend-assets/images/page1_pic7-270x217.jpeg') }}" alt="" width="270" height="108"/>
                         </figure>
                         <div class="post-modern-caption">
                             <div class="post-modern-price">Price: $258</div>
@@ -136,7 +139,7 @@
                     <!-- Post Modern-->
                     <div class="post-modern">
                         <div class="post-modern-countdown countdown" data-format="HMS" data-until="+65000"></div>
-                        <figure class="post-modern-figure"><img src="images/page1_pic8-270x217.jpeg" alt="" width="270" height="108"/>
+                        <figure class="post-modern-figure"><img src="{{ asset('frontend-assets/images/page1_pic8-270x217.jpeg') }}" alt="" width="270" height="108"/>
                         </figure>
                         <div class="post-modern-caption">
                             <div class="post-modern-price">Price: $258</div>
@@ -196,31 +199,34 @@
     </section>
 
     <!-- Join the Winners-->
-    <section class="parallax-container context-dark section-lg" data-parallax-img="images/home-02-1920x1030.jpeg">
+    <section
+        class="parallax-container context-dark section-lg"
+        data-parallax-img="{{ asset('frontend-assets/images/home-02-1920x1030.jpeg') }}"
+    >
         <div class="parallax-content">
             <div class="container">
                 <h2 class="text-center text-sm-left">Join <span class="h2-style">the Winners</span></h2>
                 <div class="row row-sm-30 row-15 row-eight row-xs-horizontal-15">
                     <div class="col-lg-2 col-4">
-                        <figure class="box-image"><img src="images/box-image-01-270x270.png" alt="" width="270" height="135"/>
+                        <figure class="box-image"><img src="{{ asset('frontend-assets/images/box-image-01-270x270.png') }}" alt="" width="270" height="135"/>
                         </figure>
                     </div>
                     <div class="col-lg-2 col-4">
                         <div class="row row-sm-30 row-15 row-eight row-xs-horizontal-15">
                             <div class="col-4">
-                                <figure class="box-image"><img src="images/box-image-02-120x120.png" alt="" width="120" height="60"/>
+                                <figure class="box-image"><img src="{{ asset('frontend-assets/images/box-image-02-120x120.png') }}" alt="" width="120" height="60"/>
                                 </figure>
                             </div>
                             <div class="col-4">
-                                <figure class="box-image"><img src="images/box-image-03-120x120.png" alt="" width="120" height="60"/>
+                                <figure class="box-image"><img src="{{ asset('frontend-assets/images/box-image-03-120x120.png') }}" alt="" width="120" height="60"/>
                                 </figure>
                             </div>
                             <div class="col-4">
-                                <figure class="box-image"><img src="images/box-image-04-120x120.png" alt="" width="120" height="60"/>
+                                <figure class="box-image"><img src="{{ asset('frontend-assets/images/box-image-04-120x120.png') }}" alt="" width="120" height="60"/>
                                 </figure>
                             </div>
                             <div class="col-4">
-                                <figure class="box-image"><img src="images/box-image-05-120x120.png" alt="" width="120" height="60"/>
+                                <figure class="box-image"><img src="{{ asset('frontend-assets/images/box-image-05-120x120.png') }}" alt="" width="120" height="60"/>
                                 </figure>
                             </div>
                         </div>
@@ -231,43 +237,43 @@
                         </div>
                     </div>
                     <div class="col-lg-2 col-4">
-                        <figure class="box-image"><img src="images/box-image-06-270x270.png" alt="" width="270" height="135"/>
+                        <figure class="box-image"><img src="{{ asset('frontend-assets/images/box-image-06-270x270.png') }}" alt="" width="270" height="135"/>
                         </figure>
                     </div>
                     <div class="col-lg-1 col-2 order-1 order-lg-0">
                         <div class="row row-sm-30 row-15 row-eight row-xs-horizontal-15">
                             <div class="col-8">
-                                <figure class="box-image"><img src="images/box-image-07-120x120.png" alt="" width="120" height="60"/>
+                                <figure class="box-image"><img src="{{ asset('frontend-assets/images/box-image-07-120x120.png') }}" alt="" width="120" height="60"/>
                                 </figure>
                             </div>
                             <div class="col-8">
-                                <figure class="box-image"><img src="images/box-image-08-120x120.png" alt="" width="120" height="60"/>
+                                <figure class="box-image"><img src="{{ asset('frontend-assets/images/box-image-08-120x120.png') }}" alt="" width="120" height="60"/>
                                 </figure>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-2 col-4">
-                        <figure class="box-image"><img src="images/box-image-09-270x270.png" alt="" width="270" height="135"/>
+                        <figure class="box-image"><img src="{{ asset('frontend-assets/images/box-image-09-270x270.png') }}" alt="" width="270" height="135"/>
                         </figure>
                     </div>
                     <div class="col-lg-2 col-4">
-                        <figure class="box-image"><img src="images/box-image-10-270x270.png" alt="" width="270" height="135"/>
+                        <figure class="box-image"><img src="{{ asset('frontend-assets/images/box-image-10-270x270.png') }}" alt="" width="270" height="135"/>
                         </figure>
                     </div>
                     <div class="col-lg-1 col-2">
                         <div class="row row-sm-30 row-15 row-eight row-xs-horizontal-15">
                             <div class="col-8">
-                                <figure class="box-image"><img src="images/box-image-11-120x120.png" alt="" width="120" height="60"/>
+                                <figure class="box-image"><img src="{{ asset('frontend-assets/images/box-image-11-120x120.png') }}" alt="" width="120" height="60"/>
                                 </figure>
                             </div>
                             <div class="col-8">
-                                <figure class="box-image"><img src="images/box-image-12-120x120.png" alt="" width="120" height="60"/>
+                                <figure class="box-image"><img src="{{ asset('frontend-assets/images/box-image-12-120x120.png') }}" alt="" width="120" height="60"/>
                                 </figure>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-2 col-4">
-                        <figure class="box-image"><img src="images/box-image-13-270x270.png" alt="" width="270" height="135"/>
+                        <figure class="box-image"><img src="{{ asset('frontend-assets/images/box-image-13-270x270.png') }}" alt="" width="270" height="135"/>
                         </figure>
                     </div>
                 </div>
