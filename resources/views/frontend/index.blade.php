@@ -11,7 +11,13 @@
                             The best place <span class="d-block font-weight-bold">to buy and sell!</span>
                             <img class="banner-classic-figure" src="{{ asset('frontend-assets/images/banner-arrow-184x147.png') }}" alt="" width="184" height="73"/>
                         </h1>
-                        <a class="button button-icon button-icon-right button-black button-lg" href="#"><span class="icon novi-icon fa fa-chevron-right"></span>Register</a>
+                        <a
+                            href="{{ route('register') }}"
+                            class="button button-icon button-icon-right button-black button-lg"
+                        >
+                            <span class="icon novi-icon fa fa-chevron-right"></span>
+                            Register
+                        </a>
                     </div>
                 </div>
             </div>
@@ -158,7 +164,46 @@
     </section>
 
     <!-- How it Works-->
-    <section class="section novi-bg novi-bg-img section-lg bg-gray-100 section-top-shadow">
+    <section class="section novi-bg novi-bg-img section-lg bg-gray-100 section-top-shadow" id="packages">
+        <div class="container">
+            <h2 class="text-center text-sm-left">Packages <span class="h2-style">we offer</span></h2>
+            <div class="row row-50 mt-50 column-arrow">
+                @forelse($packages ?? [] as $package)
+                <div class="col-lg-3 col-sm-6">
+                    <!-- Box Icon Classic-->
+                    <div class="box-icon-classic">
+                        <div class="box-icon-classic-icon icon novi-icon linearicons-mouse-left"></div>
+                        <h4 class="box-icon-classic-title">
+                            {{ $package->name }}
+                        </h4>
+                        <h6>
+                            <u>{{ $package->award_bids }}</u> Bids for just ${{ $package->price }}
+                        </h6>
+                        <p>
+                            {{ $package->description }}
+                        </p>
+                        <p>To start using our auction, you’ll need to register. It’s completely free and requires just a few clicks!</p>
+                    </div>
+                </div>
+                @empty
+                    <div class="col-lg-12 col-sm-12">
+                        <!-- Box Icon Classic-->
+                        <div class="box-icon-classic text-center">
+                            <h4 class="box-icon-classic-title">
+                                Free
+                                <span style="font-size: 5rem;">{{ config('constants.default_bids') }}</span>
+                                Bids
+                            </h4>
+                            <p>To start using our auction, you’ll need to register. It’s completely free and requires just a few clicks!</p>
+                        </div>
+                    </div>
+                @endforelse
+            </div>
+        </div>
+    </section>
+
+    <!-- How it Works-->
+    <section class="section novi-bg novi-bg-img section-lg bg-white">
         <div class="container">
             <h2 class="text-center text-sm-left">How <span class="h2-style">it Works</span></h2>
             <div class="row row-50 mt-50 column-arrow">
@@ -198,142 +243,33 @@
         </div>
     </section>
 
-    <!-- Join the Winners-->
-    <section
-        class="parallax-container context-dark section-lg"
-        data-parallax-img="{{ asset('frontend-assets/images/home-02-1920x1030.jpeg') }}"
-    >
-        <div class="parallax-content">
-            <div class="container">
-                <h2 class="text-center text-sm-left">Join <span class="h2-style">the Winners</span></h2>
-                <div class="row row-sm-30 row-15 row-eight row-xs-horizontal-15">
-                    <div class="col-lg-2 col-4">
-                        <figure class="box-image"><img src="{{ asset('frontend-assets/images/box-image-01-270x270.png') }}" alt="" width="270" height="135"/>
-                        </figure>
-                    </div>
-                    <div class="col-lg-2 col-4">
-                        <div class="row row-sm-30 row-15 row-eight row-xs-horizontal-15">
-                            <div class="col-4">
-                                <figure class="box-image"><img src="{{ asset('frontend-assets/images/box-image-02-120x120.png') }}" alt="" width="120" height="60"/>
-                                </figure>
-                            </div>
-                            <div class="col-4">
-                                <figure class="box-image"><img src="{{ asset('frontend-assets/images/box-image-03-120x120.png') }}" alt="" width="120" height="60"/>
-                                </figure>
-                            </div>
-                            <div class="col-4">
-                                <figure class="box-image"><img src="{{ asset('frontend-assets/images/box-image-04-120x120.png') }}" alt="" width="120" height="60"/>
-                                </figure>
-                            </div>
-                            <div class="col-4">
-                                <figure class="box-image"><img src="{{ asset('frontend-assets/images/box-image-05-120x120.png') }}" alt="" width="120" height="60"/>
-                                </figure>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-4">
-                        <div class="box-primary novi-bg">
-                            <h3 class="box-primary-content">Place for <span class="d-block font-weight-bold">your</span> picture</h3>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-4">
-                        <figure class="box-image"><img src="{{ asset('frontend-assets/images/box-image-06-270x270.png') }}" alt="" width="270" height="135"/>
-                        </figure>
-                    </div>
-                    <div class="col-lg-1 col-2 order-1 order-lg-0">
-                        <div class="row row-sm-30 row-15 row-eight row-xs-horizontal-15">
-                            <div class="col-8">
-                                <figure class="box-image"><img src="{{ asset('frontend-assets/images/box-image-07-120x120.png') }}" alt="" width="120" height="60"/>
-                                </figure>
-                            </div>
-                            <div class="col-8">
-                                <figure class="box-image"><img src="{{ asset('frontend-assets/images/box-image-08-120x120.png') }}" alt="" width="120" height="60"/>
-                                </figure>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-4">
-                        <figure class="box-image"><img src="{{ asset('frontend-assets/images/box-image-09-270x270.png') }}" alt="" width="270" height="135"/>
-                        </figure>
-                    </div>
-                    <div class="col-lg-2 col-4">
-                        <figure class="box-image"><img src="{{ asset('frontend-assets/images/box-image-10-270x270.png') }}" alt="" width="270" height="135"/>
-                        </figure>
-                    </div>
-                    <div class="col-lg-1 col-2">
-                        <div class="row row-sm-30 row-15 row-eight row-xs-horizontal-15">
-                            <div class="col-8">
-                                <figure class="box-image"><img src="{{ asset('frontend-assets/images/box-image-11-120x120.png') }}" alt="" width="120" height="60"/>
-                                </figure>
-                            </div>
-                            <div class="col-8">
-                                <figure class="box-image"><img src="{{ asset('frontend-assets/images/box-image-12-120x120.png') }}" alt="" width="120" height="60"/>
-                                </figure>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-4">
-                        <figure class="box-image"><img src="{{ asset('frontend-assets/images/box-image-13-270x270.png') }}" alt="" width="270" height="135"/>
-                        </figure>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+@endsection
 
-    <!-- About As-->
-    <section class="section novi-bg novi-bg-img section-lg">
-        <div class="container">
-            <div class="row row-50">
-                <div class="col-lg-6">
-                    <h2 class="text-center text-sm-left">About <span class="h2-style">Us</span></h2>
-                    <div class="row row-30">
-                        <div class="col-12">
-                            <!-- Box Moder-->
-                            <div class="box-modern">
-                                <div class="box-modern-header">
-                                    <div class="box-modern-icon icon novi-icon novi-bg linearicons-laptop-phone"></div>
-                                    <h5 class="box-modern-title" style="width: 240px">Quality products for the best customers</h5>
-                                </div>
-                                <p class="box-modern-body">Online Auction features a wide variety of quality products at wholesale prices with our main locations in San Francisco, CA and Phoenix, AZ. We strive to make sure our customers are completely satisfied with their purchase.</p>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <!-- Box Moder-->
-                            <div class="box-modern">
-                                <div class="box-modern-header">
-                                    <div class="box-modern-icon icon novi-icon novi-bg linearicons-thumbs-up"></div>
-                                    <h5 class="box-modern-title" style="width: 240px">More than 20 years of auction experience</h5>
-                                </div>
-                                <p class="box-modern-body">We have the knowledge and ability to handle any type of auction. We handle small local sales, and large multiple-day, multi-million dollar auctions. Our services are tailored to fit each client's needs.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <h2 class="text-center text-sm-left">Events</h2>
-                    <div class="row row-30 box-modern-index">
-                        <div class="col-12">
-                            <div class="box-modern">
-                                <div class="box-modern-header">
-                                    <div class="box-modern-index-count"></div>
-                                    <h5 class="box-modern-title" style="width: 240px">Laptops, Smartphones & IT Equipment Auction</h5>
-                                </div>
-                                <p class="box-modern-body">Next Saturday, we will be conducting our online auction of IT equipment including smartphones, laptops "Dell", "Apple" and "HP", monitors, printers, servers, network components, switches, and various accessories.</p>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="box-modern">
-                                <div class="box-modern-header">
-                                    <div class="box-modern-index-count"></div>
-                                    <h5 class="box-modern-title" style="width: 240px">Children’s Clothes & Shoes Auction</h5>
-                                </div>
-                                <p class="box-modern-body">If you are looking for a new outfit for our kids, then our upcoming event is for you! Our new auction of kids’ clothes and shoes will start next Sunday at 11:00 (PDT) featuring exclusive clothing collections from widely known brands.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+@section('scripts')
+    <script>
+        $(document).ready(function(){
+            // Add smooth scrolling to all links
+            $("#nav-packages").on('click', function(event) {
+
+                // Make sure this.hash has a value before overriding default behavior
+                if (this.hash !== "") {
+                    // Prevent default anchor click behavior
+                    event.preventDefault();
+
+                    // Store hash
+                    var hash = this.hash;
+
+                    // Using jQuery's animate() method to add smooth page scroll
+                    // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+                    $('html, body').animate({
+                        scrollTop: $(hash).offset().top
+                    }, 800, function(){
+
+                        // Add hash (#) to URL when done scrolling (default click behavior)
+                        window.location.hash = hash;
+                    });
+                } // End if
+            });
+        });
+    </script>
 @endsection
