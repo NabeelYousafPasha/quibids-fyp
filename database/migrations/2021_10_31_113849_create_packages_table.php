@@ -18,7 +18,7 @@ class CreatePackagesTable extends Migration
             $table->string('name');
             $table->text('description');
             $table->decimal('price');
-            $table->decimal('allowed_bid_quantity');
+            $table->unsignedInteger('award_bids')->default(0);
             $table->foreignId('created_by')->constrained('users');
             $table->softDeletes();
             $table->timestamps();

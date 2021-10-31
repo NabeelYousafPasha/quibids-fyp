@@ -20,25 +20,25 @@ class PackageSeeder extends Seeder
                 'name' => 'Basic',
                 'description' => 'This is description for Basic Plan',
                 'price' => 25,
-                'allowed_bid_quantity' => 20,
+                'award_bids' => 20,
             ],
             [
                 'name' => 'Silver',
                 'description' => 'This is description for Silver Plan',
                 'price' => 50,
-                'allowed_bid_quantity' => 40,
+                'award_bids' => 40,
             ],
             [
                 'name' => 'Golden',
                 'description' => 'This is description for Golden Plan',
                 'price' => 75,
-                'allowed_bid_quantity' => 60,
+                'award_bids' => 60,
             ],
             [
                 'name' => 'Diamond',
                 'description' => 'This is description for Diamond Plan',
                 'price' => 100,
-                'allowed_bid_quantity' => 80,
+                'award_bids' => 80,
             ],
         ];
 

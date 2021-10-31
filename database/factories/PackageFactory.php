@@ -26,7 +26,7 @@ class PackageFactory extends Factory
             'name' => $this->faker->title,
             'description' => $this->faker->paragraph(),
             'price' => $this->faker->numberBetween(25, 100),
-            'allowed_bid_quantity' => $this->faker->numberBetween(10, 80),
+            'award_bids' => $this->faker->numberBetween(10, 80),
             'created_by' => User::first()->id,
         ];
     }

@@ -13,7 +13,7 @@ class Package extends Model
         'name',
         'description',
         'price',
-        'allowed_bid_quantity',
+        'award_bids',
         'created_by',
     ];
 
