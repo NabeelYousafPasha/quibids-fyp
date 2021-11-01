@@ -25,6 +25,8 @@ Route::group([
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 
     Route::resource('/packages', PackageController::class);
+    Route::resource('/vendors', PackageController::class);
+    Route::resource('/users', PackageController::class);
 });
 
 require __DIR__.'/auth.php';
