@@ -132,41 +132,7 @@
                                     <a class="rd-nav-link" href="{{ route('/') }}">Home</a>
                                 </li>
                                 <li class="rd-nav-item">
-                                    <a class="rd-nav-link" href="about.html">About</a>
-                                </li>
-                                <li class="rd-nav-item">
-                                    <a class="rd-nav-link" href="sell.html">Sell</a>
-                                </li>
-                                <li class="rd-nav-item">
-                                    <a class="rd-nav-link" href="buy.html">Buy</a>
-                                </li>
-                                <li class="rd-nav-item">
-                                    <a class="rd-nav-link">Pages</a>
-                                    <ul class="rd-menu rd-navbar-dropdown">
-                                        <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="404.html">404</a>
-                                        </li>
-                                        <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="typography.html">Typography</a>
-                                        </li>
-                                        <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="buttons.html">Buttons</a>
-                                        </li>
-                                        <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="forms.html">Forms</a>
-                                        </li>
-                                        <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="tabs-and-accordions.html">Tabs and accordions</a>
-                                        </li>
-                                        <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="progress-bars.html">Progress bars</a>
-                                        </li>
-                                        <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="tables.html">Tables</a>
-                                        </li>
-                                        <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="grid-system.html">Grid system</a>
-                                        </li>
-                                        <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="privacy-policy.html">Privacy policy</a>
-                                        </li>
-                                        <li class="rd-dropdown-item"><a class="rd-dropdown-link" href="search-results.html">Search results</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="rd-nav-item">
-                                    <a class="rd-nav-link" href="contacts.html">Contacts</a>
+                                    <a class="rd-nav-link" href="{{ route('/') }}#packages" id="nav-packages">Packages</a>
                                 </li>
                             </ul>
                         </div>
