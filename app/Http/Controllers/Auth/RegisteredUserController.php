@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -20,7 +21,11 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        return view('frontend.auth.register');
+        $allowedRoles = Role::exceptAdmin()->get();
+
+        return view('frontend.auth.register')->with([
+            'allowedRoles' => $allowedRoles,
+        ]);
     }
 
     /**
@@ -35,18 +40,28 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'username' => ['required', 'string', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255',],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role' => ['required', 'numeric', 'in:'.implode(',', Role::exceptAdmin()->pluck('id')->toArray()),],
         ]);
 
+        $role = Role::exceptAdmin()->where('id', '=', $request->input('role'))->first();
+
+        // create new user
         $user = User::create([
             'name' => $request->name,
+            'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
         event(new Registered($user));
 
+        // assign role
+        $user->assignRole($role);
+
+        // log user in
         Auth::login($user);
 
         return redirect(RouteServiceProvider::HOME);

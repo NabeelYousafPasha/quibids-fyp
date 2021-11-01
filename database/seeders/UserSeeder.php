@@ -20,21 +20,25 @@ class UserSeeder extends Seeder
         $users = [
             [
                 'name' => 'Admin',
+                'username' => 'admin@fyp.com',
                 'email' => 'admin@fyp.com',
                 'role' => Role::ADMIN,
             ],
             [
                 'name' => 'Nabeel Pasha',
+                'username' => 'nabeelyousafpasha@gmail.com',
                 'email' => 'nabeelyousafpasha@gmail.com',
                 'role' => Role::ADMIN,
             ],
             [
                 'name' => 'Vendor',
+                'username' => 'vendor@fyp.com',
                 'email' => 'vendor@fyp.com',
                 'role' => Role::VENDOR,
             ],
             [
                 'name' => 'User',
+                'username' => 'user@fyp.com',
                 'email' => 'user@fyp.com',
                 'role' => Role::USER,
             ],
@@ -42,8 +46,9 @@ class UserSeeder extends Seeder
 
         foreach ($users as $userToSeed) {
             $user = User::firstOrCreate([
-                'email' => $userToSeed['email'],
+                'username' => $userToSeed['username'],
             ],[
+                'email' => $userToSeed['email'],
                 'name' => $userToSeed['name'],
                 'password' => $password
             ]);
