@@ -27,7 +27,7 @@ Route::group([
 
     Route::resource('/packages', PackageController::class);
     Route::get('/vendors', [UserController::class, 'vendors'])->name('vendors');
-    Route::resource('/users', PackageController::class);
+    Route::get('/users', [UserController::class, 'users'])->name('users');
 });
 
 require __DIR__.'/auth.php';
