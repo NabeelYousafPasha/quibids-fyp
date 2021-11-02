@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\{
     HomeController,
-    PackageController
+    PackageController,
+    UserController
 };
 use Illuminate\Support\Facades\Route;
 
@@ -25,7 +26,7 @@ Route::group([
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 
     Route::resource('/packages', PackageController::class);
-    Route::resource('/vendors', PackageController::class);
+    Route::get('/vendors', [UserController::class, 'vendors'])->name('vendors');
     Route::resource('/users', PackageController::class);
 });
 
