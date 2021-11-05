@@ -14,6 +14,11 @@ class Role extends SpatieRole
     const VENDOR = 'vendor';
     const USER = 'user';
 
+    protected $fillable = [
+        'name',
+        'guard_name',
+    ];
+
     /**
      * @return string[]
      */

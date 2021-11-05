@@ -20,9 +20,19 @@
                     </x-nav-link>
                     <x-nav-link :href="route('vendors')" :active="request()->routeIs('vendors')">
                         {{ __('Vendors') }}
+                        @if (($navbarStatistics['unapprovedVendorCount'] ?? 0) > 0)
+                            <span class="inline-flex items-center justify-center px-2 py-1 m-1 text-xs font-bold leading-none text-red-100 bg-red-700 rounded">
+                                {{ $navbarStatistics['unapprovedVendorCount'] }}
+                            </span>
+                        @endif
                     </x-nav-link>
                     <x-nav-link :href="route('users')" :active="request()->routeIs('users')">
                         {{ __('Users') }}
+                        @if (($navbarStatistics['unapprovedUserCount'] ?? 0) > 0)
+                            <span class="inline-flex items-center justify-center px-2 py-1 m-1 text-xs font-bold leading-none text-red-100 bg-red-700 rounded">
+                                {{ $navbarStatistics['unapprovedUserCount'] }}
+                            </span>
+                        @endif
                     </x-nav-link>
                 </div>
             </div>

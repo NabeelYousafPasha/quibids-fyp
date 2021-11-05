@@ -15,10 +15,10 @@ class UserController extends Controller
      */
     public function vendors()
     {
-        $unApprovedVendors = User::whereNull('approved_at')->get();
+        $unApprovedVendors = User::OfRoleVendor()->unapproved();
 
         return view('frontend.pages.vendor.index')->with([
-            'unApprovedVendors' => $unApprovedVendors
+            'unApprovedVendors' => $unApprovedVendors->get()
         ]);
     }
 
@@ -29,10 +29,10 @@ class UserController extends Controller
      */
     public function users()
     {
-        $unApprovedUsers = User::whereNull('approved_at')->get();
+        $unApprovedUsers = User::OfRoleUser()->unapproved();
 
         return view('frontend.pages.user.index')->with([
-            'unApprovedUsers' => $unApprovedUsers
+            'unApprovedUsers' => $unApprovedUsers->get()
         ]);
     }
 }

@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\Role;
 
 class User extends Authenticatable
 {
@@ -45,4 +46,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    /**
+     *Scopes
+     */
+    public function scopeUnapproved($query)
+    {
+        return $query->whereNull('approved_at');
+    }
+
+    public function scopeOfRoleVendor($query)
+    {
+        return $this->role(Role::VENDOR);
+    }
+
+    public function scopeOfRoleUser($query)
+    {
+        return $this->role(Role::USER);
+    }
+
 }
