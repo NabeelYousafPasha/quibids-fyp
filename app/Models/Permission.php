@@ -15,6 +15,11 @@ class Permission extends SpatiePermission
     const UPDATE = 'update';
     const DELETE = 'delete';
 
+    protected $fillable = [
+        'name',
+        'guard_name',
+    ];
+
     /**
      * @return string[]
      */

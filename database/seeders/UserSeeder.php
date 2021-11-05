@@ -50,7 +50,8 @@ class UserSeeder extends Seeder
             ],[
                 'email' => $userToSeed['email'],
                 'name' => $userToSeed['name'],
-                'password' => $password
+                'password' => $password,
+                'approved_at' => now(),
             ]);
 
             switch ($userToSeed['role']) {
