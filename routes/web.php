@@ -1,11 +1,6 @@
 <?php
 
-use App\Http\Controllers\{
-    CategoryController,
-    HomeController,
-    PackageController,
-    UserController
-};
+use App\Http\Controllers\{AuctionController, CategoryController, HomeController, PackageController, UserController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,11 +21,20 @@ Route::group([
 ], function () {
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 
+    // package
     Route::resource('/packages', PackageController::class);
+
+    // vendor
     Route::get('/vendors', [UserController::class, 'vendors'])->name('vendors');
+
+    // user
     Route::get('/users', [UserController::class, 'users'])->name('users');
 
+    // category
     Route::resource('/categories', CategoryController::class);
+
+    // auction
+    Route::resource('/auctions', AuctionController::class);
 });
 
 require __DIR__.'/auth.php';

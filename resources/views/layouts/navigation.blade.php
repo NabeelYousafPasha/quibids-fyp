@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('/') }}">
                         <x-application-logo class="block h-10 w-auto fill-current text-gray-600" />
                     </a>
                 </div>
@@ -36,6 +36,9 @@
                                 {{ $navbarStatistics['unapprovedUserCount'] }}
                             </span>
                         @endif
+                    </x-nav-link>
+                    <x-nav-link :href="route('auctions.index')" :active="request()->routeIs('auctions.index')">
+                        {{ __('Auctions') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -114,6 +117,9 @@
                         {{ $navbarStatistics['unapprovedUserCount'] }}
                     </span>
                 @endif
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('auctions.index')" :active="request()->routeIs('auctions.index')">
+                {{ __('Auctions') }}
             </x-responsive-nav-link>
         </div>
 
