@@ -17,7 +17,7 @@ class UserController extends Controller
     {
         $unApprovedVendors = User::OfRoleVendor()->unapproved();
 
-        return view('frontend.pages.vendor.index')->with([
+        return view('backend.pages.vendor.index')->with([
             'unApprovedVendors' => $unApprovedVendors->get()
         ]);
     }
@@ -31,7 +31,7 @@ class UserController extends Controller
     {
         $unApprovedUsers = User::OfRoleUser()->unapproved();
 
-        return view('frontend.pages.user.index')->with([
+        return view('backend.pages.user.index')->with([
             'unApprovedUsers' => $unApprovedUsers->get()
         ]);
     }

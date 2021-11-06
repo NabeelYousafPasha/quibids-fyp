@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\{
+    CategoryController,
     HomeController,
     PackageController,
     UserController
@@ -28,6 +29,8 @@ Route::group([
     Route::resource('/packages', PackageController::class);
     Route::get('/vendors', [UserController::class, 'vendors'])->name('vendors');
     Route::get('/users', [UserController::class, 'users'])->name('users');
+
+    Route::resource('/categories', CategoryController::class);
 });
 
 require __DIR__.'/auth.php';

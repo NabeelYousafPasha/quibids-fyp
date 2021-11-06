@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('VENDORS') }}
+            {{ __('Vendors') }}
         </h2>
     </x-slot>
 
@@ -12,7 +12,7 @@
                     <h3 class="mb-3 text-2xl font-bold leading-7">
                         Pending Vendors
                     </h3>
-                    @include('frontend.pages.vendor._table', ['unApprovedVendors' => $unApprovedVendors])
+                    @include('backend.pages.vendor._table', ['unApprovedVendors' => $unApprovedVendors])
                 </div>
             </div>
         </div>

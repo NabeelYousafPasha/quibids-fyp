@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Package;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
-class PackageController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,10 +14,10 @@ class PackageController extends Controller
      */
     public function index()
     {
-        $packages = Package::all();
+        $categories = Category::all();
 
-        return view('backend.pages.package.index')->with([
-            'packages' => $packages,
+        return view('backend.pages.category.index')->with([
+            'categories' => $categories,
         ]);
     }
 
@@ -45,10 +45,10 @@ class PackageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Package  $package
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Package $package)
+    public function show(Category $category)
     {
         //
     }
@@ -56,10 +56,10 @@ class PackageController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Package  $package
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Package $package)
+    public function edit(Category $category)
     {
         //
     }
@@ -68,10 +68,10 @@ class PackageController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Package  $package
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Package $package)
+    public function update(Request $request, Category $category)
     {
         //
     }
@@ -79,10 +79,10 @@ class PackageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Package  $package
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Package $package)
+    public function destroy(Category $category)
     {
         //
     }
