@@ -2,22 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Package;
+use App\Http\Requests\Category\CategoryRequest;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
-class PackageController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index()
     {
-        $packages = Package::all();
+        $categories = Category::all();
 
-        return view('backend.pages.package.index')->with([
-            'packages' => $packages,
+        return view('backend.pages.category.index')->with([
+            'categories' => $categories,
         ]);
     }
 
@@ -28,7 +29,7 @@ class PackageController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.pages.category.form');
     }
 
     /**
@@ -37,18 +38,22 @@ class PackageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        //
+        Category::create($request->validated() + [
+            'created_by' => auth()->id(),
+        ]);
+
+        return redirect()->route('categories.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Package  $package
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Package $package)
+    public function show(Category $category)
     {
         //
     }
@@ -56,10 +61,10 @@ class PackageController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Package  $package
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Package $package)
+    public function edit(Category $category)
     {
         //
     }
@@ -68,10 +73,10 @@ class PackageController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Package  $package
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Package $package)
+    public function update(Request $request, Category $category)
     {
         //
     }
@@ -79,10 +84,10 @@ class PackageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Package  $package
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Package $package)
+    public function destroy(Category $category)
     {
         //
     }
