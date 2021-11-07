@@ -19,8 +19,8 @@ class CreateAuctionsTable extends Migration
             $table->string('title');
             $table->longText('description');
             $table->double('estimated_price');
-            $table->dateTime('estimated_expired_at');
-            $table->dateTime('actual_expired_at')->nullable();
+            $table->dateTime('estimated_expire_at');
+            $table->dateTime('sold_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

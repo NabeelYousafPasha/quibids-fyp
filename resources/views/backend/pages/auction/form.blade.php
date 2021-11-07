@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Categories') }}
+            {{ __('Auctions') }}
         </h2>
     </x-slot>
 
@@ -13,7 +13,7 @@
                     <div class="grid grid-cols-2 gap-4 mb-3">
                         <div>
                             <h3 class="text-2xl font-bold leading-5">
-                                Categories
+                                Auctions
                             </h3>
                         </div>
                     </div>
@@ -28,27 +28,15 @@
 
                     <form
                         method="POST"
-                        action="{{ route('categories.store') }}"
+                        action="{{ $form['route'] }}"
+                        enctype="multipart/form-data"
                     >
                     @csrf
+                        @if($form['_method'] ?? null)
+                            @method($form['_method'])
+                        @endif
 
-                    <!-- Name -->
-                        <div>
-                            <x-label
-                                for="name"
-                                :value="__('Name')"
-                            />
-
-                            <x-input
-                                id="name"
-                                type="text"
-                                name="name"
-                                :value="old('name')"
-                                class="block mt-1 w-full"
-                                required
-                                autofocus
-                            />
-                        </div>
+                        @include('backend.pages.auction._form')
 
                         <div class="flex items-center justify-end mt-4">
                             <x-button class="ml-3">

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Categories') }}
+            {{ __('Auctions') }}
         </h2>
     </x-slot>
 
@@ -13,13 +13,13 @@
                     <div class="grid grid-cols-2 gap-4 mb-3">
                         <div>
                             <h3 class="text-2xl font-bold leading-5">
-                                Categories
+                                Auctions
                             </h3>
                         </div>
 
                         <div class="text-right">
                             <a
-                                href="{{ route('categories.create') }}"
+                                href="{{ route('auctions.create') }}"
                                 class="px-2 py-1 bg-transparent border-2 border-blue-500 text-blue-500 text-lg rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300"
                             >
                                 Add
@@ -28,7 +28,7 @@
                     </div>
                     <hr class="m-2">
 
-                    @include('backend.pages.category._table')
+                    @include('backend.pages.auction._table')
                 </div>
             </div>
         </div>

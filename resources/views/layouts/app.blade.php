@@ -27,6 +27,20 @@
 
             <!-- Page Content -->
             <main>
+
+                @if(session()->has('status') ?? false)
+                    <!-- Session Status -->
+                    <div class="m-2 p-2">
+                        <div class="bg-green-50 border-t-4 border-green-500 rounded-b text-teal-900 px-4 py-3 shadow-md" role="alert">
+                            <div class="flex">
+                                <div>
+                                    <x-auth-session-status class="p-2" :status="session('status')" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
                 {{ $slot }}
             </main>
         </div>
