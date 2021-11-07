@@ -37,7 +37,7 @@
                 <td class="px-6 py-4">
                     <div class="flex items-center space-x-3">
                         <p>
-                            {{ $auction->estimated_expired_at }}
+                            {{ $auction->estimated_expire_at }}
                         </p>
                     </div>
                 </td>

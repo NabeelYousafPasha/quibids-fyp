@@ -85,7 +85,7 @@ class AuctionController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Auction  $auction
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(AuctionRequest $request, Auction $auction)
     {
