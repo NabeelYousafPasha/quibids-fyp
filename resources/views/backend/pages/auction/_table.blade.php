@@ -43,9 +43,15 @@
                 </td>
                 <td class="px-6 py-4">
                     <div class="flex items-center space-x-3">
-                        <p>
-                            {{ $auction->sold_at ? 'SOLD' : 'ACTIVE' }}
-                        </p>
+                        @if($auction->sold_at)
+                            <p class="text text-red-500">
+                                SOLD
+                            </p>
+                        @else
+                            <p class="text text-green-500">
+                                AVAILABLE
+                            </p>
+                        @endif
                     </div>
                 </td>
                 <td class="px-6 py-4">
@@ -56,6 +62,12 @@
                     </div>
                 </td>
                 <td class="px-6 py-4 text-center">
+                    <a
+                        href="{{ route('auctions.media', ['auction' => $auction]) }}"
+                        class="px-2 py-1 m-1 bg-transparent border-2 border-grey-500 text-grey-500 text-lg rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300"
+                    >
+                        Media
+                    </a>
                     <a
                         href="{{ route('auctions.edit', ['auction' => $auction]) }}"
                         class="px-2 py-1 m-1 bg-transparent border-2 border-blue-500 text-blue-500 text-lg rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300"

@@ -105,4 +105,26 @@ class AuctionController extends Controller
     {
         //
     }
+
+    public function listMedia(Auction $auction)
+    {
+        $auctionMediaItems = $auction->getMedia('auction');
+
+        return view('backend.pages.auction.media')->with([
+            'auction' => $auction,
+            'auctionMediaItems' => $auctionMediaItems,
+        ]);
+    }
+
+    public function uploadMedia(Request $request, Auction $auction)
+    {
+        $this->validate($request, [
+            'media' => ['required', 'file', 'image',],
+        ]);
+
+        $auction->addMediaFromRequest('media')->toMediaCollection('auction');
+
+        return redirect()->route('auctions.media', ['auction' => $auction])
+            ->with('status', 'Image uploaded');
+    }
 }

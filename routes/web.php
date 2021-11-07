@@ -34,6 +34,8 @@ Route::group([
     Route::resource('/categories', CategoryController::class);
 
     // auction
+    Route::get('/auctions/{auction}/media', [AuctionController::class, 'listMedia'])->name('auctions.media');
+    Route::post('/auctions/{auction}/media', [AuctionController::class, 'uploadMedia'])->name('auctions.media');
     Route::resource('/auctions', AuctionController::class);
 });
 
