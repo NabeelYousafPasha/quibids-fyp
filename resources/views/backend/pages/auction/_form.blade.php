@@ -32,7 +32,7 @@
 </div>
 
 <!-- Categories -->
-<div>
+<div class="mt-3">
     <x-label for="categories" :value="__('Categories')" />
 
     <select
@@ -46,6 +46,7 @@
             value="{{ $categoryId }}"
             id="category_{{ $categoryId }}"
             {{ (collect(old('categories'))->contains($categoryId)) ? 'selected': '' }}
+            {{ (!isset($auctionCategories) ? '' : $auctionCategories->contains($categoryId)) ? 'selected': '' }}
         >
             {{ ucfirst($category) }}
         </option>

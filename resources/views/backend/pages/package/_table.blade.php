@@ -32,12 +32,17 @@
                     {{ $package->award_bids }} Bids
                 </td>
                 <td class="px-6 py-4 text-center">
-                    <a href="#" class="p-2 pl-5 pr-5 m-1 bg-transparent border-2 border-blue-500 text-blue-500 text-lg rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300">
-                        Edit
-                    </a>
-                    <a href="#" class="p-2 pl-5 pr-5 m-1 bg-transparent border-2 border-red-500 text-red-500 text-lg rounded-lg hover:bg-red-500 hover:text-gray-100 focus:border-4 focus:border-red-300">
-                        Delete
-                    </a>
+                    @if(auth()->user()->can('update_package'))
+                        <a href="#" class="p-2 pl-5 pr-5 m-1 bg-transparent border-2 border-blue-500 text-blue-500 text-lg rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300">
+                            Edit
+                        </a>
+                    @endif
+
+                    @if(auth()->user()->can('delete_package'))
+                        <a href="#" class="p-2 pl-5 pr-5 m-1 bg-transparent border-2 border-red-500 text-red-500 text-lg rounded-lg hover:bg-red-500 hover:text-gray-100 focus:border-4 focus:border-red-300">
+                            Delete
+                        </a>
+                    @endif
                 </td>
             </tr>
         @endforeach
