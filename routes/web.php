@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{AuctionController, CategoryController, HomeController, PackageController, UserController};
+use App\Http\Controllers\{AuctionController, CategoryController, HomeController, PackageController, UserController, PermissionRoleController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,7 +30,8 @@ Route::group([
             'prefix' => 'setup',
             'as' => 'setup.',
         ], function () {
-            Route::resource('permissions_roles', 'PermissionRoleController');
+            Route::get('permissions-roles', [PermissionRoleController::class, 'create'])->name('permission_role.create');
+            Route::post('permissions-roles', [PermissionRoleController::class, 'store'])->name('permission_role.store');
         });
 
         // package

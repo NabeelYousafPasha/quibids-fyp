@@ -18,12 +18,14 @@
                         </div>
 
                         <div class="text-right">
+                            @if(auth()->user()->can('create_auction'))
                             <a
                                 href="{{ route('dashboard.auctions.create') }}"
                                 class="px-2 py-1 bg-transparent border-2 border-blue-500 text-blue-500 text-lg rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300"
                             >
                                 Add
                             </a>
+                            @endif
                         </div>
                     </div>
                     <hr class="m-2">

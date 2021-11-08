@@ -46,7 +46,7 @@
             value="{{ $categoryId }}"
             id="category_{{ $categoryId }}"
             {{ (collect(old('categories'))->contains($categoryId)) ? 'selected': '' }}
-            {{ ($auctionCategories->contains($categoryId)) ? 'selected': '' }}
+            {{ (!isset($auctionCategories) ? '' : $auctionCategories->contains($categoryId)) ? 'selected': '' }}
         >
             {{ ucfirst($category) }}
         </option>
