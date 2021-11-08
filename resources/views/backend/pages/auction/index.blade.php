@@ -76,7 +76,7 @@
 
                     toggleModal();
 
-                    $('#modal__global_delete').on('click', '#delete__btn', function(){
+                    $('#modal__global_delete').on('click', '#btn__button', function(){
                         $form.submit();
                     });
 
@@ -84,10 +84,10 @@
             });
 
 
-            const overlay = document.querySelector('.modal-overlay')
+            const overlay = document.querySelector('.modal-overlay');
             overlay.addEventListener('click', toggleModal)
 
-            let closemodal = document.querySelectorAll('.modal-close')
+            let closemodal = $('.modal-close');
             for (var i = 0; i < closemodal.length; i++) {
                 closemodal[i].addEventListener('click', toggleModal)
             }

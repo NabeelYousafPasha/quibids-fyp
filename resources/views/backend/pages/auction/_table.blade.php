@@ -61,25 +61,42 @@
                         <p class="text {{ $auction->is_published ? 'text-green-500' : 'text-gray-400' }}">
                             {{ $auction->status }}
                         </p>
+                        @if(auth()->user()->can('auction_publsih_status'))
+                            <a
+                                href="{{ route('dashboard.auctions.media', ['auction' => $auction]) }}"
+                                class="px-2 py-1 m-1 text-white text-sm rounded-sm {{ $auction->is_published ? 'bg-gray-500 hover:bg-gray-700' : 'bg-green-500 hover:bg-green-700' }}"
+                            >
+                                {{ $auction->is_published ? 'Move to Draft' : 'Move to Publish' }}?
+                            </a>
+                        @endif
                     </div>
                 </td>
                 <td class="px-6 py-4 text-center">
                     @if(auth()->user()->can('create_auction'))
-                    <a
-                        href="{{ route('dashboard.auctions.media', ['auction' => $auction]) }}"
-                        class="px-2 py-1 m-1 bg-transparent border-2 border-grey-500 text-grey-500 text-lg rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300"
-                    >
-                        Media
-                    </a>
+                        <a
+                            href="{{ route('dashboard.auctions.media', ['auction' => $auction]) }}"
+                            class="px-2 py-1 m-1 bg-transparent border-2 border-grey-500 text-grey-500 text-lg rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300"
+                        >
+                            Media
+                        </a>
                     @endif
 
+                    {{-- @if(auth()->user()->can('create_bidding')) --}}
+                        <a
+                            href="{{ route('dashboard.auctions.media', ['auction' => $auction]) }}"
+                            class="px-2 py-1 m-1 text-white text-sm rounded-sm {{ $auction->is_published ? 'bg-gray-500 hover:bg-gray-700' : 'bg-yellow-500 hover:bg-yellow-700' }}"
+                        >
+                            Bid Here
+                        </a>
+                    {{-- @endif --}}
+
                     @if(auth()->user()->can('update_auction'))
-                    <a
-                        href="{{ route('dashboard.auctions.edit', ['auction' => $auction]) }}"
-                        class="px-2 py-1 m-1 bg-transparent border-2 border-blue-500 text-blue-500 text-lg rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300"
-                    >
-                        Edit
-                    </a>
+                        <a
+                            href="{{ route('dashboard.auctions.edit', ['auction' => $auction]) }}"
+                            class="px-2 py-1 m-1 bg-transparent border-2 border-blue-500 text-blue-500 text-lg rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300"
+                        >
+                            Edit
+                        </a>
                     @endif
 
                     @if(auth()->user()->can('delete_auction'))
