@@ -5,8 +5,9 @@
             <th class="font-semibold text-sm uppercase px-6 py-4"> Description </th>
             <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> Estimated Price </th>
             <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> Estimated Expiry </th>
-            <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> Status </th>
+            <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> Availabilty </th>
             <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> Sold At </th>
+            <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> Status </th>
             <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> Actions </th>
         </tr>
     </thead>
@@ -43,21 +44,22 @@
                 </td>
                 <td class="px-6 py-4">
                     <div class="flex items-center space-x-3">
-                        @if($auction->sold_at)
-                            <p class="text text-red-500">
-                                SOLD
-                            </p>
-                        @else
-                            <p class="text text-green-500">
-                                AVAILABLE
-                            </p>
-                        @endif
+                        <p class="text {{ $auction->sold_at ? 'text-red-500' : 'text-green-500' }}">
+                            {{ $auction->availability }}
+                        </p>
                     </div>
                 </td>
                 <td class="px-6 py-4">
                     <div class="flex items-center space-x-3">
                         <p>
                             {{ $auction->sold_at ?? 'N/A' }}
+                        </p>
+                    </div>
+                </td>
+                <td class="px-6 py-4">
+                    <div class="flex items-center space-x-3">
+                        <p class="text {{ $auction->is_published ? 'text-green-500' : 'text-gray-400' }}">
+                            {{ $auction->status }}
                         </p>
                     </div>
                 </td>

@@ -88,7 +88,7 @@
                                     alt="{{ $media->name }}"
                                     width="200px"
                                     height="200px"
-                                    class="p-2"
+{{--                                    class="p-2 min-h-full object-contain w-full block"--}}
                                 />
                                 <span class="small text-sm text-center">
                                     {{ $media->created_at }}

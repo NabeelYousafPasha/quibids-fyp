@@ -17,6 +17,7 @@ class Auction extends Model implements HasMedia
         'user_id',
         'title',
         'description',
+        'is_published',
         'estimated_price',
         'estimated_expire_at',
         'sold_at',
@@ -30,8 +31,34 @@ class Auction extends Model implements HasMedia
         'updated_at',
     ];
 
+    /**
+     * Accessors
+     */
     public function getEstimatedExpireAtAttribute($value)
     {
         return Carbon::parse($value)->format('Y-m-d');
+    }
+
+    public function getAvailabilityAttribute()
+    {
+        return $this->sold_at ? 'SOLD' : 'AVAILABLE';
+    }
+
+    public function getStatusAttribute()
+    {
+        return $this->is_published ? 'PUBLISHED' : 'DRAFT';
+    }
+
+    /**
+     * Scopes
+     */
+    public function scopeOfPublished($query)
+    {
+        return $query->where('is_published', '=', 1);
+    }
+
+    public function scopeOfDraft($query)
+    {
+        return $query->where('is_published', '=', 0);
     }
 }

@@ -28,7 +28,9 @@
                     </div>
                     <hr class="m-2">
 
-                    @include('backend.pages.auction._table')
+                    <div class="overflow-auto">
+                        @include('backend.pages.auction._table')
+                    </div>
                 </div>
             </div>
         </div>
