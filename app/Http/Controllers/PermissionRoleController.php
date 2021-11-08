@@ -25,7 +25,7 @@ class PermissionRoleController extends Controller
     public function create()
     {
         if (auth()->user()->cannot('view_permission_role'))
-            return $this->permissionDenied('dashboard.index');
+            return $this->permissionDenied($this->fallbackRoute);
 
         $roles = Role::ExceptAdmin()->orderBy('id')->pluck('name', 'id');
 
@@ -64,7 +64,7 @@ class PermissionRoleController extends Controller
     public function store(Request $request)
     {
         if (auth()->user()->cannot('create_permission_role'))
-            return $this->permissionDenied('dashboard.index');
+            return $this->permissionDenied($this->fallbackRoute);
 
         $data = [];
         $permissions_roles = ($request->input('permissions_roles')) ?: [];

@@ -11,6 +11,9 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+
+    public $fallbackRoute = 'dashboard.index';
+
     /**
      * Redirect If denial of permission
      *

@@ -32,7 +32,7 @@ class UserController extends Controller
         $unApprovedUsers = User::OfRoleUser()->unapproved();
 
         return view('backend.pages.user.index')->with([
-            'unApprovedUsers' => $unApprovedUsers->get()
+            'unApprovedUsers' => $unApprovedUsers->get(),
         ]);
     }
 }
