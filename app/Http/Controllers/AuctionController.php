@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Auction\AuctionRequest;
-use App\Models\Auction;
+use App\Models\{
+    Auction,
+    AuctionCategory,
+    Category
+};
 use Illuminate\Http\Request;
 
 class AuctionController extends Controller
@@ -29,10 +33,13 @@ class AuctionController extends Controller
      */
     public function create()
     {
+        $categories = Category::pluck('name', 'id');
+
         return view('backend.pages.auction.form')->with([
             'form' => [
                 'route' => route('auctions.store'),
             ],
+            'categories' => $categories,
         ]);
     }
 
@@ -44,9 +51,16 @@ class AuctionController extends Controller
      */
     public function store(AuctionRequest $request)
     {
-        Auction::create($request->validated() + [
+        $auction = Auction::create($request->validated() + [
             'user_id' => auth()->id(),
         ]);
+
+        foreach ($request->input('categories') as $categoryId) {
+            AuctionCategory::create([
+                'auction_id' => $auction->id,
+                'category_id' => $categoryId,
+            ]);
+        }
 
         return redirect()->route('auctions.index')
             ->with('status', 'Auction created successfully.');
@@ -71,12 +85,15 @@ class AuctionController extends Controller
      */
     public function edit(Auction $auction)
     {
+        $categories = Category::pluck('name', 'id');
+
         return view('backend.pages.auction.form')->with([
             'auction' => $auction,
             'form' => [
                 'route' => route('auctions.update', ['auction' => $auction,]),
                 '_method' => 'PATCH',
             ],
+            'categories' => $categories,
         ]);
     }
 
@@ -90,6 +107,17 @@ class AuctionController extends Controller
     public function update(AuctionRequest $request, Auction $auction)
     {
         $auction->update($request->validated());
+
+        // remoce old
+        AuctionCategory::where('auction_id', '=', $auction->id)->delete();
+
+        // re-insert updated
+        foreach ($request->input('categories') as $categoryId) {
+            AuctionCategory::create([
+                'auction_id' => $auction->id,
+                'category_id' => $categoryId,
+            ]);
+        }
 
         return redirect()->route('auctions.index')
             ->with('status', 'Auction updated successfully.');
@@ -119,7 +147,7 @@ class AuctionController extends Controller
     public function uploadMedia(Request $request, Auction $auction)
     {
         $this->validate($request, [
-            'media' => ['required', 'file', 'image',],
+            'media' => ['required', 'file', 'image', 'size:2000'],
         ]);
 
         $auction->addMediaFromRequest('media')->toMediaCollection('auction');

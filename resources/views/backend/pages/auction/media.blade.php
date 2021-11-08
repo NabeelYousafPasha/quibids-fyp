@@ -82,18 +82,22 @@
 
                     <div class="flex flex-row">
                         @foreach($auctionMediaItems ?? [] as $media)
-                            <div class="col mx-2 my-2">
+
+                        <div class="col mx-2 my-2">
+                            <div style='height: 200px; width: 200px;'>
                                 <img
+                                    style='height: 100%; width: 100%; object-fit: cover'
                                     src="{{ $media->getUrl() }}"
                                     alt="{{ $media->name }}"
                                     width="200px"
                                     height="200px"
-{{--                                    class="p-2 min-h-full object-contain w-full block"--}}
                                 />
-                                <span class="small text-sm text-center">
-                                    {{ $media->created_at }}
-                                </span>
                             </div>
+                            <span class="small text-sm text-center">
+                                {{ $media->created_at }}
+                            </span>
+                        </div>
+
                         @endforeach
                     </div>
                 </div>

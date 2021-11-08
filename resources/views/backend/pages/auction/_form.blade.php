@@ -31,6 +31,28 @@
     >{{ $auction->description ?? old('description') }}</textarea>
 </div>
 
+<!-- Categories -->
+<div>
+    <x-label for="categories" :value="__('Categories')" />
+
+    <select
+        class="mt-1 form-control block mt-1 w-full"
+        name="categories[]"
+        multiple
+        required
+    >
+        @foreach($categories as $categoryId => $category)
+        <option
+            value="{{ $categoryId }}"
+            id="category_{{ $categoryId }}"
+            {{ (collect(old('categories'))->contains($categoryId)) ? 'selected': '' }}
+        >
+            {{ ucfirst($category) }}
+        </option>
+        @endforeach
+    </select>
+</div>
+
 <!-- Estimated Price -->
 <div class="mt-3">
     <x-label

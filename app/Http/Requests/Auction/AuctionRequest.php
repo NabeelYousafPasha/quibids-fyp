@@ -3,6 +3,9 @@
 namespace App\Http\Requests\Auction;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\{
+    Category
+};
 
 class AuctionRequest extends FormRequest
 {
@@ -28,6 +31,8 @@ class AuctionRequest extends FormRequest
             'description' => ['required', 'string', 'max:255',],
             'estimated_price' => ['required', 'numeric', 'min:0', 'not_in:0',],
             'estimated_expire_at' => ['required', 'date', 'after:today',],
+            'categories' => ['required', 'array'],
+            'categories.*' => ['required', 'numeric', 'exists:'.Category::class.',id',],
         ];
 
         return $rules;
