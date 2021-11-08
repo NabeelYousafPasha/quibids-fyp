@@ -1,5 +1,13 @@
 @extends('frontend.layout.app')
 
+@section('stylesheets')
+    <style>
+        .post-modern-countdown {
+            font-size: 17px;
+        }
+    </style>
+@endsection
+
 @section('content')
     <!-- Best Place-->
     <section class="section novi-bg novi-bg-img section-xl section-banner-classic bg-primary text-center text-lg-left" style="background-image: url({{ asset("frontend-assets/images/home-01-1920x570.jpeg") }})">
@@ -90,76 +98,236 @@
         <div class="container">
             <h2 class="text-center text-sm-left">Current <span class="h2-style">Auctions</span></h2>
             <div class="row row-50 mt-50">
-                <div class="col-xl-3 col-lg-4 col-sm-6">
-                    <!-- Post Modern-->
-                    <div class="post-modern">
-                        <div class="post-modern-countdown countdown" data-format="HMS" data-until="+75500"></div>
-                        <figure class="post-modern-figure"><img src="{{ asset('frontend-assets/images/page1_pic5-270x217.jpeg') }}" alt="" width="270" height="108"/>
-                        </figure>
-                        <div class="post-modern-caption">
-                            <div class="post-modern-price">Price: $258</div>
-                            <div class="post-modern-price-value">386</div>
-                            <h5 class="post-modern-link"><a href="#">Apple MacBook Air 13'' 1.8GHz 128GB</a></h5><a class="button button-box-right button-primary" href="#">Submit a bid
-                                <div class="button-box">
-                                    <div class="button-box-text">X</div>
-                                    <div class="button-box-count">3</div>
-                                </div></a>
+                @forelse ($publishedAuctions ?? [] as $auction)
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="post-modern">
+                            <div class="post-modern-countdown countdown" data-format="HMS" data-until="{{ $auction->left_expiry_time }}"></div>
+                            <figure class="post-modern-figure" style='height: 200px; width: 200px;'>
+                                <img
+                                    src="{{ $auction->media()->latest()->first() ? $auction->media()->latest()->first()->getUrl() : asset('frontend-assets/images/no-img.png') }}"
+                                    alt=""
+                                    width="270"
+                                    height="108"
+                                    {{-- style='height: 100%; width: 100%; object-fit: cover' --}}
+                                />
+                            </figure>
+                            <div class="post-modern-caption">
+                                <div class="post-modern-price">Price: ${{ $auction->estimated_price }}</div>
+                                {{-- <div class="post-modern-price-value">0</div> --}}
+                                <h5 class="post-modern-link">
+                                    <a
+                                        href="javascript:void(0)"
+                                    >
+                                        {{ $auction->title }}
+                                    </a>
+                                </h5>
+                                <a
+                                    class="button button-box-right button-primary"
+                                    href="javascript:void(0)"
+                                >
+                                    Submit a bid
+                                    <div class="button-box">
+                                        <div class="button-box-text">X</div>
+                                        <div class="button-box-count">1</div>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-sm-6">
-                    <!-- Post Modern-->
-                    <div class="post-modern">
-                        <div class="post-modern-countdown countdown" data-format="HMS" data-until="+25000"></div>
-                        <figure class="post-modern-figure"><img src="{{ asset('frontend-assets/images/page1_pic6-270x217.jpeg') }}" alt="" width="270" height="108"/>
-                        </figure>
-                        <div class="post-modern-caption">
-                            <div class="post-modern-price">Price: $258</div>
-                            <div class="post-modern-price-value">11</div>
-                            <h5 class="post-modern-link"><a href="#">Billieblush Girls Blue Fluffy Cardigan</a></h5><a class="button button-box-right button-primary" href="#">Submit a bid
-                                <div class="button-box">
-                                    <div class="button-box-text">X</div>
-                                    <div class="button-box-count">3</div>
-                                </div></a>
+                @empty
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="post-modern">
+                            <div class="post-modern-countdown countdown" data-format="HMS" data-until="+0"></div>
+                            <figure class="post-modern-figure">
+                                <img src="{{ asset('frontend-assets/images/no-img.png') }}" alt="" width="270" height="108"/>
+                            </figure>
+                            <div class="post-modern-caption">
+                                <div class="post-modern-price">Price: $0</div>
+                                <div class="post-modern-price-value">0</div>
+                                <h5 class="post-modern-link">
+                                    <a
+                                        href="javascript:void(0)"
+                                    >
+                                        No Active Auction(s)
+                                    </a>
+                                </h5>
+                                <a
+                                    class="button button-box-right button-primary"
+                                    href="javascript:void(0)"
+                                >
+                                    Submit a bid
+                                    <div class="button-box">
+                                        <div class="button-box-text">X</div>
+                                        <div class="button-box-count">0</div>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-sm-6">
-                    <!-- Post Modern-->
-                    <div class="post-modern">
-                        <div class="post-modern-countdown countdown" data-format="HMS" data-until="+2500"></div>
-                        <figure class="post-modern-figure"><img src="{{ asset('frontend-assets/images/page1_pic7-270x217.jpeg') }}" alt="" width="270" height="108"/>
-                        </figure>
-                        <div class="post-modern-caption">
-                            <div class="post-modern-price">Price: $258</div>
-                            <div class="post-modern-price-value">86</div>
-                            <h5 class="post-modern-link"><a href="#">Apple Mac mini Late 2018 (MRTT2)</a></h5><a class="button button-box-right button-primary" href="#">Submit a bid
-                                <div class="button-box">
-                                    <div class="button-box-text">X</div>
-                                    <div class="button-box-count">3</div>
-                                </div></a>
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="post-modern">
+                            <div class="post-modern-countdown countdown" data-format="HMS" data-until="+0"></div>
+                            <figure class="post-modern-figure">
+                                <img src="{{ asset('frontend-assets/images/no-img.png') }}" alt="" width="270" height="108"/>
+                            </figure>
+                            <div class="post-modern-caption">
+                                <div class="post-modern-price">Price: $0</div>
+                                <div class="post-modern-price-value">0</div>
+                                <h5 class="post-modern-link">
+                                    <a
+                                        href="javascript:void(0)"
+                                    >
+                                        No Active Auction(s)
+                                    </a>
+                                </h5>
+                                <a
+                                    class="button button-box-right button-primary"
+                                    href="javascript:void(0)"
+                                >
+                                    Submit a bid
+                                    <div class="button-box">
+                                        <div class="button-box-text">X</div>
+                                        <div class="button-box-count">0</div>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-sm-6">
-                    <!-- Post Modern-->
-                    <div class="post-modern">
-                        <div class="post-modern-countdown countdown" data-format="HMS" data-until="+65000"></div>
-                        <figure class="post-modern-figure"><img src="{{ asset('frontend-assets/images/page1_pic8-270x217.jpeg') }}" alt="" width="270" height="108"/>
-                        </figure>
-                        <div class="post-modern-caption">
-                            <div class="post-modern-price">Price: $258</div>
-                            <div class="post-modern-price-value">27</div>
-                            <h5 class="post-modern-link"><a href="#">Lacoste Lerond Leather Trainers</a></h5><a class="button button-box-right button-primary" href="#">Submit a bid
-                                <div class="button-box">
-                                    <div class="button-box-text">X</div>
-                                    <div class="button-box-count">3</div>
-                                </div></a>
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="post-modern">
+                            <div class="post-modern-countdown countdown" data-format="HMS" data-until="+0"></div>
+                            <figure class="post-modern-figure">
+                                <img src="{{ asset('frontend-assets/images/no-img.png') }}" alt="" width="270" height="108"/>
+                            </figure>
+                            <div class="post-modern-caption">
+                                <div class="post-modern-price">Price: $0</div>
+                                <div class="post-modern-price-value">0</div>
+                                <h5 class="post-modern-link">
+                                    <a
+                                        href="javascript:void(0)"
+                                    >
+                                        No Active Auction(s)
+                                    </a>
+                                </h5>
+                                <a
+                                    class="button button-box-right button-primary"
+                                    href="javascript:void(0)"
+                                >
+                                    Submit a bid
+                                    <div class="button-box">
+                                        <div class="button-box-text">X</div>
+                                        <div class="button-box-count">0</div>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="post-modern">
+                            <div class="post-modern-countdown countdown" data-format="HMS" data-until="+0"></div>
+                            <figure class="post-modern-figure">
+                                <img src="{{ asset('frontend-assets/images/no-img.png') }}" alt="" width="270" height="108"/>
+                            </figure>
+                            <div class="post-modern-caption">
+                                <div class="post-modern-price">Price: $0</div>
+                                <div class="post-modern-price-value">0</div>
+                                <h5 class="post-modern-link">
+                                    <a
+                                        href="javascript:void(0)"
+                                    >
+                                        No Active Auction(s)
+                                    </a>
+                                </h5>
+                                <a
+                                    class="button button-box-right button-primary"
+                                    href="javascript:void(0)"
+                                >
+                                    Submit a bid
+                                    <div class="button-box">
+                                        <div class="button-box-text">X</div>
+                                        <div class="button-box-count">0</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <!-- Post Modern-->
+                        <div class="post-modern">
+                            <div class="post-modern-countdown countdown" data-format="HMS" data-until="+75500"></div>
+                            <figure class="post-modern-figure"><img src="{{ asset('frontend-assets/images/page1_pic5-270x217.jpeg') }}" alt="" width="270" height="108"/>
+                            </figure>
+                            <div class="post-modern-caption">
+                                <div class="post-modern-price">Price: $258</div>
+                                <div class="post-modern-price-value">386</div>
+                                <h5 class="post-modern-link"><a href="#">Apple MacBook Air 13'' 1.8GHz 128GB</a></h5><a class="button button-box-right button-primary" href="#">Submit a bid
+                                    <div class="button-box">
+                                        <div class="button-box-text">X</div>
+                                        <div class="button-box-count">3</div>
+                                    </div></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <!-- Post Modern-->
+                        <div class="post-modern">
+                            <div class="post-modern-countdown countdown" data-format="HMS" data-until="+25000"></div>
+                            <figure class="post-modern-figure"><img src="{{ asset('frontend-assets/images/page1_pic6-270x217.jpeg') }}" alt="" width="270" height="108"/>
+                            </figure>
+                            <div class="post-modern-caption">
+                                <div class="post-modern-price">Price: $258</div>
+                                <div class="post-modern-price-value">11</div>
+                                <h5 class="post-modern-link"><a href="#">Billieblush Girls Blue Fluffy Cardigan</a></h5><a class="button button-box-right button-primary" href="#">Submit a bid
+                                    <div class="button-box">
+                                        <div class="button-box-text">X</div>
+                                        <div class="button-box-count">3</div>
+                                    </div></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <!-- Post Modern-->
+                        <div class="post-modern">
+                            <div class="post-modern-countdown countdown" data-format="HMS" data-until="+2500"></div>
+                            <figure class="post-modern-figure"><img src="{{ asset('frontend-assets/images/page1_pic7-270x217.jpeg') }}" alt="" width="270" height="108"/>
+                            </figure>
+                            <div class="post-modern-caption">
+                                <div class="post-modern-price">Price: $258</div>
+                                <div class="post-modern-price-value">86</div>
+                                <h5 class="post-modern-link"><a href="#">Apple Mac mini Late 2018 (MRTT2)</a></h5><a class="button button-box-right button-primary" href="#">Submit a bid
+                                    <div class="button-box">
+                                        <div class="button-box-text">X</div>
+                                        <div class="button-box-count">3</div>
+                                    </div></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <!-- Post Modern-->
+                        <div class="post-modern">
+                            <div class="post-modern-countdown countdown" data-format="HMS" data-until="+65000"></div>
+                            <figure class="post-modern-figure"><img src="{{ asset('frontend-assets/images/page1_pic8-270x217.jpeg') }}" alt="" width="270" height="108"/>
+                            </figure>
+                            <div class="post-modern-caption">
+                                <div class="post-modern-price">Price: $258</div>
+                                <div class="post-modern-price-value">27</div>
+                                <h5 class="post-modern-link"><a href="#">Lacoste Lerond Leather Trainers</a></h5><a class="button button-box-right button-primary" href="#">Submit a bid
+                                    <div class="button-box">
+                                        <div class="button-box-text">X</div>
+                                        <div class="button-box-count">3</div>
+                                    </div></a>
+                            </div>
+                        </div>
+                    </div> --}}
+                @endforelse
+
             </div>
-            <div class="mt-xl-40 mt-50 text-center text-sm-left"><a class="button button-icon button-icon-right button-black" href="#"><span class="icon novi-icon fa fa-chevron-right"></span>View all auctions</a></div>
+            <div class="mt-xl-40 mt-50 text-center text-sm-left">
+                <a class="button button-icon button-icon-right button-black" href="#">
+                    <span class="icon novi-icon fa fa-chevron-right"></span>
+                    View all auctions
+                </a>
+            </div>
         </div>
     </section>
 

@@ -147,7 +147,7 @@ class AuctionController extends Controller
     public function uploadMedia(Request $request, Auction $auction)
     {
         $this->validate($request, [
-            'media' => ['required', 'file', 'image', 'size:2000'],
+            'media' => ['required', 'file', 'image',],
         ]);
 
         $auction->addMediaFromRequest('media')->toMediaCollection('auction');

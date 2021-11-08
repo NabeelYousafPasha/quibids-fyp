@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Support\Facades\DB;
 
 class Auction extends Model implements HasMedia
 {
@@ -60,5 +61,20 @@ class Auction extends Model implements HasMedia
     public function scopeOfDraft($query)
     {
         return $query->where('is_published', '=', 0);
+    }
+
+    public function scopeExpiryTimeInSeconds($query)
+    {
+        $query = $query->addSelect([
+            DB::raw("(SELECT TIMESTAMPDIFF(SECOND, CONCAT(CURRENT_DATE(), ' ', CURRENT_TIME()), estimated_expire_at)) as left_expiry_time"),
+        ]);
+
+        return $query;
+    }
+
+    public function scopeNotExpired($query)
+    {
+        //  expiry is greater than curren time
+        return $query->whereRaw("NOW() <= estimated_expire_at");
     }
 }
