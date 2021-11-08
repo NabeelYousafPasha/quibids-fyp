@@ -44,7 +44,7 @@ class CategoryController extends Controller
             'created_by' => auth()->id(),
         ]);
 
-        return redirect()->route('categories.index');
+        return redirect()->route('dashboard.categories.index');
     }
 
     /**

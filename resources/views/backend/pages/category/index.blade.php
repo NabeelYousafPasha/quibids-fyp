@@ -19,7 +19,7 @@
 
                         <div class="text-right">
                             <a
-                                href="{{ route('categories.create') }}"
+                                href="{{ route('dashboard.categories.create') }}"
                                 class="px-2 py-1 bg-transparent border-2 border-blue-500 text-blue-500 text-lg rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300"
                             >
                                 Add

@@ -28,27 +28,11 @@
 
                     <form
                         method="POST"
-                        action="{{ route('categories.store') }}"
+                        action="{{ route('dashboard.categories.store') }}"
                     >
                     @csrf
 
-                    <!-- Name -->
-                        <div>
-                            <x-label
-                                for="name"
-                                :value="__('Name')"
-                            />
-
-                            <x-input
-                                id="name"
-                                type="text"
-                                name="name"
-                                :value="old('name')"
-                                class="block mt-1 w-full"
-                                required
-                                autofocus
-                            />
-                        </div>
+                        @include('backend.pages.category._form')
 
                         <div class="flex items-center justify-end mt-4">
                             <x-button class="ml-3">

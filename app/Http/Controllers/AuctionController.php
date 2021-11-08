@@ -37,7 +37,7 @@ class AuctionController extends Controller
 
         return view('backend.pages.auction.form')->with([
             'form' => [
-                'route' => route('auctions.store'),
+                'route' => route('dashboard.auctions.store'),
             ],
             'categories' => $categories,
         ]);
@@ -62,7 +62,7 @@ class AuctionController extends Controller
             ]);
         }
 
-        return redirect()->route('auctions.index')
+        return redirect()->route('dashboard.auctions.index')
             ->with('status', 'Auction created successfully.');
     }
 
@@ -87,13 +87,16 @@ class AuctionController extends Controller
     {
         $categories = Category::pluck('name', 'id');
 
+        $auctionCategories = AuctionCategory::where('auction_id', '=', $auction->id)->pluck('id');
+
         return view('backend.pages.auction.form')->with([
             'auction' => $auction,
             'form' => [
-                'route' => route('auctions.update', ['auction' => $auction,]),
+                'route' => route('dashboard.auctions.update', ['auction' => $auction,]),
                 '_method' => 'PATCH',
             ],
             'categories' => $categories,
+            'auctionCategories' => $auctionCategories,
         ]);
     }
 
@@ -119,7 +122,7 @@ class AuctionController extends Controller
             ]);
         }
 
-        return redirect()->route('auctions.index')
+        return redirect()->route('dashboard.auctions.index')
             ->with('status', 'Auction updated successfully.');
     }
 
@@ -152,7 +155,7 @@ class AuctionController extends Controller
 
         $auction->addMediaFromRequest('media')->toMediaCollection('auction');
 
-        return redirect()->route('auctions.media', ['auction' => $auction])
+        return redirect()->route('dashboard.auctions.media', ['auction' => $auction])
             ->with('status', 'Image uploaded');
     }
 }

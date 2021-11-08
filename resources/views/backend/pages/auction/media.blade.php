@@ -27,7 +27,7 @@
 
                     <form
                         method="POST"
-                        action="{{ route('auctions.media', ['auction' => $auction]) }}"
+                        action="{{ route('dashboard.auctions.media', ['auction' => $auction]) }}"
                         enctype="multipart/form-data"
                     >
                         @csrf
