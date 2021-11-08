@@ -10,4 +10,24 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+
+    public $fallbackRoute = 'dashboard.index';
+
+    /**
+     * Redirect If denial of permission
+     *
+     * @param string $route
+     * @param mixed|null $param
+     * @param null $message
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function permissionDenied($route = '/', $param = null, $message = null)
+    {
+        $status = $message['message'] ?? "Permission Denied: You don't have permission to perform this action.";
+
+        return redirect()->route($route, $param)
+                        ->with('status', $status);
+    }
 }

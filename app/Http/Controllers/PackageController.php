@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class PackageController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,6 +20,9 @@ class PackageController extends Controller
      */
     public function index()
     {
+        if (auth()->user()->cannot('view_package'))
+            return $this->permissionDenied($this->fallbackRoute);
+
         $packages = Package::all();
 
         return view('backend.pages.package.index')->with([
@@ -28,7 +37,8 @@ class PackageController extends Controller
      */
     public function create()
     {
-        //
+        if (auth()->user()->cannot('create_package'))
+            return $this->permissionDenied($this->fallbackRoute);
     }
 
     /**
@@ -39,7 +49,8 @@ class PackageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (auth()->user()->cannot('create_package'))
+            return $this->permissionDenied($this->fallbackRoute);
     }
 
     /**
@@ -61,7 +72,8 @@ class PackageController extends Controller
      */
     public function edit(Package $package)
     {
-        //
+        if (auth()->user()->cannot('update_package'))
+            return $this->permissionDenied($this->fallbackRoute);
     }
 
     /**
@@ -73,7 +85,8 @@ class PackageController extends Controller
      */
     public function update(Request $request, Package $package)
     {
-        //
+        if (auth()->user()->cannot('update_package'))
+            return $this->permissionDenied($this->fallbackRoute);
     }
 
     /**
@@ -84,6 +97,7 @@ class PackageController extends Controller
      */
     public function destroy(Package $package)
     {
-        //
+        if (auth()->user()->cannot('delete_package'))
+            return $this->permissionDenied($this->fallbackRoute);
     }
 }

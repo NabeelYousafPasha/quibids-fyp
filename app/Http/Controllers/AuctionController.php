@@ -6,12 +6,19 @@ use App\Http\Requests\Auction\AuctionRequest;
 use App\Models\{
     Auction,
     AuctionCategory,
-    Category
+    Category,
+    Role
 };
 use Illuminate\Http\Request;
 
 class AuctionController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,10 +26,18 @@ class AuctionController extends Controller
      */
     public function index()
     {
-        $auctions = Auction::all();
+        if (auth()->user()->cannot('view_auction'))
+            return $this->permissionDenied($this->fallbackRoute);
+
+        $auctions = Auction::query();
+
+        if (! auth()->user()->hasRole(Role::ADMIN)) {
+            // belongs to auth user
+            $auctions = $auctions->where('user_id', '=', auth()->id());
+        }
 
         return view('backend.pages.auction.index')->with([
-            'auctions' => $auctions,
+            'auctions' => $auctions->get(),
         ]);
     }
 
@@ -33,11 +48,14 @@ class AuctionController extends Controller
      */
     public function create()
     {
+        if (auth()->user()->cannot('create_auction'))
+            return $this->permissionDenied($this->fallbackRoute);
+
         $categories = Category::pluck('name', 'id');
 
         return view('backend.pages.auction.form')->with([
             'form' => [
-                'route' => route('auctions.store'),
+                'route' => route('dashboard.auctions.store'),
             ],
             'categories' => $categories,
         ]);
@@ -51,6 +69,9 @@ class AuctionController extends Controller
      */
     public function store(AuctionRequest $request)
     {
+        if (auth()->user()->cannot('create_auction'))
+            return $this->permissionDenied($this->fallbackRoute);
+
         $auction = Auction::create($request->validated() + [
             'user_id' => auth()->id(),
         ]);
@@ -62,7 +83,7 @@ class AuctionController extends Controller
             ]);
         }
 
-        return redirect()->route('auctions.index')
+        return redirect()->route('dashboard.auctions.index')
             ->with('status', 'Auction created successfully.');
     }
 
@@ -85,15 +106,21 @@ class AuctionController extends Controller
      */
     public function edit(Auction $auction)
     {
+        if (auth()->user()->cannot('update_auction'))
+            return $this->permissionDenied($this->fallbackRoute);
+
         $categories = Category::pluck('name', 'id');
+
+        $auctionCategories = AuctionCategory::where('auction_id', '=', $auction->id)->pluck('id');
 
         return view('backend.pages.auction.form')->with([
             'auction' => $auction,
             'form' => [
-                'route' => route('auctions.update', ['auction' => $auction,]),
+                'route' => route('dashboard.auctions.update', ['auction' => $auction,]),
                 '_method' => 'PATCH',
             ],
             'categories' => $categories,
+            'auctionCategories' => $auctionCategories,
         ]);
     }
 
@@ -106,6 +133,9 @@ class AuctionController extends Controller
      */
     public function update(AuctionRequest $request, Auction $auction)
     {
+        if (auth()->user()->cannot('update_auction'))
+            return $this->permissionDenied($this->fallbackRoute);
+
         $auction->update($request->validated());
 
         // remoce old
@@ -119,7 +149,7 @@ class AuctionController extends Controller
             ]);
         }
 
-        return redirect()->route('auctions.index')
+        return redirect()->route('dashboard.auctions.index')
             ->with('status', 'Auction updated successfully.');
     }
 
@@ -131,11 +161,15 @@ class AuctionController extends Controller
      */
     public function destroy(Auction $auction)
     {
-        //
+        if (auth()->user()->cannot('delete_auction'))
+            return $this->permissionDenied($this->fallbackRoute);
     }
 
     public function listMedia(Auction $auction)
     {
+        if (auth()->user()->cannot('create_auction'))
+            return $this->permissionDenied($this->fallbackRoute);
+
         $auctionMediaItems = $auction->getMedia('auction');
 
         return view('backend.pages.auction.media')->with([
@@ -146,13 +180,16 @@ class AuctionController extends Controller
 
     public function uploadMedia(Request $request, Auction $auction)
     {
+        if (auth()->user()->cannot('create_auction'))
+            return $this->permissionDenied($this->fallbackRoute);
+
         $this->validate($request, [
             'media' => ['required', 'file', 'image',],
         ]);
 
         $auction->addMediaFromRequest('media')->toMediaCollection('auction');
 
-        return redirect()->route('auctions.media', ['auction' => $auction])
+        return redirect()->route('dashboard.auctions.media', ['auction' => $auction])
             ->with('status', 'Image uploaded');
     }
 }

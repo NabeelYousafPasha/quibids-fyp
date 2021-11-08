@@ -19,6 +19,9 @@ class PermissionSeeder extends Seeder
         $entities = [
             'permission_role',
             'user',
+            'package',
+            'category',
+            'auction',
         ];
 
         $permission_iterations = [];
@@ -46,6 +49,19 @@ class PermissionSeeder extends Seeder
                     'guard_name' => 'web',
                 ]);
             }
+        }
+
+        // other permissions
+        $otherPermissions = [
+            'user_approval_status',
+            'auction_publsih_status',
+        ];
+
+        foreach ($otherPermissions as $operation) {
+            Permission::firstOrCreate([
+                'name' => $operation,
+                'guard_name' => 'web',
+            ]);
         }
     }
 }

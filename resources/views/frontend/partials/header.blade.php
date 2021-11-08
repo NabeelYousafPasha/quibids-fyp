@@ -36,7 +36,7 @@
                             @if (Route::has('login'))
                                 @auth
                                     <a
-                                        href="{{ url('/dashboard') }}"
+                                        href="{{ route('dashboard.index') }}"
                                         class="button button-sm button-primary-2"
                                     >
                                         Dashboard

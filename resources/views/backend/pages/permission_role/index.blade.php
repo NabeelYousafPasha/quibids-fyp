@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Categories') }}
+            {{ __('Permissions Roles') }}
         </h2>
     </x-slot>
 
@@ -13,7 +13,7 @@
                     <div class="grid grid-cols-2 gap-4 mb-3">
                         <div>
                             <h3 class="text-2xl font-bold leading-5">
-                                Categories
+                                Permissions Roles
                             </h3>
                         </div>
                     </div>
@@ -26,20 +26,7 @@
                     <!-- Validation Errors -->
                     <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-                    <form
-                        method="POST"
-                        action="{{ route('dashboard.categories.store') }}"
-                    >
-                    @csrf
-
-                        @include('backend.pages.category._form')
-
-                        <div class="flex items-center justify-end mt-4">
-                            <x-button class="ml-3">
-                                {{ __('Save') }}
-                            </x-button>
-                        </div>
-                    </form>
+                    @include('backend.pages.permission_role._form')
 
                 </div>
             </div>

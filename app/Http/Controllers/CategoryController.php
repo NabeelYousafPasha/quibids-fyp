@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +21,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        if (auth()->user()->cannot('view_category'))
+            return $this->permissionDenied($this->fallbackRoute);
+
         $categories = Category::all();
 
         return view('backend.pages.category.index')->with([
@@ -29,6 +38,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        if (auth()->user()->cannot('create_category'))
+            return $this->permissionDenied($this->fallbackRoute);
+
         return view('backend.pages.category.form');
     }
 
@@ -40,11 +52,14 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
+        if (auth()->user()->cannot('create_category'))
+            return $this->permissionDenied($this->fallbackRoute);
+
         Category::create($request->validated() + [
             'created_by' => auth()->id(),
         ]);
 
-        return redirect()->route('categories.index');
+        return redirect()->route('dashboard.categories.index');
     }
 
     /**
@@ -66,7 +81,8 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        if (auth()->user()->cannot('update_category'))
+            return $this->permissionDenied($this->fallbackRoute);
     }
 
     /**
@@ -78,7 +94,8 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        if (auth()->user()->cannot('update_category'))
+            return $this->permissionDenied($this->fallbackRoute);
     }
 
     /**
@@ -89,6 +106,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        if (auth()->user()->cannot('view_category'))
+            return $this->permissionDenied($this->fallbackRoute);
     }
 }
