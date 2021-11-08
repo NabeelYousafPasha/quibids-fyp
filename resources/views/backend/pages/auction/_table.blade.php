@@ -83,9 +83,21 @@
                     @endif
 
                     @if(auth()->user()->can('delete_auction'))
-                    <a href="#" class="px-2 py-1 m-1 bg-transparent border-2 border-red-500 text-red-500 text-lg rounded-lg hover:bg-red-500 hover:text-gray-100 focus:border-4 focus:border-red-300">
-                        Delete
-                    </a>
+                        <form
+                            class="delete__auction"
+                            method="POST"
+                            action="{{ route('dashboard.auctions.destroy', ['auction' => $auction]) }}"
+                            style="display: inline-block;"
+                        >
+                            @csrf
+                            @method('DELETE')
+                            <button
+                                type ="submit"
+                                class="px-2 py-1 m-1 bg-transparent border-2 border-red-500 text-red-500 text-lg rounded-lg hover:bg-red-500 hover:text-gray-100 focus:border-4 focus:border-red-300"
+                            >
+                                Delete
+                            </button>
+                        </form>
                     @endif
                 </td>
             </tr>

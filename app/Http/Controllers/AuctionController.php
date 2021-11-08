@@ -6,7 +6,8 @@ use App\Http\Requests\Auction\AuctionRequest;
 use App\Models\{
     Auction,
     AuctionCategory,
-    Category
+    Category,
+    Role
 };
 use Illuminate\Http\Request;
 
@@ -28,10 +29,15 @@ class AuctionController extends Controller
         if (auth()->user()->cannot('view_auction'))
             return $this->permissionDenied($this->fallbackRoute);
 
-        $auctions = Auction::all();
+        $auctions = Auction::query();
+
+        if (! auth()->user()->hasRole(Role::ADMIN)) {
+            // belongs to auth user
+            $auctions = $auctions->where('user_id', '=', auth()->id());
+        }
 
         return view('backend.pages.auction.index')->with([
-            'auctions' => $auctions,
+            'auctions' => $auctions->get(),
         ]);
     }
 
