@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('/') }}">
                         <x-application-logo class="block h-10 w-auto fill-current text-gray-600" />
                     </a>
                 </div>
@@ -17,6 +17,9 @@
                     </x-nav-link>
                     <x-nav-link :href="route('packages.index')" :active="request()->routeIs('packages.index')">
                         {{ __('Packages') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.index')">
+                        {{ __('Categories') }}
                     </x-nav-link>
                     <x-nav-link :href="route('vendors')" :active="request()->routeIs('vendors')">
                         {{ __('Vendors') }}
@@ -31,6 +34,14 @@
                         @if (($navbarStatistics['unapprovedUserCount'] ?? 0) > 0)
                             <span class="inline-flex items-center justify-center px-2 py-1 m-1 text-xs font-bold leading-none text-red-100 bg-red-700 rounded">
                                 {{ $navbarStatistics['unapprovedUserCount'] }}
+                            </span>
+                        @endif
+                    </x-nav-link>
+                    <x-nav-link :href="route('auctions.index')" :active="request()->routeIs('auctions.index')">
+                        {{ __('Auctions') }}
+                        @if (($navbarStatistics['draftAuctionCount'] ?? 0) > 0)
+                            <span class="inline-flex items-center justify-center px-2 py-1 m-1 text-xs font-bold leading-none text-red-100 bg-red-700 rounded">
+                                {{ $navbarStatistics['draftAuctionCount'] }}
                             </span>
                         @endif
                     </x-nav-link>
@@ -92,6 +103,33 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('packages.index')" :active="request()->routeIs('packages.index')">
                 {{ __('Packages') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.index')">
+                {{ __('Categories') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('vendors')" :active="request()->routeIs('vendors')">
+                {{ __('Vendors') }}
+                @if (($navbarStatistics['unapprovedVendorCount'] ?? 0) > 0)
+                    <span class="inline-flex items-center justify-center px-2 py-1 m-1 text-xs font-bold leading-none text-red-100 bg-red-700 rounded">
+                        {{ $navbarStatistics['unapprovedVendorCount'] }}
+                    </span>
+                @endif
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('users')" :active="request()->routeIs('users')">
+                {{ __('Users') }}
+                @if (($navbarStatistics['unapprovedUserCount'] ?? 0) > 0)
+                    <span class="inline-flex items-center justify-center px-2 py-1 m-1 text-xs font-bold leading-none text-red-100 bg-red-700 rounded">
+                        {{ $navbarStatistics['unapprovedUserCount'] }}
+                    </span>
+                @endif
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('auctions.index')" :active="request()->routeIs('auctions.index')">
+                {{ __('Auctions') }}
+                @if (($navbarStatistics['draftAuctionCount'] ?? 0) > 0)
+                    <span class="inline-flex items-center justify-center px-2 py-1 m-1 text-xs font-bold leading-none text-red-100 bg-red-700 rounded">
+                        {{ $navbarStatistics['draftAuctionCount'] }}
+                    </span>
+                @endif
             </x-responsive-nav-link>
         </div>
 
