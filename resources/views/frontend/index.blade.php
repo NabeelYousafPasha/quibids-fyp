@@ -121,16 +121,14 @@
                                         {{ $auction->title }}
                                     </a>
                                 </h5>
-                                <a
-                                    class="button button-box-right button-primary"
-                                    href="javascript:void(0)"
-                                >
+                                
+                                <button type="button" class="button button-box-right button-primary" data-auction="{{ $auction->id }}" data-toggle="modal" data-target="#biddingModal">
                                     Submit a bid
                                     <div class="button-box">
                                         <div class="button-box-text">X</div>
-                                        <div class="button-box-count">1</div>
+                                        <div class="button-box-count">0</div>
                                     </div>
-                                </a>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -180,6 +178,7 @@
                                         No Active Auction(s)
                                     </a>
                                 </h5>
+
                                 <a
                                     class="button button-box-right button-primary"
                                     href="javascript:void(0)"
@@ -189,7 +188,7 @@
                                         <div class="button-box-text">X</div>
                                         <div class="button-box-count">0</div>
                                     </div>
-                                </a>
+                                </a>                                
                             </div>
                         </div>
                     </div>
@@ -410,6 +409,34 @@
             </div>
         </div>
     </section>
+
+    <!-- Modal for submitting auction bid -->
+    <div class="modal" id="biddingModal" tabindex="-1" role="dialog" style="z-index: 9999;top:30%">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5>Enter Offered Price</h1>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('dashboard.bidding.store') }}" method="POST">
+                    @csrf
+                    <div class="form-group">
+                        <label for="#offeredPrice">Offered Price</label>
+                        <input class="form-control" id="offeredPrice" type="number" name="offered_price" required>
+                        <input type="hidden" name="auction_id" value="{{ $auction->id }}">
+                    </div>
+                    <div class="modal-footer">
+                        <input class="btn btn-primary" type="submit" value="Submit">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
 
 @endsection
 
