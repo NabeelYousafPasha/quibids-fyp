@@ -38,14 +38,12 @@ class UserBiddingController extends Controller
      */
     public function store(Request $request)
     {
-        $auctions = Auction::addSelect('*')
-                    ->OfPublished()
-                    ->NotExpired()
-                    ->with('media')
-                    ->get();
-                    
+        $auctions = Auction::OfPublished()
+                        ->NotExpired()
+                        ->pluck('id');
+
         $data = $request->validate([
-            'auction_id' => ['required'],
+            'auction_id' => ['required', Rule::in($auctions)],
             'offered_price' => ['required', 'integer']
         ]);
 
@@ -56,7 +54,7 @@ class UserBiddingController extends Controller
         ]);
 
         return redirect()->route('/')
-            ->with('status', 'User bidded created successfully.');
+            ->with('status', 'User bidded successfully.');
     }
 
     /**
