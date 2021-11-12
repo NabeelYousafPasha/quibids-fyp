@@ -17,7 +17,17 @@ class UserBiddingController extends Controller
      */
     public function index()
     {
-        //
+        $user = auth()->user();
+
+        if ($user->cannot('view_bidding')){
+            return $this->permissionDenied($this->fallbackRoute);
+        }
+
+        $biddings = $user->userBidding()->with('auction')->get();
+
+        return view('backend.pages.bidding.index')->with([
+            'biddings' => $biddings,
+        ]);
     }
 
     /**

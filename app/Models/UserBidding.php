@@ -22,4 +22,9 @@ class UserBidding extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function auction()
+    {
+        return $this->belongsTo(Auction::class);
+    }
 }

@@ -19,6 +19,7 @@ class CreateUserBiddingsTable extends Migration
             $table->foreignId('auction_id');
             $table->double('offered_price');
             $table->timestamp('won_at')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

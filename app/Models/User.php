@@ -66,4 +66,9 @@ class User extends Authenticatable
         return $this->role(Role::USER);
     }
 
+    public function userBidding()
+    {
+        return $this->hasMany(UserBidding::class);
+    }
+
 }
