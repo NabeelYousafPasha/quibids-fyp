@@ -121,7 +121,7 @@
                                         {{ $auction->title }}
                                     </a>
                                 </h5>
-                                
+
                                 <button type="button" class="button button-box-right button-primary" data-auction="{{ $auction->id }}" data-toggle="modal" data-target="#biddingModal">
                                     Submit a bid
                                     <div class="button-box">
@@ -188,7 +188,7 @@
                                         <div class="button-box-text">X</div>
                                         <div class="button-box-count">0</div>
                                     </div>
-                                </a>                                
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -415,7 +415,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
             <div class="modal-header">
-                <h5>Enter Offered Price</h1>
+                <h5>Enter Offered Price</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -424,9 +424,14 @@
                 <form action="{{ route('dashboard.bidding.store') }}" method="POST">
                     @csrf
                     <div class="form-group">
-                        <label for="#offeredPrice">Offered Price</label>
-                        <input class="form-control" id="offeredPrice" type="number" name="offered_price" required>
-                        <input type="hidden" name="auction_id" value="{{ $auction->id }}">
+                        <label for="offered-price">Offered Price</label>
+                        <input
+                            class="form-control"
+                            id="offered-price"
+                            type="number"
+                            name="offered_price"
+                            required
+                        >
                     </div>
                     <div class="modal-footer">
                         <input class="btn btn-primary" type="submit" value="Submit">
