@@ -221,7 +221,7 @@
                                         <div class="button-box-text">X</div>
                                         <div class="button-box-count">0</div>
                                     </div>
-                                </a>                                
+                                </a>
                             </div>
                         </div>
                     </div>
