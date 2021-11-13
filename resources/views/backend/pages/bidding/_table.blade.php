@@ -33,13 +33,15 @@
                     </p>
                 </td>
                 <td class="px-6 py-4">
+                    @if($bidding->auction->getMedia('auction')->first())
                     <img
                         style='height: 50%; width: 50%; object-fit: cover'
-                        src="{{ $bidding->auction->getMedia('auction')[0]->getUrl() }}"
-                        alt="{{ $bidding->auction->getMedia('auction')[0]->name }}"
+                        src="{{ $bidding->auction->getMedia('auction')->first()->getUrl() }}"
+                        alt="{{ $bidding->auction->getMedia('auction')->first()->name }}"
                         width="200px"
                         height="200px"
                     />
+                    @endif
                 </td>
                 <td class="px-6 py-4">
                     <p class="text-gray-500 text-sm font-semibold tracking-wide">

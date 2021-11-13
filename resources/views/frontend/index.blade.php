@@ -5,6 +5,11 @@
         .post-modern-countdown {
             font-size: 17px;
         }
+
+        .alert-success{
+            background-color: lightgreen;
+            color: white;
+        }
     </style>
 @endsection
 
@@ -98,7 +103,7 @@
         <div class="container">
             <h2 class="text-center text-sm-left">Current <span class="h2-style">Auctions</span></h2>
             <div class="row row-50 mt-50">
-                @forelse ($publishedAuctions ?? [] as $auction)
+                @forelse ($publishedAuctions ?? [] as $key => $auction)
                     <div class="col-xl-3 col-lg-4 col-sm-6">
                         <div class="post-modern">
                             <div class="post-modern-countdown countdown" data-format="HMS" data-until="{{ $auction->left_expiry_time }}"></div>
@@ -122,13 +127,41 @@
                                     </a>
                                 </h5>
                                 
-                                <button type="button" class="button button-box-right button-primary" data-auction="{{ $auction->id }}" data-toggle="modal" data-target="#biddingModal">
+                                <button type="button" onclick="showBiddingModal(this, '{{ $key }}')" class="button button-box-right button-primary" data-auction="{{ $auction->id }}" data-toggle="modal" data-target="#biddingModal-{{ $key }}">
                                     Submit a bid
                                     <div class="button-box">
                                         <div class="button-box-text">X</div>
                                         <div class="button-box-count">0</div>
                                     </div>
                                 </button>
+
+                                <!-- Modal for submitting auction bid -->
+                                <div class="modal" id="biddingModal-{{ $key }}" tabindex="-1" role="dialog" style="z-index: 9999;top:30%">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5>Enter Offered Price</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{ route('dashboard.bidding.store') }}" method="POST">
+                                                @csrf
+                                                <div class="form-group">
+                                                    <label for="#offeredPrice">Offered Price</label>
+                                                    <input class="form-control" id="offeredPrice" type="number" name="offered_price" required>
+                                                    <input type="hidden" name="auction_id">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <input class="btn btn-primary" type="submit" value="Submit">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -410,37 +443,15 @@
         </div>
     </section>
 
-    <!-- Modal for submitting auction bid -->
-    <div class="modal" id="biddingModal" tabindex="-1" role="dialog" style="z-index: 9999;top:30%">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5>Enter Offered Price</h1>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="{{ route('dashboard.bidding.store') }}" method="POST">
-                    @csrf
-                    <div class="form-group">
-                        <label for="#offeredPrice">Offered Price</label>
-                        <input class="form-control" id="offeredPrice" type="number" name="offered_price" required>
-                        <input type="hidden" name="auction_id" value="{{ $auction->id }}">
-                    </div>
-                    <div class="modal-footer">
-                        <input class="btn btn-primary" type="submit" value="Submit">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                </form>
-            </div>
-            </div>
-        </div>
-    </div>
-
 @endsection
 
 @section('scripts')
+    <script>
+        function showBiddingModal(el, key){
+            let auction_id = $(el).data('auction');
+            $('#biddingModal-'+key+' input[name="auction_id"]').val(auction_id);
+        }
+    </script>
     <script>
         $(document).ready(function(){
             // Add smooth scrolling to all links
