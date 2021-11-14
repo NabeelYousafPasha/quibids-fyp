@@ -28,9 +28,13 @@
 
                     <form
                         method="POST"
-                        action="{{ route('dashboard.categories.store') }}"
+                        action="{{ $form['route'] }}"
                     >
-                    @csrf
+                        @csrf
+
+                        @if($form['_method'] ?? null)
+                            @method($form['_method'])
+                        @endif
 
                         @include('backend.pages.category._form')
 
