@@ -12,6 +12,15 @@
     <div class="page">
         @include('frontend.partials.header')
 
+        @if(session()->has('status') ?? false)
+            <!-- Session Status -->
+            <div class="m-2 p-2">
+                <div class="alert alert-success" role="alert">
+                    {{ session('status') }}
+                </div>
+            </div>
+        @endif
+
         @yield('content')
 
         @include('frontend.partials.footer')

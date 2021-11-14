@@ -22,6 +22,7 @@ class PermissionSeeder extends Seeder
             'package',
             'category',
             'auction',
+            'bidding',
         ];
 
         $permission_iterations = [];

@@ -5,6 +5,18 @@
         .post-modern-countdown {
             font-size: 17px;
         }
+
+        .alert-success{
+            background-color: lightgreen;
+            color: white;
+        }
+
+        figure.post-modern-figure img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            padding: 10px;
+        }
     </style>
 @endsection
 
@@ -98,17 +110,14 @@
         <div class="container">
             <h2 class="text-center text-sm-left">Current <span class="h2-style">Auctions</span></h2>
             <div class="row row-50 mt-50">
-                @forelse ($publishedAuctions ?? [] as $auction)
+                @forelse ($publishedAuctions ?? [] as $key => $auction)
                     <div class="col-xl-3 col-lg-4 col-sm-6">
                         <div class="post-modern">
                             <div class="post-modern-countdown countdown" data-format="HMS" data-until="{{ $auction->left_expiry_time }}"></div>
-                            <figure class="post-modern-figure" style='height: 200px; width: 200px;'>
+                            <figure class="post-modern-figure">
                                 <img
                                     src="{{ $auction->media()->latest()->first() ? $auction->media()->latest()->first()->getUrl() : asset('frontend-assets/images/no-img.png') }}"
                                     alt=""
-                                    width="270"
-                                    height="108"
-                                    {{-- style='height: 100%; width: 100%; object-fit: cover' --}}
                                 />
                             </figure>
                             <div class="post-modern-caption">
@@ -121,16 +130,42 @@
                                         {{ $auction->title }}
                                     </a>
                                 </h5>
-                                <a
-                                    class="button button-box-right button-primary"
-                                    href="javascript:void(0)"
-                                >
+
+                                <button type="button" onclick="showBiddingModal(this, '{{ $key }}')" class="button button-box-right button-primary" data-auction="{{ $auction->id }}" data-toggle="modal" data-target="#biddingModal-{{ $key }}">
                                     Submit a bid
-                                    <div class="button-box">
-                                        <div class="button-box-text">X</div>
-                                        <div class="button-box-count">1</div>
+                                    <span class="button-box">
+                                        <span class="button-box-text">X</span>
+                                        <span class="button-box-count">0</span>
+                                    </span>
+                                </button>
+
+                                <!-- Modal for submitting auction bid -->
+                                <div class="modal" id="biddingModal-{{ $key }}" tabindex="-1" role="dialog" style="z-index: 9999;top:30%">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5>Enter Offered Price</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{ route('dashboard.biddings.store') }}" method="POST">
+                                                @csrf
+                                                <div class="form-group">
+                                                    <label for="#offeredPrice">Offered Price</label>
+                                                    <input class="form-control" id="offeredPrice" type="number" name="offered_price" required>
+                                                    <input type="hidden" name="auction_id">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <input class="btn btn-primary" type="submit" value="Submit">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        </div>
                                     </div>
-                                </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -180,147 +215,79 @@
                                         No Active Auction(s)
                                     </a>
                                 </h5>
-                                <a
-                                    class="button button-box-right button-primary"
-                                    href="javascript:void(0)"
-                                >
-                                    Submit a bid
-                                    <div class="button-box">
-                                        <div class="button-box-text">X</div>
-                                        <div class="button-box-count">0</div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-sm-6">
-                        <div class="post-modern">
-                            <div class="post-modern-countdown countdown" data-format="HMS" data-until="+0"></div>
-                            <figure class="post-modern-figure">
-                                <img src="{{ asset('frontend-assets/images/no-img.png') }}" alt="" width="270" height="108"/>
-                            </figure>
-                            <div class="post-modern-caption">
-                                <div class="post-modern-price">Price: $0</div>
-                                <div class="post-modern-price-value">0</div>
-                                <h5 class="post-modern-link">
-                                    <a
-                                        href="javascript:void(0)"
-                                    >
-                                        No Active Auction(s)
-                                    </a>
-                                </h5>
-                                <a
-                                    class="button button-box-right button-primary"
-                                    href="javascript:void(0)"
-                                >
-                                    Submit a bid
-                                    <div class="button-box">
-                                        <div class="button-box-text">X</div>
-                                        <div class="button-box-count">0</div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-sm-6">
-                        <div class="post-modern">
-                            <div class="post-modern-countdown countdown" data-format="HMS" data-until="+0"></div>
-                            <figure class="post-modern-figure">
-                                <img src="{{ asset('frontend-assets/images/no-img.png') }}" alt="" width="270" height="108"/>
-                            </figure>
-                            <div class="post-modern-caption">
-                                <div class="post-modern-price">Price: $0</div>
-                                <div class="post-modern-price-value">0</div>
-                                <h5 class="post-modern-link">
-                                    <a
-                                        href="javascript:void(0)"
-                                    >
-                                        No Active Auction(s)
-                                    </a>
-                                </h5>
-                                <a
-                                    class="button button-box-right button-primary"
-                                    href="javascript:void(0)"
-                                >
-                                    Submit a bid
-                                    <div class="button-box">
-                                        <div class="button-box-text">X</div>
-                                        <div class="button-box-count">0</div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    {{-- <div class="col-xl-3 col-lg-4 col-sm-6">
-                        <!-- Post Modern-->
-                        <div class="post-modern">
-                            <div class="post-modern-countdown countdown" data-format="HMS" data-until="+75500"></div>
-                            <figure class="post-modern-figure"><img src="{{ asset('frontend-assets/images/page1_pic5-270x217.jpeg') }}" alt="" width="270" height="108"/>
-                            </figure>
-                            <div class="post-modern-caption">
-                                <div class="post-modern-price">Price: $258</div>
-                                <div class="post-modern-price-value">386</div>
-                                <h5 class="post-modern-link"><a href="#">Apple MacBook Air 13'' 1.8GHz 128GB</a></h5><a class="button button-box-right button-primary" href="#">Submit a bid
-                                    <div class="button-box">
-                                        <div class="button-box-text">X</div>
-                                        <div class="button-box-count">3</div>
-                                    </div></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-sm-6">
-                        <!-- Post Modern-->
-                        <div class="post-modern">
-                            <div class="post-modern-countdown countdown" data-format="HMS" data-until="+25000"></div>
-                            <figure class="post-modern-figure"><img src="{{ asset('frontend-assets/images/page1_pic6-270x217.jpeg') }}" alt="" width="270" height="108"/>
-                            </figure>
-                            <div class="post-modern-caption">
-                                <div class="post-modern-price">Price: $258</div>
-                                <div class="post-modern-price-value">11</div>
-                                <h5 class="post-modern-link"><a href="#">Billieblush Girls Blue Fluffy Cardigan</a></h5><a class="button button-box-right button-primary" href="#">Submit a bid
-                                    <div class="button-box">
-                                        <div class="button-box-text">X</div>
-                                        <div class="button-box-count">3</div>
-                                    </div></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-sm-6">
-                        <!-- Post Modern-->
-                        <div class="post-modern">
-                            <div class="post-modern-countdown countdown" data-format="HMS" data-until="+2500"></div>
-                            <figure class="post-modern-figure"><img src="{{ asset('frontend-assets/images/page1_pic7-270x217.jpeg') }}" alt="" width="270" height="108"/>
-                            </figure>
-                            <div class="post-modern-caption">
-                                <div class="post-modern-price">Price: $258</div>
-                                <div class="post-modern-price-value">86</div>
-                                <h5 class="post-modern-link"><a href="#">Apple Mac mini Late 2018 (MRTT2)</a></h5><a class="button button-box-right button-primary" href="#">Submit a bid
-                                    <div class="button-box">
-                                        <div class="button-box-text">X</div>
-                                        <div class="button-box-count">3</div>
-                                    </div></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-sm-6">
-                        <!-- Post Modern-->
-                        <div class="post-modern">
-                            <div class="post-modern-countdown countdown" data-format="HMS" data-until="+65000"></div>
-                            <figure class="post-modern-figure"><img src="{{ asset('frontend-assets/images/page1_pic8-270x217.jpeg') }}" alt="" width="270" height="108"/>
-                            </figure>
-                            <div class="post-modern-caption">
-                                <div class="post-modern-price">Price: $258</div>
-                                <div class="post-modern-price-value">27</div>
-                                <h5 class="post-modern-link"><a href="#">Lacoste Lerond Leather Trainers</a></h5><a class="button button-box-right button-primary" href="#">Submit a bid
-                                    <div class="button-box">
-                                        <div class="button-box-text">X</div>
-                                        <div class="button-box-count">3</div>
-                                    </div></a>
-                            </div>
-                        </div>
-                    </div> --}}
-                @endforelse
 
+                                <a
+                                    class="button button-box-right button-primary"
+                                    href="javascript:void(0)"
+                                >
+                                    Submit a bid
+                                    <div class="button-box">
+                                        <div class="button-box-text">X</div>
+                                        <div class="button-box-count">0</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="post-modern">
+                            <div class="post-modern-countdown countdown" data-format="HMS" data-until="+0"></div>
+                            <figure class="post-modern-figure">
+                                <img src="{{ asset('frontend-assets/images/no-img.png') }}" alt="" width="270" height="108"/>
+                            </figure>
+                            <div class="post-modern-caption">
+                                <div class="post-modern-price">Price: $0</div>
+                                <div class="post-modern-price-value">0</div>
+                                <h5 class="post-modern-link">
+                                    <a
+                                        href="javascript:void(0)"
+                                    >
+                                        No Active Auction(s)
+                                    </a>
+                                </h5>
+                                <a
+                                    class="button button-box-right button-primary"
+                                    href="javascript:void(0)"
+                                >
+                                    Submit a bid
+                                    <div class="button-box">
+                                        <div class="button-box-text">X</div>
+                                        <div class="button-box-count">0</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-sm-6">
+                        <div class="post-modern">
+                            <div class="post-modern-countdown countdown" data-format="HMS" data-until="+0"></div>
+                            <figure class="post-modern-figure">
+                                <img src="{{ asset('frontend-assets/images/no-img.png') }}" alt="" width="270" height="108"/>
+                            </figure>
+                            <div class="post-modern-caption">
+                                <div class="post-modern-price">Price: $0</div>
+                                <div class="post-modern-price-value">0</div>
+                                <h5 class="post-modern-link">
+                                    <a
+                                        href="javascript:void(0)"
+                                    >
+                                        No Active Auction(s)
+                                    </a>
+                                </h5>
+                                <a
+                                    class="button button-box-right button-primary"
+                                    href="javascript:void(0)"
+                                >
+                                    Submit a bid
+                                    <div class="button-box">
+                                        <div class="button-box-text">X</div>
+                                        <div class="button-box-count">0</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                @endforelse
             </div>
             <div class="mt-xl-40 mt-50 text-center text-sm-left">
                 <a class="button button-icon button-icon-right button-black" href="#">
@@ -414,6 +381,12 @@
 @endsection
 
 @section('scripts')
+    <script>
+        function showBiddingModal(el, key){
+            let auction_id = $(el).data('auction');
+            $('#biddingModal-'+key+' input[name="auction_id"]').val(auction_id);
+        }
+    </script>
     <script>
         $(document).ready(function(){
             // Add smooth scrolling to all links
