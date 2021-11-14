@@ -18,13 +18,22 @@ class UserBidding extends Model
     ];
 
     protected $dates = [
+        'won_at',
         'deleted_at',
         'created_at',
         'updated_at'
     ];
 
+    /**
+     * Relationships
+     */
     public function auction()
     {
         return $this->belongsTo(Auction::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

@@ -47,9 +47,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Relationships
+     */
+    public function biddings()
+    {
+        return $this->hasMany(UserBidding::class);
+    }
 
     /**
-     *Scopes
+     * Scopes
      */
     public function scopeUnapproved($query)
     {
@@ -64,11 +71,6 @@ class User extends Authenticatable
     public function scopeOfRoleUser($query)
     {
         return $this->role(Role::USER);
-    }
-
-    public function userBidding()
-    {
-        return $this->hasMany(UserBidding::class);
     }
 
 }

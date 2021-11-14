@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Auction;
+use App\Http\Requests\UserBidding\UserBiddingRequest;
+use App\Models\Role;
 use App\Models\UserBidding;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 
 class UserBiddingController extends Controller
 {
@@ -23,16 +22,20 @@ class UserBiddingController extends Controller
      */
     public function index()
     {
-        $user = auth()->user();
-
-        if ($user->cannot('view_bidding')) {
+        if (auth()->user()->cannot('view_bidding')) {
             return $this->permissionDenied($this->fallbackRoute);
         }
 
-        $biddings = $user->userBidding()->with('auction')->get();
+        $biddings = UserBidding::with('auction');
+
+        if (! auth()->user()->hasRole(Role::ADMIN)) {
+
+            // belongs to auth user
+            $biddings = $biddings->where('user_id', '=', auth()->id());
+        }
 
         return view('backend.pages.bidding.index')->with([
-            'biddings' => $biddings,
+            'biddings' => $biddings->get(),
         ]);
     }
 
@@ -49,28 +52,21 @@ class UserBiddingController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param UserBiddingRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(UserBiddingRequest $request)
     {
-        $auctions = Auction::OfPublished()
-                        ->NotExpired()
-                        ->pluck('id');
+        if (auth()->user()->cannot('create_bidding')) {
+            return $this->permissionDenied($this->fallbackRoute);
+        }
 
-        $data = $request->validate([
-            'auction_id' => ['required', Rule::in($auctions)],
-            'offered_price' => ['required', 'integer']
-        ]);
-
-        UserBidding::create([
+        UserBidding::create($request->validated() + [
             'user_id' => auth()->id(),
-            'auction_id' => $data['auction_id'],
-            'offered_price' => $data['offered_price'],
         ]);
 
         return redirect()->route('/')
-            ->with('status', 'User bidded successfully.');
+            ->with('status', 'User has bid successfully.');
     }
 
     /**
