@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Role;
 use App\Http\Controllers\{AuctionController, CategoryController, HomeController, PackageController, UserController, PermissionRoleController, UserBiddingController};
 use Illuminate\Support\Facades\Route;
 
@@ -42,6 +43,11 @@ Route::group([
 
         // user
         Route::get('/users', [UserController::class, 'users'])->name('users');
+
+        // user & vendor => status
+        Route::get('/{role}/{person}/status', [UserController::class, 'toggleStatus'])
+            ->name('switch-status')
+            ->where('role', '('.str_replace(',', '|', implode(',', [Role::VENDOR, Role::USER])).')');
 
         // category
         Route::resource('/categories', CategoryController::class);

@@ -138,7 +138,7 @@ class AuctionController extends Controller
 
         $auction->update($request->validated());
 
-        // remoce old
+        // replace old
         AuctionCategory::where('auction_id', '=', $auction->id)->delete();
 
         // re-insert updated

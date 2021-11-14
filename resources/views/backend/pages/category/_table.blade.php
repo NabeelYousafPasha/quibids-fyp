@@ -25,7 +25,10 @@
                 </td>
                 <td class="px-6 py-4 text-center">
                     @if(auth()->user()->can('update_category'))
-                        <a href="#" class="px-2 py-1 m-1 bg-transparent border-2 border-blue-500 text-blue-500 text-lg rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300">
+                        <a
+                            href="{{ route('dashboard.categories.edit', ['category' => $category]) }}"
+                            class="px-2 py-1 m-1 bg-transparent border-2 border-blue-500 text-blue-500 text-lg rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300"
+                        >
                             Edit
                         </a>
                     @endif

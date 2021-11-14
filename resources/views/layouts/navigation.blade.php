@@ -68,7 +68,7 @@
                     @endif
 
                     @if(auth()->user()->can('view_bidding'))
-                        <x-nav-link :href="route('dashboard.bidding.index')" :active="request()->routeIs('dashboard.bidding.index')">
+                        <x-nav-link :href="route('dashboard.biddings.index')" :active="request()->routeIs('dashboard.biddings.index')">
                             {{ __('Bidding') }}
                         </x-nav-link>
                     @endif
@@ -177,6 +177,12 @@
             @if(auth()->user()->can('view_permission_role'))
                 <x-responsive-nav-link :href="route('dashboard.setup.permission_role.create')" :active="request()->routeIs('dashboard.setup.permission_role.create')">
                     {{ __('Settings') }}
+                </x-responsive-nav-link>
+            @endif
+
+            @if(auth()->user()->can('view_bidding'))
+                <x-responsive-nav-link :href="route('dashboard.biddings.index')" :active="request()->routeIs('dashboard.biddings.index')">
+                    {{ __('Bidding') }}
                 </x-responsive-nav-link>
             @endif
         </div>
