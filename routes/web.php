@@ -51,8 +51,8 @@ Route::group([
         Route::post('/auctions/{auction}/media', [AuctionController::class, 'uploadMedia'])->name('auctions.media');
         Route::resource('/auctions', AuctionController::class);
 
-        // bidding 
-        Route::resource('/bidding', UserBiddingController::class);
+        // bidding
+        Route::resource('/biddings', UserBiddingController::class);
     });
 });
 

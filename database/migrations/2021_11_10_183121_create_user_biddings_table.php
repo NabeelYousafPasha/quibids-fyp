@@ -16,7 +16,7 @@ class CreateUserBiddingsTable extends Migration
         Schema::create('user_biddings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('auction_id');
+            $table->foreignId('auction_id')->constrained('auctions');
             $table->double('offered_price');
             $table->timestamp('won_at')->nullable();
             $table->softDeletes();

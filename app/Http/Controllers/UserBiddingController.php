@@ -10,16 +10,22 @@ use Illuminate\Validation\Rule;
 
 class UserBiddingController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
     public function index()
     {
         $user = auth()->user();
 
-        if ($user->cannot('view_bidding')){
+        if ($user->cannot('view_bidding')) {
             return $this->permissionDenied($this->fallbackRoute);
         }
 
@@ -44,7 +50,7 @@ class UserBiddingController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -58,9 +64,9 @@ class UserBiddingController extends Controller
         ]);
 
         UserBidding::create([
-            'user_id' => auth()->user()->id,
+            'user_id' => auth()->id(),
             'auction_id' => $data['auction_id'],
-            'offered_price' => $data['offered_price']
+            'offered_price' => $data['offered_price'],
         ]);
 
         return redirect()->route('/')
