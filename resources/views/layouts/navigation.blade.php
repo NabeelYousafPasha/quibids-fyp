@@ -66,6 +66,12 @@
                             {{ __('Settings') }}
                         </x-nav-link>
                     @endif
+
+                    @if(auth()->user()->can('view_bidding'))
+                        <x-nav-link :href="route('dashboard.bidding.index')" :active="request()->routeIs('dashboard.bidding.index')">
+                            {{ __('Bidding') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 

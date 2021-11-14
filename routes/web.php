@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{AuctionController, CategoryController, HomeController, PackageController, UserController, PermissionRoleController};
+use App\Http\Controllers\{AuctionController, CategoryController, HomeController, PackageController, UserController, PermissionRoleController, UserBiddingController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -50,6 +50,9 @@ Route::group([
         Route::get('/auctions/{auction}/media', [AuctionController::class, 'listMedia'])->name('auctions.media');
         Route::post('/auctions/{auction}/media', [AuctionController::class, 'uploadMedia'])->name('auctions.media');
         Route::resource('/auctions', AuctionController::class);
+
+        // bidding
+        Route::resource('/biddings', UserBiddingController::class);
     });
 });
 
