@@ -47,6 +47,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
+    /**
+     * Accessors & Mutators
+     */
+    public function getStatusAttribute()
+    {
+        return $this->approved_at ? 'Approved' : 'Pending';
+    }
+
+    public function getSwitchStatusButtonAttribute()
+    {
+        return $this->approved_at ? 'In-activate' : 'Activate';
+    }
+
     /**
      * Relationships
      */
@@ -61,6 +75,11 @@ class User extends Authenticatable
     public function scopeUnapproved($query)
     {
         return $query->whereNull('approved_at');
+    }
+
+    public function scopeApproved($query)
+    {
+        return $query->whereNotNull('approved_at');
     }
 
     public function scopeOfRoleVendor($query)
