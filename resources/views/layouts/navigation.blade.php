@@ -32,7 +32,7 @@
                         <x-nav-link :href="route('dashboard.vendors')" :active="request()->routeIs('dashboard.vendors')">
                             {{ __('Vendors') }}
                             @if (($navbarStatistics['unapprovedVendorCount'] ?? 0) > 0)
-                                <span class="inline-flex items-center justify-center px-2 py-1 m-1 text-xs font-bold leading-none text-red-100 bg-red-700 rounded">
+                                <span id="unapprovedVendorCount" class="inline-flex items-center justify-center px-2 py-1 m-1 text-xs font-bold leading-none text-red-100 bg-red-700 rounded">
                                     {{ $navbarStatistics['unapprovedVendorCount'] }}
                                 </span>
                             @endif
@@ -43,7 +43,7 @@
                         <x-nav-link :href="route('dashboard.users')" :active="request()->routeIs('dashboard.users')">
                             {{ __('Users') }}
                             @if (($navbarStatistics['unapprovedUserCount'] ?? 0) > 0)
-                                <span class="inline-flex items-center justify-center px-2 py-1 m-1 text-xs font-bold leading-none text-red-100 bg-red-700 rounded">
+                                <span id="unapprovedUserCount" class="inline-flex items-center justify-center px-2 py-1 m-1 text-xs font-bold leading-none text-red-100 bg-red-700 rounded">
                                     {{ $navbarStatistics['unapprovedUserCount'] }}
                                 </span>
                             @endif
@@ -54,7 +54,7 @@
                         <x-nav-link :href="route('dashboard.auctions.index')" :active="request()->routeIs('dashboard.auctions.index')">
                             {{ __('Auctions') }}
                             @if (($navbarStatistics['draftAuctionCount'] ?? 0) > 0)
-                                <span class="inline-flex items-center justify-center px-2 py-1 m-1 text-xs font-bold leading-none text-red-100 bg-red-700 rounded">
+                                <span id="draftAuctionCount" class="inline-flex items-center justify-center px-2 py-1 m-1 text-xs font-bold leading-none text-red-100 bg-red-700 rounded">
                                     {{ $navbarStatistics['draftAuctionCount'] }}
                                 </span>
                             @endif
@@ -145,7 +145,7 @@
                 <x-responsive-nav-link :href="route('dashboard.vendors')" :active="request()->routeIs('dashboard.vendors')">
                     {{ __('Vendors') }}
                     @if (($navbarStatistics['unapprovedVendorCount'] ?? 0) > 0)
-                        <span class="inline-flex items-center justify-center px-2 py-1 m-1 text-xs font-bold leading-none text-red-100 bg-red-700 rounded">
+                        <span id="unapprovedVendorCount" class="inline-flex items-center justify-center px-2 py-1 m-1 text-xs font-bold leading-none text-red-100 bg-red-700 rounded">
                             {{ $navbarStatistics['unapprovedVendorCount'] }}
                         </span>
                     @endif
@@ -156,7 +156,7 @@
                 <x-responsive-nav-link :href="route('dashboard.users')" :active="request()->routeIs('dashboard.users')">
                     {{ __('Users') }}
                     @if (($navbarStatistics['unapprovedUserCount'] ?? 0) > 0)
-                        <span class="inline-flex items-center justify-center px-2 py-1 m-1 text-xs font-bold leading-none text-red-100 bg-red-700 rounded">
+                        <span id="unapprovedUserCount" class="inline-flex items-center justify-center px-2 py-1 m-1 text-xs font-bold leading-none text-red-100 bg-red-700 rounded">
                             {{ $navbarStatistics['unapprovedUserCount'] }}
                         </span>
                     @endif
@@ -167,7 +167,7 @@
                 <x-responsive-nav-link :href="route('dashboard.auctions.index')" :active="request()->routeIs('dashboard.auctions.index')">
                     {{ __('Auctions') }}
                     @if (($navbarStatistics['draftAuctionCount'] ?? 0) > 0)
-                        <span class="inline-flex items-center justify-center px-2 py-1 m-1 text-xs font-bold leading-none text-red-100 bg-red-700 rounded">
+                        <span id="draftAuctionCount" class="inline-flex items-center justify-center px-2 py-1 m-1 text-xs font-bold leading-none text-red-100 bg-red-700 rounded">
                             {{ $navbarStatistics['draftAuctionCount'] }}
                         </span>
                     @endif
@@ -209,3 +209,19 @@
         </div>
     </div>
 </nav>
+<script>
+    var getNavbarStatistics = function (){
+        $.ajax({
+            type: "GET",
+            url: '/navbar-states',
+            dataType: "json",
+            success: function(res){
+                $('#unapprovedVendorCount').text(res.navbarStatistics.unapprovedVendorCount)
+                $('#unapprovedUserCount').text(res.navbarStatistics.unapprovedUserCount)
+                $('#draftAuctionCount').text(res.navbarStatistics.draftAuctionCount)
+            }
+        })
+    }
+
+    setInterval(getNavbarStatistics, 5000);
+</script>

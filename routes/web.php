@@ -2,6 +2,8 @@
 
 use App\Models\Role;
 use App\Http\Controllers\{AuctionController, CategoryController, HomeController, PackageController, UserController, PermissionRoleController, UserBiddingController};
+use App\Models\Auction;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +22,17 @@ Route::get('/', [HomeController::class, 'index'])->name('/');
 Route::group([
     'middleware' => ['auth'],
 ], function () {
+    Route::get('navbar-states', function(){
+        $unapprovedVendorCount = User::OfRoleVendor()->unapproved();
+        $unapprovedUserCount = User::OfRoleUser()->unapproved();
+        $draftAuctionCount = Auction::OfDraft()->whereNull('sold_at');
+        $navbarStatistics = [
+                            'unapprovedVendorCount' => $unapprovedVendorCount->count(),
+                            'unapprovedUserCount' => $unapprovedUserCount->count(),
+                            'draftAuctionCount' => $draftAuctionCount->count(),
+                            ];
+        return response(['navbarStatistics' => $navbarStatistics]);
+    });
 
     Route::group([
         'prefix' => 'dashboard',
