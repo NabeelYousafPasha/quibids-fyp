@@ -1,8 +1,13 @@
 <?php
 
-use App\Models\Role;
 use App\Http\Controllers\{AuctionController, CategoryController, HomeController, PackageController, UserController, PermissionRoleController, UserBiddingController};
+use App\Models\{
+    Auction,
+    Role,
+    User
+};
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,6 +64,24 @@ Route::group([
 
         // bidding
         Route::resource('/biddings', UserBiddingController::class);
+
+        Route::get('/navbar-stats', function(){
+            $unapprovedVendorCount = User::OfRoleVendor()->unapproved();
+            $unapprovedUserCount = User::OfRoleUser()->unapproved();
+            $draftAuctionCount = Auction::OfDraft()->whereNull('sold_at');
+
+            $navbarStatistics = [
+                'unapprovedVendorCount' => $unapprovedVendorCount->count(),
+                'unapprovedUserCount' => $unapprovedUserCount->count(),
+                'draftAuctionCount' => $draftAuctionCount->count(),
+            ];
+
+            return response()->json([
+                'data' => [
+                    'navbarStatistics' => $navbarStatistics,
+                ],
+            ], Response::HTTP_OK);
+        })->name('navbar-stats');
     });
 });
 
