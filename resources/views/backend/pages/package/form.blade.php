@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Categories') }}
+            {{ __('Packages') }}
         </h2>
     </x-slot>
 
@@ -13,7 +13,7 @@
                     <div class="grid grid-cols-2 gap-4 mb-3">
                         <div>
                             <h3 class="text-2xl font-bold leading-5">
-                                Categories
+                                Packages
                             </h3>
                         </div>
                     </div>
@@ -30,13 +30,12 @@
                         method="POST"
                         action="{{ $form['route'] }}"
                     >
-                        @csrf
-
+                    @csrf
                         @if($form['_method'] ?? null)
                             @method($form['_method'])
                         @endif
 
-                        @include('backend.pages.category._form')
+                        @include('backend.pages.package._form')
 
                         <div class="flex items-center justify-end mt-4">
                             <x-button class="ml-3">

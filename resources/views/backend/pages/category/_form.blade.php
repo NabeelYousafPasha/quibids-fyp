@@ -9,7 +9,7 @@
         id="name"
         type="text"
         name="name"
-        :value="old('name')"
+        :value="$category->name ?? old('name')"
         class="block mt-1 w-full"
         required
         autofocus

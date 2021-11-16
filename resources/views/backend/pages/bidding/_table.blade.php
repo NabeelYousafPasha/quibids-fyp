@@ -4,7 +4,6 @@
             <th class="font-semibold text-sm uppercase px-6 py-4"> Auction Id </th>
             <th class="font-semibold text-sm uppercase px-6 py-4"> Auction Title </th>
             <th class="font-semibold text-sm uppercase px-6 py-4"> Auction Price </th>
-            <th class="font-semibold text-sm uppercase px-6 py-4"> Auction Image </th>
             <th class="font-semibold text-sm uppercase px-6 py-4"> Offered Price </th>
             <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> Won At </th>
             <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> Actions </th>
@@ -21,7 +20,7 @@
                             </p>
                         </div>
                     </div>
-                </td>                
+                </td>
                 <td class="px-6 py-4">
                     <p class="text-gray-500 text-sm font-semibold tracking-wide">
                         {{ $bidding->auction->title }}
@@ -33,23 +32,12 @@
                     </p>
                 </td>
                 <td class="px-6 py-4">
-                    @if($bidding->auction->getMedia('auction')->first())
-                    <img
-                        style='height: 50%; width: 50%; object-fit: cover'
-                        src="{{ $bidding->auction->getMedia('auction')->first()->getUrl() }}"
-                        alt="{{ $bidding->auction->getMedia('auction')->first()->name }}"
-                        width="200px"
-                        height="200px"
-                    />
-                    @endif
-                </td>
-                <td class="px-6 py-4">
                     <p class="text-gray-500 text-sm font-semibold tracking-wide">
                         {{ $bidding->offered_price }}
                     </p>
                 </td>
                 <td class="px-6 py-4 text-center">
-                    {{ @$bidding->won_at }} 
+                    {{ @$bidding->won_at }}
                 </td>
                 <td class="px-6 py-4 text-center">
                     @if(auth()->user()->can('delete_bidding'))

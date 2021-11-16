@@ -49,11 +49,37 @@ class User extends Authenticatable
 
 
     /**
-     *Scopes
+     * Accessors & Mutators
+     */
+    public function getStatusAttribute()
+    {
+        return $this->approved_at ? 'Approved' : 'Pending';
+    }
+
+    public function getSwitchStatusButtonAttribute()
+    {
+        return $this->approved_at ? 'In-activate' : 'Activate';
+    }
+
+    /**
+     * Relationships
+     */
+    public function biddings()
+    {
+        return $this->hasMany(UserBidding::class);
+    }
+
+    /**
+     * Scopes
      */
     public function scopeUnapproved($query)
     {
         return $query->whereNull('approved_at');
+    }
+
+    public function scopeApproved($query)
+    {
+        return $query->whereNotNull('approved_at');
     }
 
     public function scopeOfRoleVendor($query)
@@ -64,11 +90,6 @@ class User extends Authenticatable
     public function scopeOfRoleUser($query)
     {
         return $this->role(Role::USER);
-    }
-
-    public function userBidding()
-    {
-        return $this->hasMany(UserBidding::class);
     }
 
 }
