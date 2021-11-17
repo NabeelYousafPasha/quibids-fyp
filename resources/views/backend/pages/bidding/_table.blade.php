@@ -1,9 +1,7 @@
 <table class='mx-auto w-full whitespace-nowrap rounded-lg bg-white divide-y divide-gray-300 overflow-hidden'>
     <thead class="bg-gray-900">
         <tr class="text-white text-left">
-            <th class="font-semibold text-sm uppercase px-6 py-4"> Auction Id </th>
-            <th class="font-semibold text-sm uppercase px-6 py-4"> Auction Title </th>
-            <th class="font-semibold text-sm uppercase px-6 py-4"> Auction Price </th>
+            <th class="font-semibold text-sm uppercase px-6 py-4"> Auction Id </th>            
             <th class="font-semibold text-sm uppercase px-6 py-4"> Offered Price </th>
             <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> Won At </th>
             <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> Actions </th>
@@ -16,21 +14,11 @@
                     <div class="flex items-center space-x-3">
                         <div>
                             <p>
-                                <a href="{{ route('dashboard.auctions.index') }}">{{ $bidding->auction_id }}</a>
+                                <a href="{{ route('dashboard.auctions.show', $bidding->auction->id) }}">{{ $bidding->auction->title }}</a>
                             </p>
                         </div>
                     </div>
-                </td>
-                <td class="px-6 py-4">
-                    <p class="text-gray-500 text-sm font-semibold tracking-wide">
-                        {{ $bidding->auction->title }}
-                    </p>
-                </td>
-                <td class="px-6 py-4">
-                    <p class="text-gray-500 text-sm font-semibold tracking-wide">
-                        {{ $bidding->auction->estimated_price }}
-                    </p>
-                </td>
+                </td>                
                 <td class="px-6 py-4">
                     <p class="text-gray-500 text-sm font-semibold tracking-wide">
                         {{ $bidding->offered_price }}

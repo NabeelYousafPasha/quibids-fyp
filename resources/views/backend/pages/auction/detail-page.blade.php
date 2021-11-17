@@ -20,12 +20,12 @@
                                     <th class="font-semibold text-sm uppercase px-6 py-4"> Title </th>
                                     <th class="font-semibold text-sm uppercase px-6 py-4"> Description </th>
                                     <th class="font-semibold text-sm uppercase px-6 py-4"> Media </th>
-                                    <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> Estimated Price </th>
-                                    <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> Estimated Expiry </th>
-                                    <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> Sold At </th>
+                                    <th class="font-semibold text-sm uppercase px-6 py-4"> Estimated Price </th>
+                                    <th class="font-semibold text-sm uppercase px-6 py-4"> Estimated Expiry </th>
+                                    <th class="font-semibold text-sm uppercase px-6 py-4"> Sold At </th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-200">
+                            <tbody id="show-auction" class="divide-y divide-gray-200">
                                 <tr>
                                     <td class="px-6 py-4">
                                         <div class="flex items-center space-x-3">
@@ -45,11 +45,11 @@
                                         @if($auction->getFirstMedia('auction'))
                                         <div class="flex items-center space-x-3">
                                             <img
-                                                style='height: 50%; width: 50%; object-fit: cover'
+                                                style='object-fit:cover'
                                                 src="{{ $auction->getFirstMedia('auction')->getUrl() }}"
                                                 alt="{{ $auction->getFirstMedia('auction')->name }}"
-                                                width="50px"
-                                                height="50px"
+                                                width="100px"
+                                                height="100px"
                                             />
                                         </div>
                                         @endif
@@ -74,7 +74,7 @@
                                                 {{ $auction->sold_at ?? 'N/A' }}
                                             </p>
                                         </div>
-                                    </td>                              
+                                    </td>                          
                                     
                                 </tr>
                             </tbody>
