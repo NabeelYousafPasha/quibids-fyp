@@ -1,14 +1,14 @@
 <table class='mx-auto w-full whitespace-nowrap rounded-lg bg-white divide-y divide-gray-300 overflow-hidden'>
     <thead class="bg-gray-900">
         <tr class="text-white text-left">
-            <th class="font-semibold text-sm uppercase px-6 py-4"> Auction Id </th>            
+            <th class="font-semibold text-sm uppercase px-6 py-4"> Auction </th>
             <th class="font-semibold text-sm uppercase px-6 py-4"> Offered Price </th>
             <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> Won At </th>
             <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> Actions </th>
         </tr>
     </thead>
     <tbody class="divide-y divide-gray-200">
-        @foreach($biddings ?? [] as $bidding)
+        @foreach($wonBiddings ?? [] as $bidding)
             <tr>
                 <td class="px-6 py-4">
                     <div class="flex items-center space-x-3">
@@ -18,7 +18,7 @@
                             </p>
                         </div>
                     </div>
-                </td>                
+                </td>
                 <td class="px-6 py-4">
                     <p class="text-gray-500 text-sm font-semibold tracking-wide">
                         {{ $bidding->offered_price }}

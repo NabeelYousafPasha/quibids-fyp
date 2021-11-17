@@ -95,7 +95,9 @@ class AuctionController extends Controller
      */
     public function show(Auction $auction)
     {
-        //
+        return view('backend.pages.auction.detail-page')->with([
+            'auction' => $auction,
+        ]);
     }
 
     /**
