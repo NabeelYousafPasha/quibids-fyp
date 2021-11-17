@@ -77,4 +77,9 @@ class Auction extends Model implements HasMedia
         //  expiry is greater than curren time
         return $query->whereRaw("NOW() <= estimated_expire_at");
     }
+
+    public function createdBy()
+    {
+        return $this->hasOne(User::class, 'id');
+    }
 }

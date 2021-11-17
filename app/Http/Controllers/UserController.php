@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\VendorActivated;
 use App\Models\Package;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -57,6 +59,8 @@ class UserController extends Controller
 
         $person->approved_at = ! is_null($person->approved_at) ? NULL : now();
         $person->save();
+
+        Mail::to($person)->send(new VendorActivated());
 
         return redirect()->route('dashboard.'.$role.'s')
             ->with('status', 'Status switched successfully');
