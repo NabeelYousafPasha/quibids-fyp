@@ -65,7 +65,7 @@ Route::group([
         // bidding
         Route::resource('/biddings', UserBiddingController::class);
 
-        Route::get('/navbar-stats', function(){
+        Route::get('/navbar-stats', function() {
             $unapprovedVendorCount = User::OfRoleVendor()->unapproved();
             $unapprovedUserCount = User::OfRoleUser()->unapproved();
             $draftAuctionCount = Auction::OfDraft()->whereNull('sold_at');
@@ -82,6 +82,10 @@ Route::group([
                 ],
             ], Response::HTTP_OK);
         })->name('navbar-stats');
+
+        Route::get('/messages', function () {
+            return view('backend.messenger.messages');
+        })->name('messages');
     });
 });
 
