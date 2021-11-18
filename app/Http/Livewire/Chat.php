@@ -1,71 +1,64 @@
 <?php
 
-/*namespace App\Http\Livewire;
+namespace App\Http\Livewire;
 
-use Carbon\Carbon;
 use App\Models\Message;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\MessageStatus;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 
 class Chat extends Component
 {
-    public $fromUser = auth()->user();
-    public $toUser;
-
-    public $message_text;
-    public $response;
-    public $messageStatus;
 
     use WithPagination;
 
-    public function mount($toUserId)
+    public $recipient;
+    public $messageStatus;
+    public $message;
+
+    public $response;
+
+    public function mount(User $recipient)
     {
+        $this->recipient = $recipient;
         $this->messageStatus = MessageStatus::where('code', '=', MessageStatus::SEEN)->first();
-        $this->toUser = User::find($toUserId);
     }
 
     public function render()
     {
-        $messages = Message::where('from_user_id', '=', $this->fromUser->id)
-                        ->where('to_user_id', '=', $this->toUser->id);
+        // mark messages from recipient user to auth as SEEN
+        // messagesFromRecipientToAuth
+        Message::where('to_user_id', '=', auth()->id())
+                ->where('from_user_id', '=', $this->recipient->id)
+                ->update([
+                    'message_status_id'=> $this->messageStatus->id
+                ]);
 
-        $messages->update([
-            'status'=> $this->messageStatus->id
-        ]);
+        // messagesToRecipientFromAuth
+        $messagesToRecipientFromAuth = Message::where('from_user_id', '=', auth()->id())
+                ->where('to_user_id', '=', $this->recipient->id)
+                ->latest('id', 'DESC');
 
         return view('livewire.chat', [
-            'messages' => $messages->latest()->paginate(1),
+            'chatMessages' => $messagesToRecipientFromAuth->paginate(1),
         ]);
     }
 
 
     public function sendMessage()
     {
-        if(!(is_null($this->message_text))) {
+        if (! is_null($this->message)) {
+
             Message::create([
-                'room_id' => $this->chat_room->id,
-                'user_id' => $this->first_user->id,
-                'message' => $this->message_text,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
+                'from_user_id' => auth()->id(),
+                'to_user_id' => $this->recipient->id,
+                'message' => $this->message,
             ]);
 
-
-            $this->reset('message_text');
+            // reset message field
+            $this->reset('message');
         }
     }
 
-    public function save()
-    {
-        $this->validate([
-            'photo' => 'image|max:1024', // 1MB Max
-        ]);
-
-        $this->photo->store('photos');
-    }
-
 }
-*/

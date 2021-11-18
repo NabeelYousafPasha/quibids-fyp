@@ -11,12 +11,15 @@
                         <ul>
                             @forelse($chattedWith ?? [] as $user)
                                 <li class="flex justify-between items-center bg-gray-100 mt-2 p-2 hover:shadow-lg rounded cursor-pointer transition">
+
                                     <div class="flex ml-2">
                                         <div class="flex flex-col ml-2">
-                                            <span class="font-medium text-black">{{ $user->name }}</span>
-                                            <span class="text-sm text-gray-400 truncate w-32">
-                                                {{ $user->message }}
-                                            </span>
+                                            <a href="{{ route('dashboard.messenger.chat', ['recipient' => $user->id,]) }}">
+                                                <span class="font-medium text-black">{{ $user->name }}</span>
+                                                <span class="text-sm text-gray-400 truncate w-32">
+                                                    {{ $user->message }}
+                                                </span>
+                                            </a>
                                         </div>
                                     </div>
                                     <div class="flex flex-col items-center">

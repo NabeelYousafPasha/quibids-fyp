@@ -83,9 +83,15 @@ Route::group([
             ], Response::HTTP_OK);
         })->name('navbar-stats');
 
-        Route::get('/messages', function () {
+        Route::get('/messenger', function () {
             return view('backend.messenger.messages');
-        })->name('messages');
+        })->name('messenger');
+
+        Route::get('/messenger/{recipient}/messages', function ($recipient) {
+            return view('backend.messenger.chat')->with([
+                'recipient' => $recipient,
+            ]);
+        })->name('messenger.chat');
     });
 });
 
