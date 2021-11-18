@@ -205,9 +205,14 @@ class AuctionController extends Controller
         } else {
             $auction->is_published = 0;
         }
-        $auction->save();
         
-        return redirect()->route('dashboard.switch.auction.status', ['auction' => $auction])
-            ->with('status', 'Status switched successfully');
+        $auctionPublished = $auction->save();
+
+        if($auctionPublished){
+            session()->flash('status', 'Status switched successfully');
+
+        }
+
+        return redirect()->route('dashboard.auctions.index');            
     }
 }
