@@ -54,6 +54,7 @@ class Chat extends Component
                 'from_user_id' => auth()->id(),
                 'to_user_id' => $this->recipient->id,
                 'message' => $this->message,
+                'message_status_id' => 2,
             ]);
 
             // reset message field
