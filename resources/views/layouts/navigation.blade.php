@@ -72,6 +72,10 @@
                             {{ __('Bidding') }}
                         </x-nav-link>
                     @endif
+
+                    <x-nav-link :href="route('dashboard.messenger')" :active="request()->routeIs('dashboard.messenger')">
+                        {{ __('Messenger') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -185,6 +189,10 @@
                     {{ __('Bidding') }}
                 </x-responsive-nav-link>
             @endif
+
+            <x-responsive-nav-link :href="route('dashboard.messenger')" :active="request()->routeIs('dashboard.messenger')">
+                {{ __('Messenger') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
@@ -209,31 +217,34 @@
         </div>
     </div>
 </nav>
-<script>
-    let getNavbarStatistics = function (){
-        $.ajax({
-            type: "GET",
-            url: "{{ route('dashboard.navbar-stats') }}",
-            dataType: "json",
-            success: function(res){
-                let response = res.data;
-                let stats = response.navbarStatistics;
 
-                let vendorSpan = $('.unapproved-vendor-count');
-                let userSpan = $('.unapproved-user-count');
-                let auctionSpan = $('.draft-auction-count');
+@if ((config('constants.notification.realtime') ?? false) == true)
+    <script type="text/javascript">
+        let getNavbarStatistics = function (){
+            $.ajax({
+                type: "GET",
+                url: "{{ route('dashboard.navbar-stats') }}",
+                dataType: "json",
+                success: function(res){
+                    let response = res.data;
+                    let stats = response.navbarStatistics;
 
-                vendorSpan.text(stats.unapprovedVendorCount);
-                (stats.unapprovedVendorCount <= 0) ? vendorSpan.addClass('hidden') : vendorSpan.removeClass('hidden');
+                    let vendorSpan = $('.unapproved-vendor-count');
+                    let userSpan = $('.unapproved-user-count');
+                    let auctionSpan = $('.draft-auction-count');
 
-                userSpan.text(stats.unapprovedUserCount);
-                (stats.unapprovedUserCount <= 0) ? userSpan.addClass('hidden') : userSpan.removeClass('hidden');
+                    vendorSpan.text(stats.unapprovedVendorCount);
+                    (stats.unapprovedVendorCount <= 0) ? vendorSpan.addClass('hidden') : vendorSpan.removeClass('hidden');
 
-                auctionSpan.text(stats.draftAuctionCount);
-                (stats.draftAuctionCount <= 0) ? auctionSpan.addClass('hidden') : auctionSpan.removeClass('hidden');
-            }
-        })
-    }
+                    userSpan.text(stats.unapprovedUserCount);
+                    (stats.unapprovedUserCount <= 0) ? userSpan.addClass('hidden') : userSpan.removeClass('hidden');
 
-    setInterval(getNavbarStatistics, 5000);
-</script>
+                    auctionSpan.text(stats.draftAuctionCount);
+                    (stats.draftAuctionCount <= 0) ? auctionSpan.addClass('hidden') : auctionSpan.removeClass('hidden');
+                }
+            })
+        }
+
+        setInterval(getNavbarStatistics, 5000);
+    </script>
+@endif
