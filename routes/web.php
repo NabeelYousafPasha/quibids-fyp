@@ -60,6 +60,7 @@ Route::group([
         // auction
         Route::get('/auctions/{auction}/media', [AuctionController::class, 'listMedia'])->name('auctions.media');
         Route::post('/auctions/{auction}/media', [AuctionController::class, 'uploadMedia'])->name('auctions.media');
+        Route::get('/auctions/{auction}/status', [AuctionController::class, 'toggleStatus'])->name('switch.auction.status');
         Route::resource('/auctions', AuctionController::class);
 
         // bidding
