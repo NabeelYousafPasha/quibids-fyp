@@ -35,13 +35,13 @@ class Chat extends Component
                     'message_status_id'=> $this->messageStatus->id
                 ]);
 
-        // messagesToRecipientFromAuth
-        $messagesToRecipientFromAuth = Message::where('from_user_id', '=', auth()->id())
-                ->where('to_user_id', '=', $this->recipient->id)
-                ->latest('id', 'DESC');
+        // messagesBetweenRecipientAndAuth
+        $messagesBetweenRecipientAndAuth = Message::whereIn('from_user_id', [$this->recipient->id, auth()->id()])
+                ->whereIn('to_user_id', [$this->recipient->id, auth()->id()])
+                ->orderBy('id');
 
         return view('livewire.chat', [
-            'chatMessages' => $messagesToRecipientFromAuth->paginate(1),
+            'chatMessages' => $messagesBetweenRecipientAndAuth->get(),
         ]);
     }
 
