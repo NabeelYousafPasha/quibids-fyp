@@ -72,6 +72,10 @@
                             {{ __('Bidding') }}
                         </x-nav-link>
                     @endif
+
+                    <x-nav-link :href="route('dashboard.messenger')" :active="request()->routeIs('dashboard.messenger')">
+                        {{ __('Messenger') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -185,6 +189,10 @@
                     {{ __('Bidding') }}
                 </x-responsive-nav-link>
             @endif
+
+            <x-responsive-nav-link :href="route('dashboard.messenger')" :active="request()->routeIs('dashboard.messenger')">
+                {{ __('Messenger') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
