@@ -60,7 +60,10 @@ class UserController extends Controller
         $person->approved_at = ! is_null($person->approved_at) ? NULL : now();
         $person->save();
 
-        Mail::to($person)->send(new VendorActivated());
+        // send email to vendor
+        if ($role == Role::VENDOR && ! is_null($person->approved_at)) {
+            Mail::to($person)->send(new VendorActivated());
+        }
 
         return redirect()->route('dashboard.'.$role.'s')
             ->with('status', 'Status switched successfully');

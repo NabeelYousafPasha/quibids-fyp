@@ -199,20 +199,23 @@ class AuctionController extends Controller
 
     public function toggleStatus(Auction $auction)
     {
-        if($auction->is_published == 0){
+        if ($auction->is_published == 0) {
+
             $auction->is_published = 1;
+
             Mail::to($auction->createdBy)->send(new AuctionPublished());
         } else {
             $auction->is_published = 0;
         }
-        
+
         $auctionPublished = $auction->save();
 
-        if($auctionPublished){
-            session()->flash('status', 'Status switched successfully');
-
+        if ($auctionPublished) {
+            ($auction->is_published)
+                ? session()->flash('status', 'Auction Published successfully')
+                : session()->flash('status', 'Auction marked Draft successfully');
         }
 
-        return redirect()->route('dashboard.auctions.index');            
+        return redirect()->route('dashboard.auctions.index');
     }
 }
