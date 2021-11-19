@@ -50,6 +50,15 @@ class Auction extends Model implements HasMedia
         return $this->is_published ? 'PUBLISHED' : 'DRAFT';
     }
 
+
+    /**
+     * Relationships
+     */
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'id');
+    }
+
     /**
      * Scopes
      */
