@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Auction\AuctionRequest;
+use App\Mail\AuctionPublished;
 use App\Models\{
     Auction,
     AuctionCategory,
@@ -10,6 +11,7 @@ use App\Models\{
     Role
 };
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class AuctionController extends Controller
 {
@@ -193,5 +195,27 @@ class AuctionController extends Controller
 
         return redirect()->route('dashboard.auctions.media', ['auction' => $auction])
             ->with('status', 'Image uploaded');
+    }
+
+    public function toggleStatus(Auction $auction)
+    {
+        if ($auction->is_published == 0) {
+
+            $auction->is_published = 1;
+
+            Mail::to($auction->createdBy)->send(new AuctionPublished());
+        } else {
+            $auction->is_published = 0;
+        }
+
+        $auctionPublished = $auction->save();
+
+        if ($auctionPublished) {
+            ($auction->is_published)
+                ? session()->flash('status', 'Auction Published successfully')
+                : session()->flash('status', 'Auction marked Draft successfully');
+        }
+
+        return redirect()->route('dashboard.auctions.index');
     }
 }

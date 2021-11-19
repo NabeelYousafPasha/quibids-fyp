@@ -63,7 +63,7 @@
                         </p>
                         @if(auth()->user()->can('auction_publsih_status'))
                             <a
-                                href="{{ route('dashboard.auctions.media', ['auction' => $auction]) }}"
+                                href="{{ route('dashboard.switch.auction.status', ['auction' => $auction]) }}"
                                 class="px-2 py-1 m-1 text-white text-sm rounded-sm {{ $auction->is_published ? 'bg-gray-500 hover:bg-gray-700' : 'bg-green-500 hover:bg-green-700' }}"
                             >
                                 {{ $auction->is_published ? 'Move to Draft' : 'Move to Publish' }}?
