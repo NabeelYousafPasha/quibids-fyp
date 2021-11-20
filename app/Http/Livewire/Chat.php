@@ -54,7 +54,7 @@ class Chat extends Component
                 'from_user_id' => auth()->id(),
                 'to_user_id' => $this->recipient->id,
                 'message' => $this->message,
-                'message_status_id' => 2,
+                'message_status_id' => MessageStatus::where('code', '=', MessageStatus::UNSEEN)->first()->id,
             ]);
 
             // reset message field
