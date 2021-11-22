@@ -21,8 +21,20 @@
                     </div>
                 </div>
                 @endrole
-            {{-- @endif --}}
-
+            {{-- @endif --}}            
         </div>
+        <section class="min-h-screen px-4 bg-white">
+            <div class="max-w-xl my-8 w-full text-center rounded-lg shadow-lg p-4 flex md:flex-row flex-col">
+            @forelse($items as $key => $item)
+                    <div class="flex-1 flex-col">
+                        <h3 class="font-semibold text-lg tracking-wide">{{ $key }}</h3>
+                        <p class="text-gray-500 my-1">
+                            Total: {{ $item }}
+                        </p>
+                    </div>
+            @empty
+            @endforelse
+            </div>
+        </section>
     </div>
 </x-app-layout>
