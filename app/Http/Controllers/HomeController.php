@@ -67,12 +67,12 @@ class HomeController extends Controller
         $items = [];
         $items['Published Auctions'] = count($publishedAuctions->get());
         $items['Draft Auctions'] = count($draftAuctions->get());
-        $items['Open Auctions'] = count($publishedAuctions->get());
-        $items['Closed Auctions'] = count($publishedAuctions->get());
-        $items['Pending Vendors'] = count($publishedAuctions->get());
-        $items['Approved Vendors'] = count($publishedAuctions->get());
-        $items['Pending Users'] = count($publishedAuctions->get());
-        $items['Approved Users'] = count($publishedAuctions->get());
+        $items['Open Auctions'] = count($openAuctions->get());
+        $items['Closed Auctions'] = count($closedAuctions->get());
+        $items['Pending Vendors'] = count($pendingVendors->get());
+        $items['Approved Vendors'] = count($approvedVendors->get());
+        $items['Pending Users'] = count($pendingUsers->get());
+        $items['Approved Users'] = count($approvedUsers->get());
 
         return view('dashboard')->with([
             'authUser' => $user,

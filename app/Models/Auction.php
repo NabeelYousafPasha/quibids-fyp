@@ -90,6 +90,7 @@ class Auction extends Model implements HasMedia
     public function scopeExpired($query)
     {
         //  expiry is less than current time
-        return $query->whereRaw("NOW() >= estimated_expire_at");
+        return $query->whereRaw("NOW() >= estimated_expire_at")
+                    ->whereNull('sold_out');
     }
 }
