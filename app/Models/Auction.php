@@ -91,6 +91,6 @@ class Auction extends Model implements HasMedia
     {
         //  expiry is less than current time
         return $query->whereRaw("NOW() >= estimated_expire_at")
-                    ->whereNull('sold_out');
+                    ->whereNull('sold_at');
     }
 }

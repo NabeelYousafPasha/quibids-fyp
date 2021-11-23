@@ -39,40 +39,29 @@ class HomeController extends Controller
     public function dashboard()
     {
         $user = Auth::user();
-        $publishedAuctions = Auction::addSelect('*')
-                                ->OfPublished();
-        $draftAuctions = Auction::addSelect('*')
-                                ->OfDraft();
-        $openAuctions = Auction::addSelect('*')
-                                ->NotExpired();
-        $closedAuctions = Auction::addSelect('*')
-                                ->Expired();
 
-        $pendingVendors = User::addSelect('*')
-                                ->OfRoleVendor()
+        $publishedAuctions = Auction::OfPublished();
+        $draftAuctions = Auction::OfDraft();
+        $openAuctions = Auction::NotExpired();
+        $closedAuctions = Auction::Expired();
+        $pendingVendors = User::OfRoleVendor()
                                 ->Approved();
-
-        $approvedVendors = User::addSelect('*')
-                                ->OfRoleVendor()
+        $approvedVendors = User::OfRoleVendor()
                                 ->Unapproved();
-
-        $pendingUsers = User::addSelect('*')
-                                ->OfRoleUser()
+        $pendingUsers = User::OfRoleUser()
                                 ->Approved();
-
-        $approvedUsers = User::addSelect('*')
-                                ->OfRoleUser()
+        $approvedUsers = User::OfRoleUser()
                                 ->Unapproved();
 
         $items = [];
-        $items['Published Auctions'] = count($publishedAuctions->get());
-        $items['Draft Auctions'] = count($draftAuctions->get());
-        $items['Open Auctions'] = count($openAuctions->get());
-        $items['Closed Auctions'] = count($closedAuctions->get());
-        $items['Pending Vendors'] = count($pendingVendors->get());
-        $items['Approved Vendors'] = count($approvedVendors->get());
-        $items['Pending Users'] = count($pendingUsers->get());
-        $items['Approved Users'] = count($approvedUsers->get());
+        $items['Published Auctions'] = $publishedAuctions->count();
+        $items['Draft Auctions'] = $draftAuctions->count();
+        $items['Open Auctions'] = $openAuctions->count();
+        $items['Closed Auctions'] = $closedAuctions->count();
+        $items['Pending Vendors'] = $pendingVendors->count();
+        $items['Approved Vendors'] = $approvedVendors->count();
+        $items['Pending Users'] = $pendingUsers->count();
+        $items['Approved Users'] = $approvedUsers->count();
 
         return view('dashboard')->with([
             'authUser' => $user,
