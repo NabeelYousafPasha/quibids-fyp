@@ -50,12 +50,17 @@
                         id="messages"
                         class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch"
                     >
-                        @forelse($chatMessages as $message)
+                        @forelse($chatMessages ?? [] as $message)
+                            {{-- auth as a sender --}}
                             @if($message->to_user_id == auth()->id())
                                 <div class="chat-message">
                                     <div class="flex items-end">
                                         <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2 items-start">
-                                            <div><span class="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">{{ $message->message }}</span></div>
+                                            <div>
+                                                <span class="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">
+                                                    {{ $message->message }}
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -74,7 +79,17 @@
                             @endif
 
                         @empty
-
+                            <div class="chat-message">
+                                <div class="flex justify-center">
+                                    <div class="flex flex-col space-y-2 text-xs max-w-xs mx-2 order-2">
+                                        <div>
+                                            <span class="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-100 text-gray-700">
+                                                {{ "No Previous Chat" }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         @endforelse
                     </div>
                     <div class="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
@@ -92,43 +107,15 @@
                             </div>
                         </form>
                     </div>
-                 </div>
-
-
+                </div>
 
                 <script>
                     const el = document.getElementById('messages')
                     el.scrollTop = el.scrollHeight
                 </script>
 
-                <div class="p-6 bg-white border-b border-gray-200" style="position:static; top:800px">
-                    {{-- @forelse( $messages as $message)
-                        <div class="p-6 bg-white border-b border-gray-200">
-
-                            <label style="color:rgb(25, 25, 95); font-family:verdana" for="user_name">
-                                {{ $message->user->name}}
-                            </label>
-
-                            @if ($message->status == 2)
-                            <label style="color:rgb(122, 6, 255);" for="user_name">{{ $message->message}} : {{$message->status}}</label>
-                            <label style="color:rgb(6, 255, 139);" for="user_name">new</label>
-                            @else
-                            <label style="color:black;" for="user_name">{{ $message->message}}</label>
-                            <label style="color:black; text-align:right" for="user_name">{{$message->created_at}}</label>
-                            @endif
-
-                            <br/>
-                        </div>
-                    @empty
-                        No previous chat
-                    @endforelse
-
-                    <div class="p-6 bg-white border-b border-gray-200">
-                        {{ $messages->links() }}
-                    </div> --}}
-                </div>
-
             </div>
+        </div>
     </div>
 
 @if ((config('constants.messenger.realtime') ?? false) == true)
