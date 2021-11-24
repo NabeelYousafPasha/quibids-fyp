@@ -44,22 +44,20 @@ class HomeController extends Controller
         $draftAuctions = Auction::OfDraft();
         $openAuctions = Auction::NotExpired();
         $closedAuctions = Auction::Expired();
-        $pendingVendors = User::OfRoleVendor()
-                                ->Unapproved();
-        $approvedVendors = User::OfRoleVendor()
-                                ->Approved();
-        $pendingUsers = User::OfRoleUser()
-                                ->Unapproved();
-        $approvedUsers = User::OfRoleUser()
-                                ->Approved();
+        $pendingVendors = User::OfRoleVendor()->Unapproved();
+        $approvedVendors = User::OfRoleVendor()->Approved();
+        $pendingUsers = User::OfRoleUser()->Unapproved();
+        $approvedUsers = User::OfRoleUser()->Approved();
 
         $items = [];
         $items['Published Auctions'] = $publishedAuctions->count();
         $items['Draft Auctions'] = $draftAuctions->count();
         $items['Open Auctions'] = $openAuctions->count();
         $items['Closed Auctions'] = $closedAuctions->count();
+
         $items['Pending Vendors'] = $pendingVendors->count();
         $items['Approved Vendors'] = $approvedVendors->count();
+
         $items['Pending Users'] = $pendingUsers->count();
         $items['Approved Users'] = $approvedUsers->count();
 

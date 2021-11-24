@@ -21,20 +21,38 @@
                     </div>
                 </div>
                 @endrole
-            {{-- @endif --}}            
+            {{-- @endif --}}
         </div>
-        <section class="min-h-screen px-4 bg-white">
-            @forelse($items as $key => $item)
-            <div class="max-w-xl my-8 w-full text-center rounded-lg shadow-lg p-4 flex md:flex-row flex-col">
-                <div class="flex-1">
-                    <h3 class="font-semibold text-lg tracking-wide">{{ $key }}</h3>
-                    <p class="text-gray-500 my-1">
-                        Total: {{ $item }}
-                    </p>
-                </div>
+
+        <section class="min-h-screen px-4 bg-white pt-5 pb-5">
+
+            <div class="h-64 grid grid-rows-3 grid-flow-col gap-4">
+                @foreach($items as $key => $item)
+                    <div class="shadow-md p-4">
+                        <div class="flex flex-col">
+                            <div class="flex space-x-8 w-56">
+                                <div class="">
+                                    <div class="uppercase text-sm text-gray-700">
+                                        {{ $key }}
+                                    </div>
+                                    <div class="mt-1">
+                                        <div class="flex space-x-2 items-center">
+                                            <div class="text-2xl">
+                                                {{ $item }}
+                                            </div>
+                                            <div class="text-xs text-green-800 bg-green-200 rounded-md p-1">
+                                                Total
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
             </div>
-            @empty
-            @endforelse
         </section>
+
+
     </div>
 </x-app-layout>
