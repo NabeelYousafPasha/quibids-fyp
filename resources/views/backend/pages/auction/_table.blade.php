@@ -75,7 +75,7 @@
                     @if(auth()->user()->can('create_auction'))
                         <a
                             href="{{ route('dashboard.auctions.media', ['auction' => $auction]) }}"
-                            class="px-2 py-1 m-1 bg-transparent border-2 border-grey-500 text-grey-500 text-lg rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300"
+                            class="px-2 py-1 m-1 text-sm rounded-sm bg-transparent border-2 border-grey-500 text-grey-500 hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300"
                         >
                             Media
                         </a>
@@ -93,7 +93,7 @@
                     @if(auth()->user()->can('update_auction'))
                         <a
                             href="{{ route('dashboard.auctions.edit', ['auction' => $auction]) }}"
-                            class="px-2 py-1 m-1 bg-transparent border-2 border-blue-500 text-blue-500 text-lg rounded-lg hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300"
+                            class="px-2 py-1 m-1 text-sm rounded-sm bg-transparent border-2 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-gray-100 focus:border-4 focus:border-blue-300"
                         >
                             Edit
                         </a>
@@ -110,7 +110,7 @@
                             @method('DELETE')
                             <button
                                 type ="submit"
-                                class="px-2 py-1 m-1 bg-transparent border-2 border-red-500 text-red-500 text-lg rounded-lg hover:bg-red-500 hover:text-gray-100 focus:border-4 focus:border-red-300"
+                                class="px-2 py-1 m-1 text-sm rounded-sm bg-transparent border-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-gray-100 focus:border-4 focus:border-red-300"
                             >
                                 Delete
                             </button>

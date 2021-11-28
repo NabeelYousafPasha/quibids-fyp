@@ -49,21 +49,21 @@ class HomeController extends Controller
         $pendingUsers = User::OfRoleUser()->Unapproved();
         $approvedUsers = User::OfRoleUser()->Approved();
 
-        $items = [];
-        $items['Published Auctions'] = $publishedAuctions->count();
-        $items['Draft Auctions'] = $draftAuctions->count();
-        $items['Open Auctions'] = $openAuctions->count();
-        $items['Closed Auctions'] = $closedAuctions->count();
+        $stats = [];
+        $stats['Auctions']['Published Auctions'] = $publishedAuctions->count();
+        $stats['Auctions']['Draft Auctions'] = $draftAuctions->count();
+        $stats['Auctions']['Open Auctions'] = $openAuctions->count();
+        $stats['Auctions']['Closed Auctions'] = $closedAuctions->count();
 
-        $items['Pending Vendors'] = $pendingVendors->count();
-        $items['Approved Vendors'] = $approvedVendors->count();
+        $stats['Vendors']['Pending Vendors'] = $pendingVendors->count();
+        $stats['Vendors']['Approved Vendors'] = $approvedVendors->count();
 
-        $items['Pending Users'] = $pendingUsers->count();
-        $items['Approved Users'] = $approvedUsers->count();
+        $stats['Users']['Pending Users'] = $pendingUsers->count();
+        $stats['Users']['Approved Users'] = $approvedUsers->count();
 
         return view('dashboard')->with([
             'authUser' => $user,
-            'items' => $items,
+            'stats' => $stats,
         ]);
     }
 }
