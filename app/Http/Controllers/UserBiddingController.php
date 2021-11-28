@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserBidding\UserBiddingRequest;
+use App\Models\Auction;
 use App\Models\Role;
 use App\Models\UserBidding;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserBiddingController extends Controller
 {
@@ -45,11 +47,27 @@ class UserBiddingController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
-    public function create()
+    public function create(Auction $auction)
     {
-        //
+        if (auth()->user()->cannot('create_bidding')) {
+            return $this->permissionDenied($this->fallbackRoute);
+        }
+
+        $maxOfferedBiddingPrice = UserBidding::select(DB::raw("MAX(offered_price) as max_offered_price"))
+            ->where('auction_id', '=', $auction->id)
+            ->first();
+
+        $maxOfferedBiddingPrice = $maxOfferedBiddingPrice->max_offered_price ?? NULL;
+
+        return view('backend.pages.bidding.form')->with([
+            'auction' => $auction,
+            'maxOfferedBiddingPrice' => $maxOfferedBiddingPrice,
+            'form' => [
+                'route' => route('dashboard.bidding.store', ['auction' => $auction,]),
+            ],
+        ]);
     }
 
     /**
@@ -58,18 +76,29 @@ class UserBiddingController extends Controller
      * @param UserBiddingRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(UserBiddingRequest $request)
+    public function store(UserBiddingRequest $request, Auction $auction)
     {
         if (auth()->user()->cannot('create_bidding')) {
             return $this->permissionDenied($this->fallbackRoute);
         }
 
+        $validAuction = Auction::OfPublished()
+            ->NotExpired()
+            ->where('id', '=', $auction->id)
+            ->first();
+
+        if (is_null($validAuction)) {
+            return redirect()->route('dashboard.bidding.create', ['auction' => $auction])
+                ->with('status', 'Invalid Auction.');
+        }
+
         UserBidding::create($request->validated() + [
+            'auction_id' => $auction->id,
             'user_id' => auth()->id(),
         ]);
 
-        return redirect()->route('/')
-            ->with('status', 'User has bid successfully.');
+        return redirect()->route('dashboard.bidding.index')
+            ->with('status', 'Your bid has been submitted successfully.');
     }
 
     /**
