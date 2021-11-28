@@ -22,7 +22,42 @@
                 </div>
                 @endrole
             {{-- @endif --}}
-
         </div>
+
+        <section class="min-h-screen px-4 bg-white pt-5 pb-5">
+            @foreach($stats ?? [] as $key => $items)
+                <div class="w-full p-3">
+                    <div class="uppercase text-black font-bold text-xl mb-2 leading-tight">
+                        {{ $key }}
+                    </div>
+                    <hr>
+                    <br>
+                    @foreach($items as $itemKey => $itemValue)
+                        <div class="shadow-md p-4">
+                            <div class="flex flex-col">
+                                <div class="flex space-x-8 w-56">
+                                    <div class="">
+                                        <div class="uppercase text-sm text-gray-700">
+                                            {{ $itemKey }}
+                                        </div>
+                                        <div class="mt-1">
+                                            <div class="flex space-x-2 items-center">
+                                                <div class="text-2xl">
+                                                    {{ $itemValue }}
+                                                </div>
+                                                <div class="text-xs text-green-800 bg-green-200 rounded-md p-1">
+                                                    Total
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @endforeach
+        </section>
+
     </div>
 </x-app-layout>
