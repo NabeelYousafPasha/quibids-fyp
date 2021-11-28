@@ -64,7 +64,9 @@ Route::group([
         Route::resource('/auctions', AuctionController::class);
 
         // bidding
-        Route::resource('/biddings', UserBiddingController::class);
+        Route::get('/bidding', [UserBiddingController::class, 'index'])->name('bidding.index');
+        Route::get('/bidding/{auction}/create', [UserBiddingController::class, 'create'])->name('bidding.create');
+        Route::post('/bidding/{auction}/store', [UserBiddingController::class, 'store'])->name('bidding.store');
 
         Route::get('/navbar-stats', function() {
             $unapprovedVendorCount = User::OfRoleVendor()->unapproved();

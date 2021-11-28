@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\UserBidding;
 
-use App\Models\Auction;
+use App\Models\UserBidding;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 
 class UserBiddingRequest extends FormRequest
 {
@@ -25,13 +25,16 @@ class UserBiddingRequest extends FormRequest
      */
     public function rules()
     {
-        $auctions = Auction::OfPublished()
-            ->NotExpired()
-            ->pluck('id');
+        $auction = $this->route('auction');
+
+        $maxOfferedBiddingPrice = UserBidding::select(DB::raw("MAX(offered_price) as max_offered_price"))
+            ->where('auction_id', '=', $auction->id)
+            ->first();
+
+        $maxOfferedBiddingPrice = $maxOfferedBiddingPrice->max_offered_price ?? 0;
 
         $rules = [
-            'auction_id' => ['required', Rule::in($auctions)],
-            'offered_price' => ['required', 'integer'],
+            'offered_price' => ['required', 'integer', 'min:'.$maxOfferedBiddingPrice],
         ];
 
         return $rules;

@@ -68,7 +68,7 @@
                     @endif
 
                     @if(auth()->user()->can('view_bidding'))
-                        <x-nav-link :href="route('dashboard.biddings.index')" :active="request()->routeIs('dashboard.biddings.index')">
+                        <x-nav-link :href="route('dashboard.bidding.index')" :active="request()->routeIs('dashboard.bidding.index')">
                             {{ __('Bidding') }}
                         </x-nav-link>
                     @endif
@@ -185,7 +185,7 @@
             @endif
 
             @if(auth()->user()->can('view_bidding'))
-                <x-responsive-nav-link :href="route('dashboard.biddings.index')" :active="request()->routeIs('dashboard.biddings.index')">
+                <x-responsive-nav-link :href="route('dashboard.bidding.index')" :active="request()->routeIs('dashboard.bidding.index')">
                     {{ __('Bidding') }}
                 </x-responsive-nav-link>
             @endif
