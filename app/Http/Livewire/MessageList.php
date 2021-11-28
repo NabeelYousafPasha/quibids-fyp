@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Foundation\Auth\User;
@@ -20,13 +21,13 @@ class MessageList extends Component
     {
         $chattedWithUsers = User::addSelect([
                 'users.*',
-                'latest_messages.message',
+                DB::raw("(SELECT message FROM messages WHERE id = latest_messages.message_id) as message"),
                 'latest_messages.last_message_at',
                 'latest_messages.last_message_status',
             ])
             ->join(DB::raw("(
                     SELECT
-                        MAX(message) as message,
+                        MAX(id) as message_id,
                         MAX(created_at) as last_message_at,
                         to_user_id,
                         from_user_id,
@@ -47,6 +48,7 @@ class MessageList extends Component
             ->where('latest_messages.from_user_id', '=', auth()->id())
             ->groupBy('latest_messages.to_user_id')
             ->latest('latest_messages.last_message_at', 'DESC')
+
             ->paginate(10);
 
 

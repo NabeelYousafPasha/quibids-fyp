@@ -135,7 +135,7 @@
                                     Submit a bid
                                     <span class="button-box">
                                         <span class="button-box-text">X</span>
-                                        <span class="button-box-count">0</span>
+                                        <span class="button-box-count">1</span>
                                     </span>
                                 </button>
 
