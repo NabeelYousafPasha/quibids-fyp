@@ -92,4 +92,9 @@ class User extends Authenticatable
         return $this->role(Role::USER);
     }
 
+    public function userPackages()
+    {
+        return $this->hasMany(UserPackage::class);
+    }
+
 }

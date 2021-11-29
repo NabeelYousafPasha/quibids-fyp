@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{AuctionController, CategoryController, HomeController, PackageController, UserController, PermissionRoleController, UserBiddingController};
+use App\Http\Controllers\{AuctionController, CategoryController, HomeController, PackageController, UserController, PermissionRoleController, UserBiddingController, UserPackageController};
 use App\Models\{
     Auction,
     Role,
@@ -42,6 +42,9 @@ Route::group([
 
         // package
         Route::resource('/packages', PackageController::class);
+
+        // user package
+        Route::get('/user-packages/{package:id}', [UserPackageController::class, 'store'])->name('user.packages.store');
 
         // vendor
         Route::get('/vendors', [UserController::class, 'vendors'])->name('vendors');
