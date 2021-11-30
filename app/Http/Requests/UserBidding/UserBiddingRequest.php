@@ -31,10 +31,14 @@ class UserBiddingRequest extends FormRequest
             ->where('auction_id', '=', $auction->id)
             ->first();
 
-        $maxOfferedBiddingPrice = $maxOfferedBiddingPrice->max_offered_price ?? 0;
+
+        $price = $auction->estimated_price;
+        if (($maxOfferedBiddingPrice->max_offered_price ?? 0) > $auction->estimated_price) {
+            $price = $maxOfferedBiddingPrice->max_offered_price ?? 0;
+        }
 
         $rules = [
-            'offered_price' => ['required', 'integer', 'min:'.$maxOfferedBiddingPrice],
+            'offered_price' => ['required', 'integer', 'min:'.$price],
         ];
 
         return $rules;

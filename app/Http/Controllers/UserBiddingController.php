@@ -30,6 +30,7 @@ class UserBiddingController extends Controller
 
         $biddings = UserBidding::with('auction');
         $wonBiddings = null;
+
         if (! auth()->user()->hasRole(Role::ADMIN)) {
 
             // belongs to auth user
@@ -55,11 +56,40 @@ class UserBiddingController extends Controller
             return $this->permissionDenied($this->fallbackRoute);
         }
 
+        $validAuction = Auction::OfPublished()
+            ->NotExpired()
+            ->where('id', '=', $auction->id)
+            ->first();
+
+        if (is_null($validAuction)) {
+            return redirect()->route('dashboard.bidding.index')
+                ->with([
+                    'status' => 'Invalid Auction.',
+                    'error_status' => true,
+                ]);
+        }
+
+        if (! is_null(UserBidding::where([
+            'auction_id' => $auction->id,
+            'user_id' => auth()->id(),
+        ])->first())) {
+            return redirect()->route('dashboard.bidding.index')
+                ->with([
+                    'status' => 'You have already bid.',
+                    'error_status' => true,
+                ]);
+        }
+
         $maxOfferedBiddingPrice = UserBidding::select(DB::raw("MAX(offered_price) as max_offered_price"))
             ->where('auction_id', '=', $auction->id)
             ->first();
 
-        $maxOfferedBiddingPrice = $maxOfferedBiddingPrice->max_offered_price ?? NULL;
+        $price = $auction->estimated_price;
+        if (($maxOfferedBiddingPrice->max_offered_price ?? 0) > $auction->estimated_price) {
+            $price = $maxOfferedBiddingPrice->max_offered_price ?? 0;
+        }
+
+        $maxOfferedBiddingPrice = $price;
 
         return view('backend.pages.bidding.form')->with([
             'auction' => $auction,
@@ -82,6 +112,17 @@ class UserBiddingController extends Controller
             return $this->permissionDenied($this->fallbackRoute);
         }
 
+        if (! is_null(UserBidding::where([
+            'auction_id' => $auction->id,
+            'user_id' => auth()->id(),
+        ])->first())) {
+            return redirect()->route('dashboard.bidding.index')
+                ->with([
+                    'status' => 'You have already bid.',
+                    'error_status' => true,
+                ]);
+        }
+
         $validAuction = Auction::OfPublished()
             ->NotExpired()
             ->where('id', '=', $auction->id)
@@ -89,7 +130,10 @@ class UserBiddingController extends Controller
 
         if (is_null($validAuction)) {
             return redirect()->route('dashboard.bidding.create', ['auction' => $auction])
-                ->with('status', 'Invalid Auction.');
+                ->with([
+                    'status' => 'Invalid Auction.',
+                    'error_status' => true,
+                ]);
         }
 
         UserBidding::create($request->validated() + [
