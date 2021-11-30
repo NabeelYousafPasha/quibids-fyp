@@ -83,8 +83,8 @@
 
                     {{-- @if(auth()->user()->can('create_bidding')) --}}
                         <a
-                            href="{{ route('dashboard.auctions.media', ['auction' => $auction]) }}"
-                            class="px-2 py-1 m-1 text-white text-sm rounded-sm {{ $auction->is_published ? 'bg-gray-500 hover:bg-gray-700' : 'bg-yellow-500 hover:bg-yellow-700' }}"
+                            href="{{ route('dashboard.bidding.create', ['auction' => $auction]) }}"
+                            class="px-2 py-1 m-1 text-white text-sm rounded-sm border-2 {{ $auction->is_published ? 'bg-gray-500 hover:bg-gray-700' : 'bg-yellow-500 hover:bg-yellow-700' }}"
                         >
                             Bid Here
                         </a>
