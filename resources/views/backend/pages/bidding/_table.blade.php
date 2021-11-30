@@ -33,6 +33,11 @@
                             Delete
                         </a>
                     @endif
+                    {{-- @if(auth()->user()->can('delete_bidding')) --}}
+                        <a href="{{ route('dashboard.messenger.chat', $bidding->auction->user_id) }}" class="p-2 pl-5 pr-5 m-1 bg-transparent border-2 border-green-500 text-green-500 text-lg rounded-lg hover:bg-green-500 hover:text-gray-100 focus:border-4 focus:border-green-300">
+                            Chat
+                        </a>
+                    {{-- @endif --}}
                 </td>
             </tr>
         @endforeach
