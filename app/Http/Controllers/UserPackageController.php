@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Package;
 use App\Models\UserPackage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserPackageController extends Controller
 {
@@ -33,9 +35,24 @@ class UserPackageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Package $package)
     {
-        //
+        $user = auth()->user();
+
+        DB::transaction(function() use ($package, $user){            
+            $user->userPackages()->create([
+                'package_id' => $package->id,
+                'awarded_bids' => $package->award_bids,
+                'price' => $package->price
+            ]);
+
+            $user->update([
+                'bids_left' => $package->award_bids + $user->bids_left
+            ]);
+        });
+
+        return redirect()->route('dashboard.packages.index')
+        ->with('status', 'Package purchased successfully.');
     }
 
     /**

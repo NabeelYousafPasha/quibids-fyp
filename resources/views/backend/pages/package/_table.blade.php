@@ -46,6 +46,12 @@
                             Delete
                         </a>
                     @endif
+
+                    @if(auth()->user()->can('delete_package'))
+                        <a href="{{ route('dashboard.user.packages.store', $package->id) }}" onclick="return confirm('Are you sure')" class="p-2 pl-5 pr-5 m-1 bg-transparent border-2 border-green-500 text-green-500 text-lg rounded-lg hover:bg-green-500 hover:text-gray-100 focus:border-4 focus:border-green-300">
+                            Purchase
+                        </a>
+                    @endif
                 </td>
             </tr>
         @endforeach
