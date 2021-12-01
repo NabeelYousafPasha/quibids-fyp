@@ -34,13 +34,12 @@ class UserBiddingController extends Controller
         if (! auth()->user()->hasRole(Role::ADMIN)) {
 
             // belongs to auth user
-            $biddings = $biddings->where('user_id', '=', auth()->id());
-            $wonBiddings = $biddings->where('user_id', '=', auth()->id())
-                                    ->whereNotNull('won_at')->get();
+            $biddings = auth()->user()->biddings()->get();
+            $wonBiddings = auth()->user()->biddings()->whereNotNull('won_at')->get();
         }
 
         return view('backend.pages.bidding.index')->with([
-            'biddings' => $biddings->get(),
+            'biddings' => $biddings,
             'wonBiddings' => $wonBiddings,
         ]);
     }
