@@ -6,6 +6,7 @@ use App\Http\Requests\UserBidding\UserBiddingRequest;
 use App\Models\Auction;
 use App\Models\Role;
 use App\Models\UserBidding;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -135,10 +136,22 @@ class UserBiddingController extends Controller
                 ]);
         }
 
-        UserBidding::create($request->validated() + [
-            'auction_id' => $auction->id,
-            'user_id' => auth()->id(),
-        ]);
+        try {
+            DB::transaction(function() use ($request, $auction){
+                UserBidding::create($request->validated() + [
+                    'auction_id' => $auction->id,
+                    'user_id' => auth()->id(),
+                ]);
+        
+                $auction->update([
+                    'estimated_expire_at' => Carbon::parse($auction->estimated_expire_at)
+                                                    ->addSeconds(env('INCREMENT_AFTER_BIDDING'))
+                ]);
+            });
+        } catch (\Throwable $th) {
+            return redirect()->route('dashboard.bidding.index')
+            ->with($th->getMessage());
+        }
 
         return redirect()->route('dashboard.bidding.index')
             ->with('status', 'Your bid has been submitted successfully.');

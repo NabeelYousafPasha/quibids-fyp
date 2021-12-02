@@ -23,16 +23,8 @@ class HomeController extends Controller
     {
         $packages = Package::all();
 
-        $publishedAuctions = Auction::addSelect('*')
-            ->expiryTimeInSeconds()
-            ->OfPublished()
-            ->NotExpired()
-            ->limit(4)
-            ->with('media');
-
         return view('frontend.index', [
             'packages' => $packages,
-            'publishedAuctions' => $publishedAuctions->get(),
         ]);
     }
 

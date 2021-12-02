@@ -30,6 +30,7 @@
 
     @include('frontend.partials.scripts')
     @yield('scripts')
+    @livewireScripts
 
 </body>
 </html>
