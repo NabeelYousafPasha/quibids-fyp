@@ -36,7 +36,7 @@ class HomeController extends Controller
         ]);
     }
 
-    public function dashboard()
+    public function dashboard(Request $request)
     {
         $user = Auth::user();
 
@@ -50,6 +50,35 @@ class HomeController extends Controller
         $approvedUsers = User::OfRoleUser()->Approved();
 
         $stats = [];
+
+        if($request->filled('from'))
+        {
+
+            $publishedAuctions = $publishedAuctions->whereDate('created_at', '<=', $request->from)->get();
+            $draftAuctions = $draftAuctions->whereDate('created_at', '<=', $request->from)->get();
+            $openAuctions = $openAuctions->whereDate('created_at', '<=', $request->from)->get();
+            $closedAuctions = $closedAuctions->whereDate('created_at', '<=', $request->from)->get();
+            $pendingVendors = $pendingVendors->whereDate('created_at', '<=', $request->from)->get();
+            $approvedVendors = $approvedVendors->whereDate('created_at', '<=', $request->from)->get();
+            $pendingUsers = $pendingUsers->whereDate('created_at', '<=', $request->from)->get();
+            $approvedUsers = $approvedUsers->whereDate('created_at', '<=', $request->from)->get();
+
+        }
+
+        if($request->filled('to'))
+        {
+
+            $publishedAuctions = $publishedAuctions->whereDate('created_at', '<=', $request->to)->get();
+            $draftAuctions = $draftAuctions->whereDate('created_at', '<=', $request->to)->get();
+            $openAuctions = $openAuctions->whereDate('created_at', '<=', $request->to)->get();
+            $closedAuctions = $closedAuctions->whereDate('created_at', '<=', $request->to)->get();
+            $pendingVendors = $pendingVendors->whereDate('created_at', '<=', $request->to)->get();
+            $approvedVendors = $approvedVendors->whereDate('created_at', '<=', $request->to)->get();
+            $pendingUsers = $pendingUsers->whereDate('created_at', '<=', $request->to)->get();
+            $approvedUsers = $approvedUsers->whereDate('created_at', '<=', $request->to)->get();
+            
+        }
+
         $stats['Auctions']['Published Auctions'] = $publishedAuctions->count();
         $stats['Auctions']['Draft Auctions'] = $draftAuctions->count();
         $stats['Auctions']['Open Auctions'] = $openAuctions->count();
