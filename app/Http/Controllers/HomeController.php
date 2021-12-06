@@ -72,7 +72,7 @@ class HomeController extends Controller
             $draftAuctions = $draftAuctions->whereDate('created_at', '<=', $request->to);
             $openAuctions = $openAuctions->whereDate('created_at', '<=', $request->to);
             $closedAuctions = $closedAuctions->whereDate('created_at', '<=', $request->to);
-            $pendingVendors = $pendingVendors->whereDate('created_at', '<=', $request->to));
+            $pendingVendors = $pendingVendors->whereDate('created_at', '<=', $request->to);
             $approvedVendors = $approvedVendors->whereDate('created_at', '<=', $request->to);
             $pendingUsers = $pendingUsers->whereDate('created_at', '<=', $request->to);
             $approvedUsers = $approvedUsers->whereDate('created_at', '<=', $request->to);
