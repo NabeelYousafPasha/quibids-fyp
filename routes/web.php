@@ -22,6 +22,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 Route::get('/', [HomeController::class, 'index'])->name('/');
 
+// all auctions
+Route::get('/all-auctions', function(){
+    return view('frontend.auctions');
+})->name('all.auctions');
+
 Route::group([
     'middleware' => ['auth'],
 ], function () {
@@ -59,9 +64,6 @@ Route::group([
 
         // category
         Route::resource('/categories', CategoryController::class);
-
-        // all auctions
-        Route::view('/all-auctions', 'livewire.paginated-auctions')->name('all.auctions');
 
         // auction
         Route::get('/auctions/{auction}/media', [AuctionController::class, 'listMedia'])->name('auctions.media');

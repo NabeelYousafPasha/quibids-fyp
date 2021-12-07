@@ -3,7 +3,7 @@
         <div class="container">
             <h2 class="text-center text-sm-left">Current <span class="h2-style">Auctions</span></h2>            
             <div class="row row-50 mt-50">
-                @forelse ($publishedAuctions ?? [] as $key => $auction)
+                @forelse ($allPublishedAuctions ?? [] as $key => $auction)
                     <div class="col-xl-3 col-lg-4 col-sm-6">
                         <div class="post-modern">
                             <div class="post-modern-countdown countdown" data-format="HMS" data-until="{{ $auction->left_expiry_time }}"></div>
@@ -154,16 +154,12 @@
                                 </a>
                             </div>
                         </div>
-                    </div>
-                @endforelse
-            </div>
-            <div class="mt-xl-40 mt-50 text-center text-sm-left">
-                <a class="button button-icon button-icon-right button-black" href="#">
-                    <span class="icon novi-icon fa fa-chevron-right"></span>
-                    View all auctions
-                </a>
-            </div>
-            {{ $publishedAuctions->links() }}
-        </div>
-    </section>        
+                    </div>                    
+                    @endforelse
+                </div>
+            </div> 
+            <div class="flex justify-center my-8">
+                {{ $allPublishedAuctions->links() }}                
+            </div>           
+        </section>        
 </div>

@@ -14,15 +14,15 @@ class PaginatedAuctions extends Component
 
     public function render()
     {
-        $publishedAuctions = Auction::addSelect('*')
+        $allPublishedAuctions = Auction::addSelect('*')
         ->expiryTimeInSeconds()
         ->OfPublished()
         ->NotExpired()
-        ->limit(4)
         ->with('media')
         ->paginate(4);
+
         return view('livewire.paginated-auctions')->with([
-        'publishedAuctions' => $publishedAuctions
+        'allPublishedAuctions' => $allPublishedAuctions
         ]);
     }
 }
