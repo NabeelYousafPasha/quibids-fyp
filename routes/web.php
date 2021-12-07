@@ -60,6 +60,9 @@ Route::group([
         // category
         Route::resource('/categories', CategoryController::class);
 
+        // all auctions
+        Route::view('/all-auctions', 'livewire.paginated-auctions')->name('all.auctions');
+
         // auction
         Route::get('/auctions/{auction}/media', [AuctionController::class, 'listMedia'])->name('auctions.media');
         Route::post('/auctions/{auction}/media', [AuctionController::class, 'uploadMedia'])->name('auctions.media');

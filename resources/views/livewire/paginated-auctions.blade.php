@@ -158,11 +158,12 @@
                 @endforelse
             </div>
             <div class="mt-xl-40 mt-50 text-center text-sm-left">
-                <a class="button button-icon button-icon-right button-black" href="{{ route('dashboard.all.auctions') }}">
+                <a class="button button-icon button-icon-right button-black" href="#">
                     <span class="icon novi-icon fa fa-chevron-right"></span>
                     View all auctions
                 </a>
             </div>
+            {{ $publishedAuctions->links() }}
         </div>
     </section>        
 </div>
