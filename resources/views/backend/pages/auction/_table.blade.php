@@ -81,14 +81,14 @@
                         </a>
                     @endif
 
-                    {{-- @if(auth()->user()->can('create_bidding')) --}}
+                    @if(auth()->user()->can('create_bidding') || auth()->user()->can('bid_auction'))
                         <a
                             href="{{ route('dashboard.bidding.create', ['auction' => $auction]) }}"
                             class="px-2 py-1 m-1 text-white text-sm rounded-sm border-2 {{ $auction->is_published ? 'bg-gray-500 hover:bg-gray-700' : 'bg-yellow-500 hover:bg-yellow-700' }}"
                         >
                             Bid Here
                         </a>
-                    {{-- @endif --}}
+                    @endif
 
                     @if(auth()->user()->can('update_auction'))
                         <a

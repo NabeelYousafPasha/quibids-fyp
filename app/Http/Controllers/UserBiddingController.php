@@ -52,7 +52,7 @@ class UserBiddingController extends Controller
      */
     public function create(Auction $auction)
     {
-        if (auth()->user()->cannot('create_bidding')) {
+        if (auth()->user()->cannot('create_bidding') && auth()->user()->cannot('bid_auction')) {
             return $this->permissionDenied($this->fallbackRoute);
         }
 
@@ -108,7 +108,7 @@ class UserBiddingController extends Controller
      */
     public function store(UserBiddingRequest $request, Auction $auction)
     {
-        if (auth()->user()->cannot('create_bidding')) {
+        if (auth()->user()->cannot('create_bidding') && auth()->user()->cannot('bid_auction')) {
             return $this->permissionDenied($this->fallbackRoute);
         }
 
