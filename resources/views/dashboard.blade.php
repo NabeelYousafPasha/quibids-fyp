@@ -8,33 +8,56 @@
     <div class="py-12">
         <section class="px-4 bg-white pt-5 pb-5">
             <div class="w-full p-3">
-                    <div class="uppercase text-black font-bold text-xl mb-2 leading-tight">
-                        Filters
-                    </div>
-                    <hr><form class="w-full max-w-lg" action="{{route('dashboard.index')}}" method="GET" role="search">
-                    
-                        @csrf
-                        <div class="flex flex-wrap -mx-3 mb-6">
-                          <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
-                              From
+                <div class="uppercase text-black font-bold text-xl mb-2 leading-tight">
+                    Filters
+                </div>
+                <hr>
+                <br>
+                <form
+                    class="w-full"
+                    action="{{route('dashboard.index')}}"
+                    method="GET"
+                    role="search"
+                >
+                    <div class="grid grid-cols-3 gap-4">
+                        <div>
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                From
                             </label>
-                            <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-first-name" type="date" name="from">
-                          </div>
-                          <div class="w-full md:w-1/2 px-3">
-                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
-                              To
+                            <input
+                                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                id="grid-first-name"
+                                type="date"
+                                name="from"
+                                value="{{ $filters['from'] ?? old('from') }}"
+                            >
+                        </div>
+                        <div>
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                To
                             </label>
-                            <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="date" name="to">
-                          </div>
-                          <div class="w-full md:w-1/2 px-3">
-                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                            <input
+                                class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                id="grid-last-name"
+                                type="date"
+                                name="to"
+                                value="{{ $filters['to'] ?? old('to') }}"
+                            >
+                        </div>
+                        <div>
+                            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                                Search
+                            </label>
+                            <button
+                                class="w-full h-12 px-6 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800"
+                                type="submit"
+                            >
                                 Apply Filter
                             </button>
-                          </div>
                         </div>
-                      </form>
-            
+                    </div>
+                </form>
+            </div>
         </section>
 
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">

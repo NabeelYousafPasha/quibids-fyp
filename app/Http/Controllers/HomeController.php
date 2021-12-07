@@ -38,6 +38,15 @@ class HomeController extends Controller
 
     public function dashboard(Request $request)
     {
+
+        $this->validate($request, [
+            'from' => ['nullable', 'date'],
+            'to' => ['nullable', 'date', 'after:from'],
+        ]);
+
+        $from = $request->get('from');
+        $to = $request->get('to');
+
         $user = Auth::user();
 
         $publishedAuctions = Auction::OfPublished();
@@ -51,32 +60,26 @@ class HomeController extends Controller
 
         $stats = [];
 
-        if($request->filled('from'))
-        {
-
-            $publishedAuctions = $publishedAuctions->whereDate('created_at', '>=', $request->from);
-            $draftAuctions = $draftAuctions->whereDate('created_at', '>=', $request->from);
-            $openAuctions = $openAuctions->whereDate('created_at', '>=', $request->from);
-            $closedAuctions = $closedAuctions->whereDate('created_at', '>=', $request->from);
-            $pendingVendors = $pendingVendors->whereDate('created_at', '>=', $request->from);
-            $approvedVendors = $approvedVendors->whereDate('created_at', '>=', $request->from);
-            $pendingUsers = $pendingUsers->whereDate('created_at', '>=', $request->from);
-            $approvedUsers = $approvedUsers->whereDate('created_at', '>=', $request->from);
-
+        if ($request->filled('from')) {
+            $publishedAuctions = $publishedAuctions->whereDate('created_at', '>=', $from);
+            $draftAuctions = $draftAuctions->whereDate('created_at', '>=', $from);
+            $openAuctions = $openAuctions->whereDate('created_at', '>=', $from);
+            $closedAuctions = $closedAuctions->whereDate('created_at', '>=', $from);
+            $pendingVendors = $pendingVendors->whereDate('created_at', '>=', $from);
+            $approvedVendors = $approvedVendors->whereDate('created_at', '>=', $from);
+            $pendingUsers = $pendingUsers->whereDate('created_at', '>=', $from);
+            $approvedUsers = $approvedUsers->whereDate('created_at', '>=', $from);
         }
 
-        if($request->filled('to'))
-        {
-
-            $publishedAuctions = $publishedAuctions->whereDate('created_at', '<=', $request->to);
-            $draftAuctions = $draftAuctions->whereDate('created_at', '<=', $request->to);
-            $openAuctions = $openAuctions->whereDate('created_at', '<=', $request->to);
-            $closedAuctions = $closedAuctions->whereDate('created_at', '<=', $request->to);
-            $pendingVendors = $pendingVendors->whereDate('created_at', '<=', $request->to);
-            $approvedVendors = $approvedVendors->whereDate('created_at', '<=', $request->to);
-            $pendingUsers = $pendingUsers->whereDate('created_at', '<=', $request->to);
-            $approvedUsers = $approvedUsers->whereDate('created_at', '<=', $request->to);
-            
+        if ($request->filled('to')) {
+            $publishedAuctions = $publishedAuctions->whereDate('created_at', '<=', $to);
+            $draftAuctions = $draftAuctions->whereDate('created_at', '<=', $to);
+            $openAuctions = $openAuctions->whereDate('created_at', '<=', $to);
+            $closedAuctions = $closedAuctions->whereDate('created_at', '<=', $to);
+            $pendingVendors = $pendingVendors->whereDate('created_at', '<=', $to);
+            $approvedVendors = $approvedVendors->whereDate('created_at', '<=', $to);
+            $pendingUsers = $pendingUsers->whereDate('created_at', '<=', $to);
+            $approvedUsers = $approvedUsers->whereDate('created_at', '<=', $to);
         }
 
         $stats['Auctions']['Published Auctions'] = $publishedAuctions->count();
@@ -93,6 +96,10 @@ class HomeController extends Controller
         return view('dashboard')->with([
             'authUser' => $user,
             'stats' => $stats,
+            'filters' => [
+                'from' => $from,
+                'to' => $to,
+            ],
         ]);
     }
 }

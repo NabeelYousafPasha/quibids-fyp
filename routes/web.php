@@ -31,7 +31,7 @@ Route::group([
         'as' => 'dashboard.',
     ], function() {
         Route::get('/', [HomeController::class, 'dashboard'])->name('index');
-        
+
         Route::group([
             'prefix' => 'setup',
             'as' => 'setup.',
@@ -56,7 +56,7 @@ Route::group([
         Route::get('/{role}/{person}/status', [UserController::class, 'toggleStatus'])
             ->name('switch-status')
             ->where('role', '('.str_replace(',', '|', implode(',', [Role::VENDOR, Role::USER])).')');
-        
+
 
         // category
         Route::resource('/categories', CategoryController::class);
