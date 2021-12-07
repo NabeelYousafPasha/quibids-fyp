@@ -17,8 +17,17 @@ class AdminRolePermissionSeeder extends Seeder
      */
     public function run()
     {
-        Role::where('name', '=', Role::ADMIN)
-            ->first()
-            ->givePermissionTo(Permission::all());
+        $admin = Role::where('name', '=', Role::ADMIN)
+            ->first();
+
+        $admin->givePermissionTo(Permission::all());
+
+        $admin->revokePermissionTo([
+            'create_auction',
+            'bid_auction',
+            'create_bidding',
+            'message',
+        ]);
+
     }
 }

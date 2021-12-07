@@ -37,9 +37,13 @@ class UserPackageController extends Controller
      */
     public function store(Package $package)
     {
+        if (auth()->user()->cannot('purchase_package')) {
+            return $this->permissionDenied($this->fallbackRoute);
+        }
+
         $user = auth()->user();
 
-        DB::transaction(function() use ($package, $user){            
+        DB::transaction(function() use ($package, $user){
             $user->userPackages()->create([
                 'package_id' => $package->id,
                 'awarded_bids' => $package->award_bids,
