@@ -56,6 +56,8 @@ class PermissionSeeder extends Seeder
         $otherPermissions = [
             'user_approval_status',
             'auction_publsih_status',
+            'message',
+            'view_auction_bids',
         ];
 
         foreach ($otherPermissions as $operation) {

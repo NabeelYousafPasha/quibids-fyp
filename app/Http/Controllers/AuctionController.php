@@ -33,7 +33,8 @@ class AuctionController extends Controller
 
         $auctions = Auction::query();
 
-        if (! auth()->user()->hasRole(Role::ADMIN)) {
+        // show only own auctions
+        if (auth()->user()->hasRole(Role::VENDOR)) {
             // belongs to auth user
             $auctions = $auctions->where('user_id', '=', auth()->id());
         }

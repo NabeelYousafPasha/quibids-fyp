@@ -22,26 +22,38 @@ class UserBiddingController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
-    public function index()
+    public function index(Request $request)
     {
         if (auth()->user()->cannot('view_bidding')) {
             return $this->permissionDenied($this->fallbackRoute);
         }
 
-        $biddings = UserBidding::with('auction');
-        $wonBiddings = null;
-
-        if (! auth()->user()->hasRole(Role::ADMIN)) {
-
+        // bidder
+        if (auth()->user()->hasRole(Role::USER)) {
             // belongs to auth user
-            $biddings = $biddings->where('user_id', '=', auth()->id());
-            $wonBiddings = $biddings->where('user_id', '=', auth()->id())
-                                    ->whereNotNull('won_at')->get();
+            $biddings = auth()->user()->biddings()
+                        ->whereNull('won_at')
+                        ->get();
+
+            $wonBiddings = auth()->user()->biddings()
+                        ->whereNotNull('won_at')
+                        ->get();
+
+        } else {
+            $biddings = UserBidding::where('auction_id', '=', $request->get('auction'))
+                        ->with('user')
+                        ->whereNull('won_at')
+                        ->get();
+
+            $wonBiddings = UserBidding::where('auction_id', '=', $request->get('auction'))
+                        ->with('user')
+                        ->whereNotNull('won_at')
+                        ->get();
         }
 
         return view('backend.pages.bidding.index')->with([
-            'biddings' => $biddings->get(),
-            'wonBiddings' => $wonBiddings,
+            'biddings' => $biddings ?? [],
+            'wonBiddings' => $wonBiddings ?? [],
         ]);
     }
 

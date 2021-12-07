@@ -15,9 +15,10 @@ class MessageStatusSeeder extends Seeder
     public function run()
     {
         foreach (MessageStatus::getAllMessageStatuses() as $status) {
-            MessageStatus::create([
-                'name' => ucfirst($status),
+            MessageStatus::firstOrCreate([
                 'code' => $status,
+            ], [
+                'name' => ucfirst($status),
             ]);
         }
     }
