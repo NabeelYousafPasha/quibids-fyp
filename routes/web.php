@@ -22,6 +22,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 Route::get('/', [HomeController::class, 'index'])->name('/');
 
+// all auctions
+Route::get('/all-auctions', function(){
+    return view('frontend.auctions');
+})->name('all.auctions');
+
 Route::group([
     'middleware' => ['auth'],
 ], function () {
