@@ -3,6 +3,7 @@
 <head>
     @include('frontend.partials.head')
     @yield('stylesheets')
+    @livewireStyles
 </head>
 <body>
     @include('frontend.partials.ie')
@@ -30,6 +31,7 @@
 
     @include('frontend.partials.scripts')
     @yield('scripts')
+    @livewireScripts
 
 </body>
 </html>

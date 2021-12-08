@@ -73,9 +73,11 @@
                         </x-nav-link>
                     @endif
 
-                    <x-nav-link :href="route('dashboard.messenger')" :active="request()->routeIs('dashboard.messenger')">
-                        {{ __('Messenger') }}
-                    </x-nav-link>
+                    @if(auth()->user()->can('message'))
+                        <x-nav-link :href="route('dashboard.messenger')" :active="request()->routeIs('dashboard.messenger')">
+                            {{ __('Messenger') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -190,9 +192,11 @@
                 </x-responsive-nav-link>
             @endif
 
-            <x-responsive-nav-link :href="route('dashboard.messenger')" :active="request()->routeIs('dashboard.messenger')">
-                {{ __('Messenger') }}
-            </x-responsive-nav-link>
+            @if(auth()->user()->can('message'))
+                <x-responsive-nav-link :href="route('dashboard.messenger')" :active="request()->routeIs('dashboard.messenger')">
+                    {{ __('Messenger') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->

@@ -6,6 +6,7 @@ use App\Http\Requests\UserBidding\UserBiddingRequest;
 use App\Models\Auction;
 use App\Models\Role;
 use App\Models\UserBidding;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -22,26 +23,39 @@ class UserBiddingController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
-    public function index()
+    public function index(Request $request)
     {
         if (auth()->user()->cannot('view_bidding')) {
             return $this->permissionDenied($this->fallbackRoute);
         }
 
-        $biddings = UserBidding::with('auction');
-        $wonBiddings = null;
-
-        if (! auth()->user()->hasRole(Role::ADMIN)) {
-
+        // bidder
+        if (auth()->user()->hasRole(Role::USER)) {
             // belongs to auth user
-            $biddings = $biddings->where('user_id', '=', auth()->id());
-            $wonBiddings = $biddings->where('user_id', '=', auth()->id())
-                                    ->whereNotNull('won_at')->get();
+
+            $biddings = auth()->user()->biddings()
+                        ->whereNull('won_at')
+                        ->get();
+
+            $wonBiddings = auth()->user()->biddings()
+                        ->whereNotNull('won_at')
+                        ->get();
+
+        } else {
+            $biddings = UserBidding::where('auction_id', '=', $request->get('auction'))
+                        ->with('user')
+                        ->whereNull('won_at')
+                        ->get();
+
+            $wonBiddings = UserBidding::where('auction_id', '=', $request->get('auction'))
+                        ->with('user')
+                        ->whereNotNull('won_at')
+                        ->get();
         }
 
         return view('backend.pages.bidding.index')->with([
-            'biddings' => $biddings->get(),
-            'wonBiddings' => $wonBiddings,
+            'biddings' => $biddings ?? [],
+            'wonBiddings' => $wonBiddings ?? [],
         ]);
     }
 
@@ -52,7 +66,7 @@ class UserBiddingController extends Controller
      */
     public function create(Auction $auction)
     {
-        if (auth()->user()->cannot('create_bidding')) {
+        if (auth()->user()->cannot('create_bidding') && auth()->user()->cannot('bid_auction')) {
             return $this->permissionDenied($this->fallbackRoute);
         }
 
@@ -108,7 +122,7 @@ class UserBiddingController extends Controller
      */
     public function store(UserBiddingRequest $request, Auction $auction)
     {
-        if (auth()->user()->cannot('create_bidding')) {
+        if (auth()->user()->cannot('create_bidding') && auth()->user()->cannot('bid_auction')) {
             return $this->permissionDenied($this->fallbackRoute);
         }
 
@@ -136,10 +150,22 @@ class UserBiddingController extends Controller
                 ]);
         }
 
-        UserBidding::create($request->validated() + [
-            'auction_id' => $auction->id,
-            'user_id' => auth()->id(),
-        ]);
+        try {
+            DB::transaction(function() use ($request, $auction){
+                UserBidding::create($request->validated() + [
+                    'auction_id' => $auction->id,
+                    'user_id' => auth()->id(),
+                ]);
+
+                $auction->update([
+                    'estimated_expire_at' => Carbon::parse($auction->estimated_expire_at)
+                                                    ->addSeconds(env('INCREMENT_AFTER_BIDDING'))
+                ]);
+            });
+        } catch (\Throwable $th) {
+            return redirect()->route('dashboard.bidding.index')
+            ->with($th->getMessage());
+        }
 
         return redirect()->route('dashboard.bidding.index')
             ->with('status', 'Your bid has been submitted successfully.');
