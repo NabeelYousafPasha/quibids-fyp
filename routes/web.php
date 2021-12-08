@@ -71,6 +71,7 @@ Route::group([
         Route::post('/auctions/{auction}/media', [AuctionController::class, 'uploadMedia'])->name('auctions.media');
         Route::get('/auctions/{auction}/status', [AuctionController::class, 'toggleStatus'])->name('switch.auction.status');
         Route::resource('/auctions', AuctionController::class);
+        Route::get('/auctions/{auction}/mark-winner', [AuctionController::class, 'markWinner'])->name('auctions.mark.winner');
 
         // bidding
         Route::get('/bidding', [UserBiddingController::class, 'index'])->name('bidding.index');

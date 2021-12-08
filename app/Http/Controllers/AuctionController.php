@@ -10,7 +10,9 @@ use App\Models\{
     Category,
     Role
 };
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class AuctionController extends Controller
@@ -218,5 +220,23 @@ class AuctionController extends Controller
         }
 
         return redirect()->route('dashboard.auctions.index');
+    }
+
+    public function markWinner(Auction $auction)
+    {
+        $auction->load('userBiddings');
+
+        DB::transaction(function() use ($auction){
+            $auction->update([
+                'sold_at' => Carbon::now(),
+            ]);
+            $auction->userBiddings()->update([
+                'won_at' => Carbon::now(),
+            ]);
+        });
+
+        session()->flash('status', 'Winner Marked successfully');
+        return redirect()->route('dashboard.auctions.index');       
+
     }
 }
