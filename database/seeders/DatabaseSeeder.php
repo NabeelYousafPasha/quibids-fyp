@@ -19,6 +19,11 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             AdminRolePermissionSeeder::class,
             MessageStatusSeeder::class,
+            PackageSeeder::class,
+            CategorySeeder::class,
+
+            UserPermissionSeeder::class,
+            VendorPermissionSeeder::class,
         ]);
     }
 }

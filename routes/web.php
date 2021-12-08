@@ -62,6 +62,7 @@ Route::group([
             ->name('switch-status')
             ->where('role', '('.str_replace(',', '|', implode(',', [Role::VENDOR, Role::USER])).')');
 
+
         // category
         Route::resource('/categories', CategoryController::class);
 
