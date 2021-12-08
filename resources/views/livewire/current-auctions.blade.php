@@ -1,8 +1,5 @@
-<div wire:poll>
-    <section class="section novi-bg novi-bg-img section-lg bg-white section-top-shadow">
-        <div class="container">
-            <h2 class="text-center text-sm-left">Current <span class="h2-style">Auctions</span></h2>            
-            <div class="row row-50 mt-50">
+<div wire:poll.5s>
+    <div class="row row-50 mt-50">
                 @forelse ($publishedAuctions ?? [] as $key => $auction)
                     <div class="col-xl-3 col-lg-4 col-sm-6">
                         <div class="post-modern">
@@ -23,7 +20,7 @@
                                         {{ $auction->title }}
                                     </a>
                                 </h5>
-    
+
                                 <a
                                     href="{{ route('dashboard.bidding.create', ['auction' => $auction]) }}"
                                     class="button button-box-right button-primary"
@@ -83,7 +80,7 @@
                                         No Active Auction(s)
                                     </a>
                                 </h5>
-    
+
                                 <a
                                     class="button button-box-right button-primary"
                                     href="javascript:void(0)"
@@ -157,12 +154,4 @@
                     </div>
                 @endforelse
             </div>
-            <div class="mt-xl-40 mt-50 text-center text-sm-left">
-                <a class="button button-icon button-icon-right button-black" href="{{ route('all.auctions') }}">
-                    <span class="icon novi-icon fa fa-chevron-right"></span>
-                    View all auctions
-                </a>
-            </div>
-        </div>
-    </section>        
 </div>

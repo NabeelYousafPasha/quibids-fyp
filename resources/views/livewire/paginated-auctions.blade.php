@@ -1,7 +1,7 @@
 <div wire:poll>
     <section class="section novi-bg novi-bg-img section-lg bg-white section-top-shadow">
         <div class="container">
-            <h2 class="text-center text-sm-left">Current <span class="h2-style">Auctions</span></h2>            
+            <h2 class="text-center text-sm-left">All Current <span class="h2-style">Auctions</span></h2>
             <div class="row row-50 mt-50">
                 @forelse ($allPublishedAuctions ?? [] as $key => $auction)
                     <div class="col-xl-3 col-lg-4 col-sm-6">
@@ -23,7 +23,7 @@
                                         {{ $auction->title }}
                                     </a>
                                 </h5>
-    
+
                                 <a
                                     href="{{ route('dashboard.bidding.create', ['auction' => $auction]) }}"
                                     class="button button-box-right button-primary"
@@ -83,7 +83,7 @@
                                         No Active Auction(s)
                                     </a>
                                 </h5>
-    
+
                                 <a
                                     class="button button-box-right button-primary"
                                     href="javascript:void(0)"
@@ -154,12 +154,22 @@
                                 </a>
                             </div>
                         </div>
-                    </div>                    
+                    </div>
                     @endforelse
                 </div>
-            </div> 
-            <div class="flex justify-center my-8">
-                {{ $allPublishedAuctions->links() }}                
-            </div>           
-        </section>        
+
+            <br>
+
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <div class="align-content-center">
+                        {{ $allPublishedAuctions->links() }}
+                    </div>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+        </div>
+
+    </section>
 </div>

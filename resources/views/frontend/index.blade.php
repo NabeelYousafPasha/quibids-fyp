@@ -106,7 +106,21 @@
     </section>
 
     <!-- Current Auctions-->
-    @livewire('current-auctions')
+    <section class="section novi-bg novi-bg-img section-lg bg-white section-top-shadow">
+        <div class="container">
+            <h2 class="text-center text-sm-left">
+                Current <span class="h2-style">Auctions</span>
+            </h2>
+            @livewire('current-auctions')
+
+            <div class="mt-xl-40 mt-50 text-center text-sm-left">
+                <a class="button button-icon button-icon-right button-black" href="{{ route('all.auctions') }}">
+                    <span class="icon novi-icon fa fa-chevron-right"></span>
+                    View all auctions
+                </a>
+            </div>
+        </div>
+    </section>
 
     <!-- How it Works-->
     <section class="section novi-bg novi-bg-img section-lg bg-gray-100 section-top-shadow" id="packages" >

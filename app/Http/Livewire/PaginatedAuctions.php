@@ -9,7 +9,7 @@ use Livewire\WithPagination;
 class PaginatedAuctions extends Component
 {
     use WithPagination;
-    
+
     protected $paginationTheme = 'bootstrap';
 
     public function render()
@@ -22,7 +22,7 @@ class PaginatedAuctions extends Component
         ->paginate(4);
 
         return view('livewire.paginated-auctions')->with([
-        'allPublishedAuctions' => $allPublishedAuctions
+            'allPublishedAuctions' => $allPublishedAuctions
         ]);
     }
 }

@@ -9,13 +9,15 @@ use Livewire\Component;
 class CurrentAuctions extends Component
 {
     public function render()
-    {        
+    {
         $publishedAuctions = Auction::addSelect('*')
             ->expiryTimeInSeconds()
             ->OfPublished()
             ->NotExpired()
             ->limit(4)
-            ->with('media')->get();
+            ->with('media')
+            ->get();
+
         return view('livewire.current-auctions')->with([
             'publishedAuctions' => $publishedAuctions
         ]);
