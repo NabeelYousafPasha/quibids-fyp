@@ -37,6 +37,17 @@
                         </a>
                      @endif
 
+                     @if(auth()->user()->can('mark_winner'))
+                         @if($alreadyMarkedWon == false ?? false)
+                             <a
+                                 href="{{ route('dashboard.auctions.mark.winner', ['userBidding' => $bidding]) }}"
+                                 class="px-2 py-1 m-1 text-sm rounded-sm bg-transparent border-2 border-green-500 text-green-500 hover:bg-green-500 hover:text-gray-100 focus:border-4 focus:border-green-300"
+                             >
+                                 Mark Winner
+                             </a>
+                         @endif
+                     @endif
+
                     @if(auth()->user()->can('delete_bidding'))
                         <a
                             href="#"

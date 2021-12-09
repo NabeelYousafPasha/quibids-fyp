@@ -44,6 +44,7 @@ class VendorPermissionSeeder extends Seeder
             'message',
             'view_bidding',
             'view_auction_bids',
+            'mark_winner',
         ];
 
         foreach ($operations as $operation) {

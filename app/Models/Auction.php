@@ -93,4 +93,9 @@ class Auction extends Model implements HasMedia
         return $query->whereRaw("NOW() >= estimated_expire_at")
                     ->whereNull('sold_at');
     }
+
+    public function userBiddings()
+    {
+        return $this->hasMany(UserBidding::class);
+    }
 }
