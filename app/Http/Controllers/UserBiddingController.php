@@ -29,6 +29,8 @@ class UserBiddingController extends Controller
             return $this->permissionDenied($this->fallbackRoute);
         }
 
+        $alreadyMarkedWon = false;
+
         // bidder
         if (auth()->user()->hasRole(Role::USER)) {
             // belongs to auth user
@@ -51,11 +53,16 @@ class UserBiddingController extends Controller
                         ->with('user')
                         ->whereNotNull('won_at')
                         ->get();
+
+            if (count($wonBiddings->toArray()) > 0) {
+                $alreadyMarkedWon = true;
+            }
         }
 
         return view('backend.pages.bidding.index')->with([
             'biddings' => $biddings ?? [],
             'wonBiddings' => $wonBiddings ?? [],
+            'alreadyMarkedWon' => $alreadyMarkedWon ?? false,
         ]);
     }
 

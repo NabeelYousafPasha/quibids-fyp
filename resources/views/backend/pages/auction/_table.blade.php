@@ -108,15 +108,6 @@
                         </a>
                     @endif
 
-                    @if(auth()->user()->can('update_auction'))
-                        <a
-                            href="{{ route('dashboard.auctions.mark.winner', ['auction' => $auction]) }}"
-                            class="px-2 py-1 m-1 text-sm rounded-sm bg-transparent border-2 border-green-500 text-green-500 hover:bg-green-500 hover:text-gray-100 focus:border-4 focus:border-green-300"
-                        >
-                            Mark Winner
-                        </a>
-                    @endif
-
                     @if(auth()->user()->can('delete_auction'))
                         <form
                             class="delete__auction"

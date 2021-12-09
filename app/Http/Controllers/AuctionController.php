@@ -4,12 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Auction\AuctionRequest;
 use App\Mail\AuctionPublished;
-use App\Models\{
-    Auction,
-    AuctionCategory,
-    Category,
-    Role
-};
+use App\Models\{Auction, AuctionCategory, Category, Role, UserBidding};
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -222,21 +217,23 @@ class AuctionController extends Controller
         return redirect()->route('dashboard.auctions.index');
     }
 
-    public function markWinner(Auction $auction)
+    public function markWinner(UserBidding $userBidding)
     {
-        $auction->load('userBiddings');
+        $auction = Auction::where('id', '=', $userBidding->auction_id)->firstOrFail();
 
-        DB::transaction(function() use ($auction){
+        DB::transaction(function() use ($auction, $userBidding) {
             $auction->update([
                 'sold_at' => Carbon::now(),
             ]);
-            $auction->userBiddings()->update([
+
+            $userBidding->update([
                 'won_at' => Carbon::now(),
             ]);
         });
 
         session()->flash('status', 'Winner Marked successfully');
-        return redirect()->route('dashboard.auctions.index');       
+
+        return redirect()->route('dashboard.auctions.index');
 
     }
 }
